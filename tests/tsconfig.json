@@ -1,0 +1,16 @@
+{
+    "extends": "../tsconfig.json",
+    "compilerOptions": {
+        "module": "NodeNext",
+        "moduleResolution": "NodeNext",
+        "outDir": "../dist",
+        "noEmit": false
+    },
+    "include": [
+        "./**/*.ts",
+        "./**/*.mts"
+    ],
+    "exclude": [
+        "node_modules"
+    ]
+}
