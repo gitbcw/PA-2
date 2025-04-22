@@ -1,98 +1,67 @@
 "use client";
 
 import { useState } from "react";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { PlusCircle, ListTodo, Target, Calendar, Clock } from "lucide-react";
-import GoalManager from "@/components/plan/GoalManager";
-import TaskManager from "@/components/plan/TaskManager";
-import AiAssistant from "@/components/plan/AiAssistant";
-import GoalTimeline from "@/components/plan/GoalTimeline";
+import { useSession } from "next-auth/react";
+import { redirect } from "next/navigation";
+import { GoalChatLayout } from "@/components/goal-chat/GoalChatLayout";
+import { GoalChat } from "@/components/goal-chat/GoalChat";
+import { GoalVisualization } from "@/components/goal-chat/GoalVisualization";
+import { Goal } from "@prisma/client";
 
-export default function PlanPage() {
-  const [activeTab, setActiveTab] = useState("goals");
+export default function GoalChatPage() {
+  const { data: session, status } = useSession();
+  const [extractedGoal, setExtractedGoal] = useState<Partial<Goal> | null>(null);
+
+  // 如果用户未登录，重定向到登录页面
+  if (status === "unauthenticated") {
+    redirect("/login?callbackUrl=/goal-chat");
+  }
+
+  // 如果会话正在加载，显示加载状态
+  if (status === "loading") {
+    return (
+      <div className="flex justify-center items-center h-[calc(100vh-8rem)]">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary"></div>
+      </div>
+    );
+  }
+
+  const userId = session?.user?.id;
+
+  if (!userId) {
+    return (
+      <div className="flex justify-center items-center h-[calc(100vh-8rem)]">
+        <div className="text-center">
+          <h2 className="text-2xl font-bold">无法获取用户信息</h2>
+          <p className="mt-2">请尝试重新登录</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="container mx-auto py-6">
-      <div className="flex justify-between items-center mb-6">
-        <div>
-          <h1 className="text-3xl font-bold">计划 (Plan)</h1>
-          <p className="text-muted-foreground mt-1">
-            设定目标，分解任务，制定行动计划
-          </p>
-        </div>
-        <div className="flex gap-2">
-          <Button variant="outline" size="sm" onClick={() => setActiveTab("timeline")}>
-            <Calendar className="h-4 w-4 mr-2" />
-            时间线视图
-          </Button>
-        </div>
+      <div className="mb-6">
+        <h1 className="text-3xl font-bold">目标对话</h1>
+        <p className="text-muted-foreground mt-1">
+          与AI助手对话，制定和管理你的目标
+        </p>
       </div>
 
-      <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-4">
-        <TabsList className="grid w-full grid-cols-2 md:w-auto md:grid-cols-4">
-          <TabsTrigger value="goals">
-            <Target className="h-4 w-4 mr-2" />
-            目标管理
-          </TabsTrigger>
-          <TabsTrigger value="timeline">
-            <Clock className="h-4 w-4 mr-2" />
-            时间线视图
-          </TabsTrigger>
-          <TabsTrigger value="tasks">
-            <ListTodo className="h-4 w-4 mr-2" />
-            任务分解
-          </TabsTrigger>
-          <TabsTrigger value="ai-assist" className="hidden md:flex">
-            <svg
-              className="h-4 w-4 mr-2"
-              viewBox="0 0 24 24"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M12 3C7.02944 3 3 7.02944 3 12C3 16.9706 7.02944 21 12 21C16.9706 21 21 16.9706 21 12C21 7.02944 16.9706 3 12 3Z"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-              <path
-                d="M12 8V16"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-              <path
-                d="M8 12H16"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
-            AI 助手
-          </TabsTrigger>
-        </TabsList>
-
-        <TabsContent value="goals" className="space-y-4">
-          <GoalManager />
-        </TabsContent>
-
-        <TabsContent value="timeline" className="space-y-4">
-          <GoalTimeline />
-        </TabsContent>
-
-        <TabsContent value="tasks" className="space-y-4">
-          <TaskManager />
-        </TabsContent>
-
-        <TabsContent value="ai-assist" className="space-y-4">
-          <AiAssistant />
-        </TabsContent>
-      </Tabs>
+      <GoalChatLayout
+        chatComponent={
+          <GoalChat 
+            userId={userId} 
+            onGoalExtracted={(goal) => setExtractedGoal(goal)} 
+          />
+        }
+        visualizationComponent={
+          <GoalVisualization 
+            userId={userId} 
+            extractedGoal={extractedGoal} 
+          />
+        }
+      />
     </div>
   );
 }

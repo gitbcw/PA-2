@@ -1,93 +1,94 @@
+// 备份：原 Check 页面代码，仅供参考
 "use client";
 
 import { useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Calendar, Clock, BarChart2, PlusCircle, Bell } from "lucide-react";
-import TodayGoals from "@/components/do/TodayTasks";
-import GoalRecordDemoBlock from "@/components/do/GoalRecordDemoBlock";
-import TimeTracker from "@/components/do/TimeTracker";
-import Notifications from "@/components/do/Notifications";
+import { BarChart2, Target, Zap, Calendar, Download } from "lucide-react";
+import DataAnalysis from "@/components/check/DataAnalysis";
+import GoalEvaluation from "@/components/check/GoalEvaluation";
+import EfficiencyAnalysis from "@/components/check/EfficiencyAnalysis";
 
-export default function DoPage() {
-  const [activeTab, setActiveTab] = useState("today");
+// 旧版检查页面，仅供参考
+export function CheckPageLegacy() {
+  const [activeTab, setActiveTab] = useState("data");
 
   return (
     <div className="container mx-auto py-6">
       <div className="flex justify-between items-center mb-6">
         <div>
-          <h1 className="text-3xl font-bold">执行 (Do)</h1>
+          <h1 className="text-3xl font-bold">检查 (Check)</h1>
           <p className="text-muted-foreground mt-1">
-            执行计划，跟踪进度，记录时间
+            分析数据，评估目标，检查效率
           </p>
         </div>
         <div className="flex gap-2">
           <Button variant="outline" size="sm">
             <Calendar className="h-4 w-4 mr-2" />
-            日历视图
+            选择时间范围
           </Button>
           <Button>
-            <PlusCircle className="h-4 w-4 mr-2" />
-            快速添加
+            <Download className="h-4 w-4 mr-2" />
+            导出报告
           </Button>
         </div>
       </div>
 
       <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-4">
         <TabsList className="grid w-full grid-cols-3">
-          <TabsTrigger value="today">
-            <Calendar className="h-4 w-4 mr-2" />
-            今日目标
+          <TabsTrigger value="data">
+            <BarChart2 className="h-4 w-4 mr-2" />
+            数据分析
           </TabsTrigger>
-          <TabsTrigger value="records">
-            <Clock className="h-4 w-4 mr-2" />
-            任务记录
+          <TabsTrigger value="goals">
+            <Target className="h-4 w-4 mr-2" />
+            目标评估
           </TabsTrigger>
-          <TabsTrigger value="notifications">
-            <Bell className="h-4 w-4 mr-2" />
-            提醒中心
+          <TabsTrigger value="efficiency">
+            <Zap className="h-4 w-4 mr-2" />
+            效率分析
           </TabsTrigger>
         </TabsList>
-
-        <TabsContent value="today">
+        
+        <TabsContent value="data">
           <Card>
             <CardHeader>
-              <CardTitle>今日目标</CardTitle>
+              <CardTitle>数据分析</CardTitle>
               <CardDescription>
-                查看和管理今天需要完成的目标
+                分析任务完成情况和时间使用情况
               </CardDescription>
             </CardHeader>
             <CardContent>
-              <TodayGoals />
+              <DataAnalysis />
             </CardContent>
           </Card>
         </TabsContent>
-
-        <TabsContent value="records">
+        
+        <TabsContent value="goals">
           <Card>
             <CardHeader>
-              <CardTitle>任务记录</CardTitle>
+              <CardTitle>目标评估</CardTitle>
               <CardDescription>
-                极简执行记录，支持多条自由文本输入与逾期高亮
+                评估目标完成度和进度趋势
               </CardDescription>
             </CardHeader>
             <CardContent>
-              <GoalRecordDemoBlock />
+              <GoalEvaluation />
             </CardContent>
           </Card>
         </TabsContent>
-
-        <TabsContent value="notifications">
+        
+        <TabsContent value="efficiency">
           <Card>
             <CardHeader>
-              <CardTitle>提醒中心</CardTitle>
+              <CardTitle>效率分析</CardTitle>
               <CardDescription>
-                查看任务期限提醒、进度更新建议和AI分析结果
+                分析时间利用率和任务完成效率
               </CardDescription>
             </CardHeader>
             <CardContent>
-              <Notifications />
+              <EfficiencyAnalysis />
             </CardContent>
           </Card>
         </TabsContent>

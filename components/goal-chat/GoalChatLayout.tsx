@@ -12,9 +12,9 @@ export function GoalChatLayout({
   visualizationComponent,
 }: GoalChatLayoutProps) {
   return (
-    <div className="flex flex-col md:flex-row h-[calc(100vh-8rem)]">
+    <div className="flex flex-col md:flex-row h-[80vh]">
       {/* 左侧聊天区域 */}
-      <div className="w-full md:w-1/2 h-1/2 md:h-full overflow-hidden flex flex-col border-r">
+      <div className="w-full md:w-1/2 h-1/2 md:h-full overflow-hidden flex flex-col border-r relative">
         {chatComponent}
       </div>
       

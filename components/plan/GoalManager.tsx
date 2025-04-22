@@ -64,16 +64,38 @@ const goalStatusMap = {
   ARCHIVED: { label: "已归档", color: "bg-gray-100 text-gray-800" }
 };
 
+import AiAssistant from "@/components/plan/AiAssistant";
+
+interface GoalDraft {
+  title: string;
+  description: string;
+  level?: string;
+  startDate?: string;
+  endDate?: string;
+  parentId?: string;
+  metrics?: any[];
+  resources?: any[];
+  progress?: number;
+}
+
+import GoalList from "./GoalList";
+import GoalFormDialog from "./GoalFormDialog";
+import AiAssistantDialog from "./AiAssistantDialog";
+
 export default function GoalManager() {
   const { userId } = useAuth();
-  const [goals, setGoals] = useState([]);
+  const [goals, setGoals] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [openDialog, setOpenDialog] = useState(false);
-  const [selectedGoal, setSelectedGoal] = useState(null);
+  const [selectedGoal, setSelectedGoal] = useState<any | null>(null);
   const [filter, setFilter] = useState("all");
 
+  // AI 相关
+  const [showAiAssistant, setShowAiAssistant] = useState(false);
+  const [smartCheckResult, setSmartCheckResult] = useState<string>("");
+
   // 表单状态
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<GoalDraft>({
     title: "",
     description: "",
     level: "MONTHLY",
@@ -82,11 +104,40 @@ export default function GoalManager() {
     parentId: "",
     metrics: [],
     resources: [],
-    progress: 0 // 添加进度字段
+    progress: 0
   });
 
   // 可用的父目标
-  const [availableParentGoals, setAvailableParentGoals] = useState([]);
+  const [availableParentGoals, setAvailableParentGoals] = useState<any[]>([]);
+
+  // AI 采纳生成目标
+  const handleAdoptGoalFromAI = (goal: GoalDraft) => {
+    setShowAiAssistant(false);
+    setFormData({
+      ...formData,
+      ...goal,
+      level: goal.level || "MONTHLY",
+      startDate: goal.startDate || new Date().toISOString().split('T')[0],
+      endDate: goal.endDate || new Date(Date.now() + 30 * 86400000).toISOString().split('T')[0],
+      progress: 0,
+    });
+    setOpenDialog(true);
+  };
+
+  // SMART 原则校验（模拟AI，可替换为实际API调用）
+  const handleSmartCheck = (title: string, description: string) => {
+    if (!title && !description) {
+      setSmartCheckResult("请填写目标标题或描述");
+      return;
+    }
+    // 简单模拟：包含具体、可衡量等关键词则通过
+    const text = (title + description).toLowerCase();
+    if (["具体", "可衡量", "可实现", "相关", "时限"].every(k => text.includes(k))) {
+      setSmartCheckResult("目标基本符合SMART原则");
+    } else {
+      setSmartCheckResult("建议补充SMART五要素：具体、可衡量、可实现、相关性、时限性");
+    }
+  };
 
   // 加载目标
   const loadGoals = async () => {
@@ -411,6 +462,7 @@ export default function GoalManager() {
 
   return (
     <div className="space-y-4">
+      {/* 顶部筛选与操作栏 */}
       <div className="flex justify-between items-center">
         <div className="flex items-center space-x-2">
           <Select value={filter} onValueChange={setFilter}>
@@ -431,260 +483,62 @@ export default function GoalManager() {
             刷新
           </Button>
         </div>
+        <div className="flex gap-2">
+          <Button onClick={openCreateDialog}>
+            <PlusCircle className="h-4 w-4 mr-2" />
+            新建目标
+          </Button>
+          <Button variant="secondary" size="sm" onClick={() => setShowAiAssistant(true)}>
+            <svg className="h-4 w-4 mr-2" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 3C7.02944 3 3 7.02944 3 12C3 16.9706 7.02944 21 12 21C16.9706 21 21 16.9706 21 12C21 7.02944 16.9706 3 12 3Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+            AI 生成目标
+          </Button>
+        </div>
+      </div>
+      <div className="flex gap-2">
         <Button onClick={openCreateDialog}>
           <PlusCircle className="h-4 w-4 mr-2" />
           新建目标
         </Button>
+        <Button variant="secondary" size="sm" onClick={() => setShowAiAssistant(true)}>
+          <svg className="h-4 w-4 mr-2" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 3C7.02944 3 3 7.02944 3 12C3 16.9706 7.02944 21 12 21C16.9706 21 21 16.9706 21 12C21 7.02944 16.9706 3 12 3Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+            <path d="M9 9H9.01M15 9H15.01M9 15C9.81818 15.6364 10.8182 16 12 16C13.1818 16 14.1818 15.6364 15 15" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
+          AI 生成目标
+        </Button>
       </div>
-
-      {loading ? (
-        <div className="text-center py-12">
-          <p className="text-muted-foreground">加载中...</p>
-        </div>
-      ) : filteredGoals().length === 0 ? (
-        <div className="text-center py-12">
-          <p className="text-muted-foreground mb-4">暂无目标</p>
-          <Button onClick={openCreateDialog}>
-            <PlusCircle className="h-4 w-4 mr-2" />
-            创建第一个目标
-          </Button>
-        </div>
-      ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {filteredGoals().map((goal) => (
-            <Card key={goal.id} className="overflow-hidden">
-              <CardHeader className="pb-2">
-                <div className="flex justify-between items-start">
-                  <CardTitle className="text-lg">{goal.title}</CardTitle>
-                  <div className="flex gap-1">
-                    <Badge className={goalLevelMap[goal.level]?.color || "bg-gray-100"}>
-                      {goalLevelMap[goal.level]?.label || goal.level}
-                    </Badge>
-                    <Badge className={goalStatusMap[goal.status]?.color || "bg-gray-100"}>
-                      {goalStatusMap[goal.status]?.label || goal.status}
-                    </Badge>
-                  </div>
-                </div>
-                {goal.description && (
-                  <p className="text-sm text-muted-foreground mt-1">
-                    {goal.description}
-                  </p>
-                )}
-              </CardHeader>
-              <CardContent className="pb-2">
-                <div className="flex justify-between text-xs text-muted-foreground">
-                  <div className="flex items-center">
-                    <Calendar className="h-3 w-3 mr-1" />
-                    <span>
-                      {new Date(goal.startDate).toLocaleDateString()} - {new Date(goal.endDate).toLocaleDateString()}
-                    </span>
-                  </div>
-                  <div className="flex items-center">
-                    <Target className="h-3 w-3 mr-1" />
-                    <span>{Math.round(goal.progress * 100)}%</span>
-                  </div>
-                </div>
-
-                <div className="mt-2 pt-2">
-                  <div className="w-full bg-gray-200 rounded-full h-1.5">
-                    <div
-                      className="bg-blue-600 h-1.5 rounded-full"
-                      style={{ width: `${goal.progress * 100}%` }}
-                    ></div>
-                  </div>
-                </div>
-
-                {goal.tasks && goal.tasks.length > 0 && (
-                  <div className="mt-3 pt-3 border-t">
-                    <p className="text-xs font-medium mb-1">相关任务 ({goal.tasks.length})</p>
-                    <div className="space-y-1">
-                      {goal.tasks.slice(0, 2).map((task) => (
-                        <div key={task.id} className="flex items-center text-xs">
-                          {task.status === "COMPLETED" ? (
-                            <CheckCircle2 className="h-3 w-3 mr-1 text-green-500" />
-                          ) : task.status === "IN_PROGRESS" ? (
-                            <Clock className="h-3 w-3 mr-1 text-blue-500" />
-                          ) : task.status === "CANCELLED" ? (
-                            <XCircle className="h-3 w-3 mr-1 text-red-500" />
-                          ) : (
-                            <Target className="h-3 w-3 mr-1 text-gray-500" />
-                          )}
-                          <span className="truncate">{task.title}</span>
-                        </div>
-                      ))}
-                      {goal.tasks.length > 2 && (
-                        <div className="text-xs text-muted-foreground flex items-center">
-                          <span>还有 {goal.tasks.length - 2} 个任务</span>
-                          <ChevronRight className="h-3 w-3 ml-1" />
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                )}
-              </CardContent>
-              <CardFooter className="pt-2 flex justify-between">
-                <Button variant="outline" size="sm" onClick={() => openEditDialog(goal)}>
-                  <Edit className="h-3 w-3 mr-1" />
-                  编辑
-                </Button>
-                <div className="flex gap-1">
-                  <Button variant="outline" size="sm">
-                    <BarChart2 className="h-3 w-3 mr-1" />
-                    详情
-                  </Button>
-                  <Button variant="outline" size="sm" className="text-red-500" onClick={() => deleteGoal(goal.id)}>
-                    <Trash2 className="h-3 w-3" />
-                  </Button>
-                </div>
-              </CardFooter>
-            </Card>
-          ))}
-        </div>
-      )}
-
-      <Dialog open={openDialog} onOpenChange={setOpenDialog}>
-        <DialogContent className="sm:max-w-[600px]">
-          <DialogHeader>
-            <DialogTitle>{selectedGoal ? "编辑目标" : "创建新目标"}</DialogTitle>
-            <DialogDescription>
-              {selectedGoal
-                ? "修改目标信息和进度"
-                : "设定一个明确、可衡量、有时限的目标"}
-            </DialogDescription>
-          </DialogHeader>
-          <form onSubmit={selectedGoal ? updateGoal : createGoal}>
-            <div className="grid gap-4 py-4">
-              <div className="grid grid-cols-4 items-center gap-4">
-                <Label htmlFor="title" className="text-right">
-                  目标标题
-                </Label>
-                <Input
-                  id="title"
-                  name="title"
-                  value={formData.title}
-                  onChange={handleFormChange}
-                  className="col-span-3"
-                  required
-                />
-              </div>
-              <div className="grid grid-cols-4 items-center gap-4">
-                <Label htmlFor="level" className="text-right">
-                  目标级别
-                </Label>
-                <Select
-                  value={formData.level}
-                  onValueChange={(value) => handleSelectChange("level", value)}
-                >
-                  <SelectTrigger className="col-span-3">
-                    <SelectValue placeholder="选择目标级别" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="VISION">愿景</SelectItem>
-                    <SelectItem value="YEARLY">年度目标</SelectItem>
-                    <SelectItem value="QUARTERLY">季度目标</SelectItem>
-                    <SelectItem value="MONTHLY">月度目标</SelectItem>
-                    <SelectItem value="WEEKLY">周目标</SelectItem>
-                    <SelectItem value="DAILY">日目标</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-              <div className="grid grid-cols-4 items-center gap-4">
-                <Label htmlFor="startDate" className="text-right">
-                  开始日期
-                </Label>
-                <Input
-                  id="startDate"
-                  name="startDate"
-                  type="date"
-                  value={formData.startDate}
-                  onChange={handleFormChange}
-                  className="col-span-3"
-                  required
-                />
-              </div>
-              <div className="grid grid-cols-4 items-center gap-4">
-                <Label htmlFor="endDate" className="text-right">
-                  结束日期
-                </Label>
-                <Input
-                  id="endDate"
-                  name="endDate"
-                  type="date"
-                  value={formData.endDate}
-                  onChange={handleFormChange}
-                  className="col-span-3"
-                  required
-                />
-              </div>
-              <div className="grid grid-cols-4 items-start gap-4">
-                <Label htmlFor="description" className="text-right pt-2">
-                  描述
-                </Label>
-                <Textarea
-                  id="description"
-                  name="description"
-                  value={formData.description}
-                  onChange={handleFormChange}
-                  className="col-span-3"
-                  rows={3}
-                />
-              </div>
-              <div className="grid grid-cols-4 items-center gap-4">
-                <Label htmlFor="parentId" className="text-right">
-                  父目标
-                </Label>
-                <Select
-                  value={formData.parentId || "none"}
-                  onValueChange={(value) => handleSelectChange("parentId", value === "none" ? "" : value)}
-                >
-                  <SelectTrigger className="col-span-3">
-                    <SelectValue placeholder="选择父目标" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="none">无父目标</SelectItem>
-                    {availableParentGoals
-                      .filter(g => !selectedGoal || g.id !== selectedGoal.id)
-                      .map((goal) => (
-                        <SelectItem key={goal.id} value={goal.id}>
-                          {goal.title} ({goalLevelMap[goal.level]?.label || goal.level})
-                        </SelectItem>
-                      ))}
-                  </SelectContent>
-                </Select>
-              </div>
-
-              {/* 进度条，新建和编辑模式下都显示 */}
-              <div className="grid grid-cols-4 items-center gap-4">
-                <Label className="text-right">
-                  完成进度
-                </Label>
-                <div className="col-span-3 space-y-2">
-                  <div className="flex justify-between text-xs text-muted-foreground">
-                    <span>0%</span>
-                    <span>{Math.round(formData.progress * 100)}%</span>
-                    <span>100%</span>
-                  </div>
-                  <Slider
-                    value={[Math.round(formData.progress * 100)]}
-                    max={100}
-                    step={1}
-                    onValueChange={handleProgressChange}
-                    className="w-full"
-                  />
-                </div>
-              </div>
-            </div>
-            <DialogFooter>
-              <Button type="button" variant="outline" onClick={() => setOpenDialog(false)}>
-                取消
-              </Button>
-              <Button type="submit">
-                {selectedGoal ? "更新目标" : "创建目标"}
-              </Button>
-            </DialogFooter>
-          </form>
-        </DialogContent>
-      </Dialog>
+      {/* 目标列表展示 */}
+      <GoalList
+        goals={filteredGoals()}
+        goalLevelMap={goalLevelMap}
+        goalStatusMap={goalStatusMap}
+        onEdit={openEditDialog}
+        onDelete={deleteGoal}
+        loading={loading}
+      />
+      {/* 新建/编辑目标表单弹窗 */}
+      <GoalFormDialog
+        open={openDialog}
+        onClose={() => setOpenDialog(false)}
+        onSubmit={selectedGoal ? updateGoal : createGoal}
+        formData={formData}
+        setFormData={setFormData}
+        availableParentGoals={availableParentGoals}
+        smartCheckResult={smartCheckResult}
+        handleSmartCheck={handleSmartCheck}
+        isEdit={!!selectedGoal}
+        goalLevelMap={goalLevelMap}
+      />
+      {/* AI 辅助生成目标弹窗 */}
+      <AiAssistantDialog
+        open={showAiAssistant}
+        onClose={() => setShowAiAssistant(false)}
+        onAdoptGoal={handleAdoptGoalFromAI}
+      />
     </div>
   );
-}
+};
+
+

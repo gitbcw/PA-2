@@ -125,9 +125,7 @@ export function Sidebar() {
             <SidebarLink href="/plan" icon={<ClipboardList className="h-5 w-5" />} onClick={closeSidebar}>
               计划 (Plan)
             </SidebarLink>
-            <SidebarLink href="/goal-chat" icon={<MessageSquare className="h-5 w-5" />} onClick={closeSidebar}>
-              目标对话
-            </SidebarLink>
+
             <SidebarLink href="/do" icon={<Calendar className="h-5 w-5" />} onClick={closeSidebar}>
               执行 (Do)
             </SidebarLink>

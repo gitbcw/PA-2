@@ -78,7 +78,11 @@ const promptTemplates = [
   }
 ];
 
-export default function AiAssistant() {
+interface AiAssistantProps {
+  onAdoptGoal?: (goal: { title: string; description: string; level?: string; startDate?: string; endDate?: string }) => void;
+}
+
+export default function AiAssistant({ onAdoptGoal }: AiAssistantProps) {
   const [messages, setMessages] = useState([
     {
       role: "assistant",
@@ -89,11 +93,11 @@ export default function AiAssistant() {
   const [isLoading, setIsLoading] = useState(false);
   const [selectedTemplate, setSelectedTemplate] = useState("");
 
-  const messagesEndRef = useRef(null);
+  const messagesEndRef = useRef<HTMLDivElement | null>(null);
 
   // 滚动到最新消息
   const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    (messagesEndRef.current as HTMLDivElement | null)?.scrollIntoView({ behavior: "smooth" });
   };
 
   useEffect(() => {
@@ -132,7 +136,7 @@ export default function AiAssistant() {
   };
 
   // 使用提示模板
-  const useTemplate = (templateId) => {
+  const useTemplate = (templateId: string) => {
     const template = promptTemplates.find(t => t.id === templateId);
     if (template) {
       setInput(template.prompt);
@@ -141,7 +145,7 @@ export default function AiAssistant() {
   };
 
   // 生成模拟响应（实际应用中应替换为真实的 LLM 调用）
-  const generateMockResponse = (message) => {
+  const generateMockResponse = (message: string) => {
     if (message.includes("目标") && message.includes("SMART")) {
       return `
 根据 SMART 原则，我为你制定了以下目标：
@@ -280,6 +284,27 @@ export default function AiAssistant() {
                   )}
                   <div>
                     <div className="whitespace-pre-wrap">{message.content}</div>
+                    {onAdoptGoal && message.role === "assistant" && message.content && (
+                      <div className="mt-2">
+                        <Button
+                          size="sm"
+                          variant="secondary"
+                          onClick={() => {
+                            // 简单结构化采纳目标（可根据实际AI返回格式调整）
+                            const firstLine = message.content.split("\n").find(line => line.trim().length > 0 && !line.startsWith("**"));
+                            const example = message.content.match(/“(.+?)”/);
+                            const desc = example ? example[1] : (firstLine || message.content);
+                            onAdoptGoal({
+                              title: desc.slice(0, 20),
+                              description: desc,
+                              level: "MONTHLY"
+                            });
+                          }}
+                        >
+                          采纳为目标
+                        </Button>
+                      </div>
+                    )}
                   </div>
                   {message.role === "user" && (
                     <User className="h-5 w-5 mt-0.5 flex-shrink-0" />

@@ -113,9 +113,9 @@ export function GoalChat({ userId, onGoalExtracted }: GoalChatProps) {
   };
 
   return (
-    <div className="flex flex-col h-full">
+    <div className="relative flex flex-col h-full">
       {/* 消息区域 */}
-      <div className="flex-1 overflow-y-auto p-4 space-y-4">
+      <div className="flex-1 overflow-y-auto p-4 space-y-4 pb-36">
         {messages.map((message) => (
           <div
             key={message.id}
@@ -148,7 +148,7 @@ export function GoalChat({ userId, onGoalExtracted }: GoalChatProps) {
       </div>
 
       {/* 输入区域 */}
-      <div className="border-t p-4">
+      <div className="border-t p-4 bg-white absolute bottom-0 left-0 w-full z-10 shadow">
         <form
           onSubmit={handleSubmit}
           className="flex space-x-2"
@@ -158,6 +158,16 @@ export function GoalChat({ userId, onGoalExtracted }: GoalChatProps) {
             onChange={handleInputChange}
             placeholder="描述你的目标..."
             className="flex-1 min-h-[80px] resize-none"
+            style={{ boxSizing: 'border-box' }}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                if (input.trim() && !isLoading) {
+                  (e.target as HTMLTextAreaElement).blur(); // 可选，防止多次触发
+                  handleSubmit(e as any);
+                }
+              }
+            }}
           />
           <Button type="submit" disabled={isLoading || !input.trim()}>
             <SendIcon className="h-4 w-4" />

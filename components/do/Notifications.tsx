@@ -17,7 +17,6 @@ import {
   Bell,
   Calendar,
   Clock,
-  AlertTriangle,
   CheckCircle2,
   XCircle,
   Target,

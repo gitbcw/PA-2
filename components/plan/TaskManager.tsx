@@ -43,6 +43,9 @@ import {
   Link as LinkIcon
 } from "lucide-react";
 
+import TaskList from "./TaskList";
+import TaskFormDialog from "./TaskFormDialog";
+
 // 任务状态映射
 const taskStatusMap = {
   TODO: { label: "待办", color: "bg-gray-100 text-gray-800" },
@@ -351,255 +354,31 @@ export default function TaskManager() {
           </Button>
         </div>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-          {Object.entries(taskStatusMap).map(([status, { label, color }]) => (
-            <div key={status} className="space-y-4">
-              <div className={`flex items-center justify-between p-2 rounded-t-lg ${color}`}>
-                <h3 className="font-medium">{label}</h3>
-                <Badge variant="outline">{groupedTasks[status]?.length || 0}</Badge>
-              </div>
-
-              <div className="space-y-2">
-                {groupedTasks[status]?.map((task) => (
-                  <Card key={task.id} className="overflow-hidden">
-                    <CardHeader className="p-3 pb-0">
-                      <div className="flex justify-between items-start">
-                        <CardTitle className="text-base">{task.title}</CardTitle>
-                        <Badge className={taskPriorityMap[task.priority]?.color || "bg-gray-100"}>
-                          {taskPriorityMap[task.priority]?.label || task.priority}
-                        </Badge>
-                      </div>
-                    </CardHeader>
-                    <CardContent className="p-3 pt-2">
-                      {task.description && (
-                        <p className="text-sm text-muted-foreground mb-2">
-                          {task.description}
-                        </p>
-                      )}
-
-                      {task.dueDate && (
-                        <div className="flex items-center text-xs text-muted-foreground mb-1">
-                          <Calendar className="h-3 w-3 mr-1" />
-                          <span>截止: {new Date(task.dueDate).toLocaleDateString()}</span>
-                        </div>
-                      )}
-
-                      {task.goalId && (
-                        <div className="flex items-center text-xs text-muted-foreground mb-1">
-                          <LinkIcon className="h-3 w-3 mr-1" />
-                          <span>目标: {getGoalTitle(task.goalId)}</span>
-                        </div>
-                      )}
-
-                      {task.parentId && (
-                        <div className="flex items-center text-xs text-muted-foreground">
-                          <LinkIcon className="h-3 w-3 mr-1" />
-                          <span>父任务: {getParentTaskTitle(task.parentId)}</span>
-                        </div>
-                      )}
-                    </CardContent>
-                    <CardFooter className="p-3 pt-0 flex justify-between">
-                      <div className="flex gap-1">
-                        {status !== "COMPLETED" && (
-                          <Button
-                            variant="outline"
-                            size="sm"
-                            className="text-green-500"
-                            onClick={() => updateTaskStatus(task.id, "COMPLETED")}
-                          >
-                            <CheckCircle2 className="h-3 w-3" />
-                          </Button>
-                        )}
-                        {status !== "IN_PROGRESS" && status !== "COMPLETED" && (
-                          <Button
-                            variant="outline"
-                            size="sm"
-                            className="text-blue-500"
-                            onClick={() => updateTaskStatus(task.id, "IN_PROGRESS")}
-                          >
-                            <Clock className="h-3 w-3" />
-                          </Button>
-                        )}
-                        {status !== "CANCELLED" && (
-                          <Button
-                            variant="outline"
-                            size="sm"
-                            className="text-red-500"
-                            onClick={() => updateTaskStatus(task.id, "CANCELLED")}
-                          >
-                            <XCircle className="h-3 w-3" />
-                          </Button>
-                        )}
-                      </div>
-                      <div className="flex gap-1">
-                        <Button variant="outline" size="sm" onClick={() => openEditDialog(task)}>
-                          <Edit className="h-3 w-3" />
-                        </Button>
-                        <Button variant="outline" size="sm" className="text-red-500" onClick={() => deleteTask(task.id)}>
-                          <Trash2 className="h-3 w-3" />
-                        </Button>
-                      </div>
-                    </CardFooter>
-                  </Card>
-                ))}
-
-                {groupedTasks[status]?.length === 0 && (
-                  <div className="text-center py-4 border border-dashed rounded-lg">
-                    <p className="text-xs text-muted-foreground">暂无{label}任务</p>
-                  </div>
-                )}
-              </div>
-            </div>
-          ))}
-        </div>
+        <TaskList
+          groupedTasks={groupedTasks}
+          taskStatusMap={taskStatusMap}
+          taskPriorityMap={taskPriorityMap}
+          getGoalTitle={getGoalTitle}
+          getParentTaskTitle={getParentTaskTitle}
+          onEdit={openEditDialog}
+          onDelete={deleteTask}
+          onStatusChange={updateTaskStatus}
+        />
       )}
 
-      <Dialog open={openDialog} onOpenChange={setOpenDialog}>
-        <DialogContent className="sm:max-w-[600px]">
-          <DialogHeader>
-            <DialogTitle>{selectedTask ? "编辑任务" : "创建新任务"}</DialogTitle>
-            <DialogDescription>
-              {selectedTask
-                ? "修改任务信息和状态"
-                : "创建一个新的任务，设置优先级和截止日期"}
-            </DialogDescription>
-          </DialogHeader>
-          <form onSubmit={selectedTask ? updateTask : createTask}>
-            <div className="grid gap-4 py-4">
-              <div className="grid grid-cols-4 items-center gap-4">
-                <Label htmlFor="title" className="text-right">
-                  任务标题
-                </Label>
-                <Input
-                  id="title"
-                  name="title"
-                  value={formData.title}
-                  onChange={handleFormChange}
-                  className="col-span-3"
-                  required
-                />
-              </div>
-              <div className="grid grid-cols-4 items-center gap-4">
-                <Label htmlFor="status" className="text-right">
-                  状态
-                </Label>
-                <Select
-                  value={formData.status}
-                  onValueChange={(value) => handleSelectChange("status", value)}
-                >
-                  <SelectTrigger className="col-span-3">
-                    <SelectValue placeholder="选择任务状态" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="TODO">待办</SelectItem>
-                    <SelectItem value="IN_PROGRESS">进行中</SelectItem>
-                    <SelectItem value="COMPLETED">已完成</SelectItem>
-                    <SelectItem value="CANCELLED">已取消</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-              <div className="grid grid-cols-4 items-center gap-4">
-                <Label htmlFor="priority" className="text-right">
-                  优先级
-                </Label>
-                <Select
-                  value={formData.priority}
-                  onValueChange={(value) => handleSelectChange("priority", value)}
-                >
-                  <SelectTrigger className="col-span-3">
-                    <SelectValue placeholder="选择任务优先级" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="LOW">低</SelectItem>
-                    <SelectItem value="MEDIUM">中</SelectItem>
-                    <SelectItem value="HIGH">高</SelectItem>
-                    <SelectItem value="URGENT">紧急</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-              <div className="grid grid-cols-4 items-center gap-4">
-                <Label htmlFor="dueDate" className="text-right">
-                  截止日期
-                </Label>
-                <Input
-                  id="dueDate"
-                  name="dueDate"
-                  type="date"
-                  value={formData.dueDate}
-                  onChange={handleFormChange}
-                  className="col-span-3"
-                />
-              </div>
-              <div className="grid grid-cols-4 items-center gap-4">
-                <Label htmlFor="goalId" className="text-right">
-                  关联目标
-                </Label>
-                <Select
-                  value={formData.goalId}
-                  onValueChange={(value) => handleSelectChange("goalId", value)}
-                >
-                  <SelectTrigger className="col-span-3">
-                    <SelectValue placeholder="选择关联目标" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="">无关联目标</SelectItem>
-                    {goals.map((goal) => (
-                      <SelectItem key={goal.id} value={goal.id}>
-                        {goal.title}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-              <div className="grid grid-cols-4 items-center gap-4">
-                <Label htmlFor="parentId" className="text-right">
-                  父任务
-                </Label>
-                <Select
-                  value={formData.parentId}
-                  onValueChange={(value) => handleSelectChange("parentId", value)}
-                >
-                  <SelectTrigger className="col-span-3">
-                    <SelectValue placeholder="选择父任务" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="">无父任务</SelectItem>
-                    {tasks
-                      .filter(task => !selectedTask || task.id !== selectedTask.id)
-                      .map((task) => (
-                        <SelectItem key={task.id} value={task.id}>
-                          {task.title}
-                        </SelectItem>
-                      ))
-                    }
-                  </SelectContent>
-                </Select>
-              </div>
-              <div className="grid grid-cols-4 items-start gap-4">
-                <Label htmlFor="description" className="text-right pt-2">
-                  描述
-                </Label>
-                <Textarea
-                  id="description"
-                  name="description"
-                  value={formData.description}
-                  onChange={handleFormChange}
-                  className="col-span-3"
-                  rows={3}
-                />
-              </div>
-            </div>
-            <DialogFooter>
-              <Button type="button" variant="outline" onClick={() => setOpenDialog(false)}>
-                取消
-              </Button>
-              <Button type="submit">
-                {selectedTask ? "更新任务" : "创建任务"}
-              </Button>
-            </DialogFooter>
-          </form>
-        </DialogContent>
-      </Dialog>
+      {/* 任务表单弹窗 */}
+      <TaskFormDialog
+        open={openDialog}
+        onOpenChange={setOpenDialog}
+        formData={formData}
+        goals={goals}
+        tasks={tasks}
+        selectedTask={selectedTask}
+        onFormChange={handleFormChange}
+        onSelectChange={handleSelectChange}
+        onSubmit={selectedTask ? updateTask : createTask}
+        onCancel={() => setOpenDialog(false)}
+      />
     </div>
   );
 }
