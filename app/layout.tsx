@@ -1,5 +1,4 @@
 import "./globals.css";
-import { Public_Sans } from "next/font/google";
 import { Button } from "@/components/ui/button";
 import { ExternalLink } from "lucide-react";
 import { Toaster } from "@/components/ui/sonner";
@@ -8,7 +7,6 @@ import { Sidebar } from "@/components/Sidebar";
 import AuthProvider from "@/components/auth/AuthProvider";
 import LogArchiveInitializer from "@/components/LogArchiveInitializer";
 
-const publicSans = Public_Sans({ subsets: ["latin"] });
 
 export default function RootLayout({
   children,
@@ -38,7 +36,7 @@ export default function RootLayout({
         />
         <meta name="twitter:image" content="/images/og-image.png" />
       </head>
-      <body className={publicSans.className}>
+      <body>
         <AuthProvider>
           <NuqsAdapter>
             <div className="flex h-[100dvh] overflow-hidden">

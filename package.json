@@ -5,6 +5,8 @@
   "packageManager": "yarn@3.5.1",
   "scripts": {
     "dev": "next dev",
+    "dev:turbo": "next dev --turbo",
+    "dev:fast": "cross-env NODE_ENV=development NEXT_TURBO=1 next dev",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
@@ -72,6 +74,7 @@
     "@types/bcrypt": "^5.0.2",
     "@types/uuid": "^10.0.0",
     "autoprefixer": "10.4.14",
+    "cross-env": "^7.0.3",
     "dotenv": "^16.5.0",
     "eslint": "8.46.0",
     "eslint-config-next": "13.4.12",

@@ -93,7 +93,8 @@ export const GoalLevel: {
   YEARLY: 'YEARLY',
   QUARTERLY: 'QUARTERLY',
   MONTHLY: 'MONTHLY',
-  WEEKLY: 'WEEKLY'
+  WEEKLY: 'WEEKLY',
+  DAILY: 'DAILY'
 };
 
 export type GoalLevel = (typeof GoalLevel)[keyof typeof GoalLevel]

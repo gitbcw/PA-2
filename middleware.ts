@@ -19,8 +19,10 @@ const staticPaths = ["/images", "/_next", "/favicon.ico"];
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
-  // 添加调试日志
-  console.log("Middleware checking path:", pathname);
+  // 仅在开发环境下添加调试日志
+  if (process.env.NODE_ENV === "development") {
+    console.log("Middleware checking path:", pathname);
+  }
 
   // 检查是否是静态资源
   if (staticPaths.some(path => pathname.startsWith(path))) {
@@ -40,9 +42,11 @@ export async function middleware(request: NextRequest) {
       secret: secret,
       secureCookie: process.env.NODE_ENV === "production"
     });
-    console.log("Middleware token:", token ? "Found" : "Not found");
-    if (token) {
-      console.log("Authenticated user:", token.email || token.name || token.id);
+    if (process.env.NODE_ENV === "development") {
+      console.log("Middleware token:", token ? "Found" : "Not found");
+      if (token) {
+        console.log("Authenticated user:", token.email || token.name || token.id);
+      }
     }
   } catch (error) {
     console.error("Error getting token in middleware:", error);
@@ -62,13 +66,17 @@ export async function middleware(request: NextRequest) {
 
   // 检查是否已认证
   if (!token) {
-    console.log("User not authenticated, redirecting to login");
+    if (process.env.NODE_ENV === "development") {
+      console.log("User not authenticated, redirecting to login");
+    }
     const url = new URL("/login", request.url);
     url.searchParams.set("callbackUrl", encodeURI(request.url));
     return NextResponse.redirect(url);
   }
 
-  console.log("User authenticated, proceeding to", pathname);
+  if (process.env.NODE_ENV === "development") {
+    console.log("User authenticated, proceeding to", pathname);
+  }
 
   return NextResponse.next();
 }

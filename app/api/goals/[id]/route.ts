@@ -12,7 +12,7 @@ console.log("Created new PrismaClient instance in goals detail API");
 const goalUpdateSchema = z.object({
   title: z.string().min(1).optional(),
   description: z.string().optional(),
-  level: z.enum(["VISION", "YEARLY", "QUARTERLY", "MONTHLY", "WEEKLY"]).optional(),
+  level: z.enum(["VISION", "YEARLY", "QUARTERLY", "MONTHLY", "WEEKLY", "DAILY"]).optional(),
   status: z.enum(["ACTIVE", "COMPLETED", "CANCELLED", "ARCHIVED"]).optional(),
   startDate: z.string().optional(),
   endDate: z.string().optional(),
@@ -26,10 +26,10 @@ const goalUpdateSchema = z.object({
 
 export async function GET(
   req: NextRequest,
-  context: { params: { id: string } }
+  { params }: { params: { id: string } }
 ) {
   try {
-    const goalId = context.params.id;
+    const goalId = params.id;
 
     const goal = await prisma.goal.findUnique({
       where: { id: goalId },
@@ -79,10 +79,10 @@ export async function GET(
 
 export async function PUT(
   req: NextRequest,
-  context: { params: { id: string } }
+  { params }: { params: { id: string } }
 ) {
   try {
-    const goalId = context.params.id;
+    const goalId = params.id;
     const body = await req.json();
 
     // 验证请求数据
@@ -176,10 +176,10 @@ export async function PUT(
 
 export async function DELETE(
   req: NextRequest,
-  context: { params: { id: string } }
+  { params }: { params: { id: string } }
 ) {
   try {
-    const goalId = context.params.id;
+    const goalId = params.id;
 
     // 检查目标是否存在
     const goal = await prisma.goal.findUnique({

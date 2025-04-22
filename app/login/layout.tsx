@@ -1,13 +1,12 @@
 "use client";
 
-import { Public_Sans } from "next/font/google";
+
 import { Toaster } from "@/components/ui/sonner";
 import AuthProvider from "@/components/auth/AuthProvider";
 import { useEffect } from "react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 
-const publicSans = Public_Sans({ subsets: ["latin"] });
 
 export default function LoginLayout({
   children,
@@ -36,7 +35,7 @@ export default function LoginLayout({
           content="登录到 PDCA 个人助手"
         />
       </head>
-      <body className={publicSans.className}>
+      <body>
         <AuthProvider>
           {children}
           <Toaster />

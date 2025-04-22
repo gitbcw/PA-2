@@ -283,7 +283,8 @@ exports.GoalLevel = exports.$Enums.GoalLevel = {
   YEARLY: 'YEARLY',
   QUARTERLY: 'QUARTERLY',
   MONTHLY: 'MONTHLY',
-  WEEKLY: 'WEEKLY'
+  WEEKLY: 'WEEKLY',
+  DAILY: 'DAILY'
 };
 
 exports.GoalStatus = exports.$Enums.GoalStatus = {

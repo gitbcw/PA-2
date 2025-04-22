@@ -16,6 +16,7 @@ const goalLevelMap = {
   QUARTERLY: { label: "季度", color: "bg-green-100 text-green-800 hover:bg-green-100" },
   MONTHLY: { label: "月度", color: "bg-yellow-100 text-yellow-800 hover:bg-yellow-100" },
   WEEKLY: { label: "周", color: "bg-orange-100 text-orange-800 hover:bg-orange-100" },
+  DAILY: { label: "日", color: "bg-red-100 text-red-800 hover:bg-red-100" },
 };
 
 export default function GoalTimeline() {
@@ -57,10 +58,10 @@ export default function GoalTimeline() {
   const adjustTimeRange = (months) => {
     const newStart = new Date(timeRange.start);
     const newEnd = new Date(timeRange.end);
-    
+
     newStart.setMonth(newStart.getMonth() + months);
     newEnd.setMonth(newEnd.getMonth() + months);
-    
+
     setTimeRange({ start: newStart, end: newEnd });
   };
 
@@ -74,7 +75,7 @@ export default function GoalTimeline() {
   const isGoalInTimeRange = (goal) => {
     const startDate = new Date(goal.startDate);
     const endDate = new Date(goal.endDate);
-    
+
     return (
       (startDate >= timeRange.start && startDate <= timeRange.end) ||
       (endDate >= timeRange.start && endDate <= timeRange.end) ||
@@ -89,21 +90,21 @@ export default function GoalTimeline() {
   const calculateTimelinePosition = (goal) => {
     const startDate = new Date(goal.startDate);
     const endDate = new Date(goal.endDate);
-    
+
     const timeRangeSpan = timeRange.end.getTime() - timeRange.start.getTime();
-    
+
     const startPosition = Math.max(
       0,
       (startDate.getTime() - timeRange.start.getTime()) / timeRangeSpan * 100
     );
-    
+
     const endPosition = Math.min(
       100,
       (endDate.getTime() - timeRange.start.getTime()) / timeRangeSpan * 100
     );
-    
+
     const width = endPosition - startPosition;
-    
+
     return {
       left: `${startPosition}%`,
       width: `${width}%`,
@@ -114,19 +115,19 @@ export default function GoalTimeline() {
   const generateMonthMarkers = () => {
     const markers = [];
     const currentDate = new Date(timeRange.start);
-    
+
     while (currentDate <= timeRange.end) {
-      const position = (currentDate.getTime() - timeRange.start.getTime()) / 
-                      (timeRange.end.getTime() - timeRange.start.getTime()) * 100;
-      
+      const position = (currentDate.getTime() - timeRange.start.getTime()) /
+        (timeRange.end.getTime() - timeRange.start.getTime()) * 100;
+
       markers.push({
         date: new Date(currentDate),
         position: `${position}%`,
       });
-      
+
       currentDate.setMonth(currentDate.getMonth() + 1);
     }
-    
+
     return markers;
   };
 
@@ -155,7 +156,7 @@ export default function GoalTimeline() {
         <CardHeader className="pb-2">
           <CardTitle className="text-lg flex items-center">
             <Calendar className="h-5 w-5 mr-2" />
-            {timeRange.start.toLocaleDateString('zh-CN', { year: 'numeric', month: '2-digit' })} 至 
+            {timeRange.start.toLocaleDateString('zh-CN', { year: 'numeric', month: '2-digit' })} 至
             {timeRange.end.toLocaleDateString('zh-CN', { year: 'numeric', month: '2-digit' })}
           </CardTitle>
         </CardHeader>
@@ -171,8 +172,8 @@ export default function GoalTimeline() {
               {/* 月份标记 */}
               <div className="relative h-8 border-b border-gray-200">
                 {monthMarkers.map((marker, index) => (
-                  <div 
-                    key={index} 
+                  <div
+                    key={index}
                     className="absolute transform -translate-x-1/2"
                     style={{ left: marker.position }}
                   >
@@ -183,7 +184,7 @@ export default function GoalTimeline() {
                   </div>
                 ))}
               </div>
-              
+
               {/* 目标时间线 */}
               <div className="space-y-4">
                 {filteredGoals.length === 0 ? (
@@ -196,7 +197,7 @@ export default function GoalTimeline() {
                     const position = calculateTimelinePosition(goal);
                     return (
                       <div key={goal.id} className="relative h-16 group">
-                        <div 
+                        <div
                           className={`absolute top-0 h-12 rounded-md px-2 py-1 flex flex-col justify-center cursor-pointer hover:brightness-95 ${goalLevelMap[goal.level]?.color.split(' ')[0] || 'bg-gray-100'}`}
                           style={{ left: position.left, width: position.width }}
                         >

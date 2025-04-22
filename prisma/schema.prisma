@@ -143,6 +143,7 @@ enum GoalLevel {
   QUARTERLY
   MONTHLY
   WEEKLY
+  DAILY
 }
 
 enum GoalStatus {

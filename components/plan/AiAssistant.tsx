@@ -3,32 +3,32 @@
 import { useState, useRef, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
-import { 
-  Card, 
-  CardContent, 
-  CardDescription, 
-  CardFooter, 
-  CardHeader, 
-  CardTitle 
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle
 } from "@/components/ui/card";
-import { 
-  Select, 
-  SelectContent, 
-  SelectItem, 
-  SelectTrigger, 
-  SelectValue 
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue
 } from "@/components/ui/select";
 import { toast } from "sonner";
-import { 
-  Send, 
-  Bot, 
-  User, 
-  Loader2, 
-  PlusCircle, 
-  Sparkles, 
-  Target, 
-  ListTodo, 
-  Calendar, 
+import {
+  Send,
+  Bot,
+  User,
+  Loader2,
+  PlusCircle,
+  Sparkles,
+  Target,
+  ListTodo,
+  Calendar,
   Lightbulb
 } from "lucide-react";
 
@@ -40,6 +40,20 @@ const promptTemplates = [
     icon: Target,
     description: "帮助制定 SMART 目标",
     prompt: "我想设定一个新的目标。请帮我制定一个符合 SMART 原则（具体、可衡量、可实现、相关性、时限性）的目标。我的目标大致是："
+  },
+  {
+    id: "daily-goal",
+    title: "日目标设定",
+    icon: Calendar,
+    description: "制定今日目标",
+    prompt: "请帮我制定今天的日目标。我想要完成的事情是："
+  },
+  {
+    id: "goal-decomposition",
+    title: "目标分解",
+    icon: ListTodo,
+    description: "将高层目标分解为子目标",
+    prompt: "我有一个高层目标：「{goal}」。请帮我将这个目标分解为多个子目标，包括月度、周度和日度目标。每个子目标都应该符合SMART原则。"
   },
   {
     id: "task-breakdown",
@@ -74,31 +88,31 @@ export default function AiAssistant() {
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [selectedTemplate, setSelectedTemplate] = useState("");
-  
+
   const messagesEndRef = useRef(null);
-  
+
   // 滚动到最新消息
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
-  
+
   useEffect(() => {
     scrollToBottom();
   }, [messages]);
-  
+
   // 发送消息
   const sendMessage = async () => {
     if (!input.trim()) return;
-    
+
     const userMessage = {
       role: "user",
       content: input
     };
-    
+
     setMessages(prev => [...prev, userMessage]);
     setInput("");
     setIsLoading(true);
-    
+
     try {
       // 在实际应用中，这里应该调用 LLM API
       // 这里使用模拟响应
@@ -116,7 +130,7 @@ export default function AiAssistant() {
       setIsLoading(false);
     }
   };
-  
+
   // 使用提示模板
   const useTemplate = (templateId) => {
     const template = promptTemplates.find(t => t.id === templateId);
@@ -125,7 +139,7 @@ export default function AiAssistant() {
       setSelectedTemplate("");
     }
   };
-  
+
   // 生成模拟响应（实际应用中应替换为真实的 LLM 调用）
   const generateMockResponse = (message) => {
     if (message.includes("目标") && message.includes("SMART")) {
@@ -237,7 +251,7 @@ export default function AiAssistant() {
       `;
     }
   };
-  
+
   return (
     <div className="flex flex-col h-[calc(100vh-16rem)]">
       <Card className="flex-1 flex flex-col">
@@ -252,16 +266,14 @@ export default function AiAssistant() {
             {messages.map((message, index) => (
               <div
                 key={index}
-                className={`flex ${
-                  message.role === "assistant" ? "justify-start" : "justify-end"
-                }`}
+                className={`flex ${message.role === "assistant" ? "justify-start" : "justify-end"
+                  }`}
               >
                 <div
-                  className={`flex items-start space-x-2 max-w-[80%] ${
-                    message.role === "assistant"
+                  className={`flex items-start space-x-2 max-w-[80%] ${message.role === "assistant"
                       ? "bg-muted p-3 rounded-lg"
                       : "bg-primary text-primary-foreground p-3 rounded-lg"
-                  }`}
+                    }`}
                 >
                   {message.role === "assistant" && (
                     <Bot className="h-5 w-5 mt-0.5 flex-shrink-0" />

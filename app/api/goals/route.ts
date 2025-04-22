@@ -13,12 +13,12 @@ console.log("Created new PrismaClient instance in goals API with correct import 
 const goalCreateSchema = z.object({
   title: z.string().min(1),
   description: z.string().optional(),
-  level: z.enum(["VISION", "YEARLY", "QUARTERLY", "MONTHLY", "WEEKLY"]).optional(),
+  level: z.enum(["VISION", "YEARLY", "QUARTERLY", "MONTHLY", "WEEKLY", "DAILY"]).optional(),
   status: z.enum(["ACTIVE", "COMPLETED", "CANCELLED", "ARCHIVED"]).optional(),
   startDate: z.string(),
   endDate: z.string(),
   userId: z.string(),
-  parentId: z.string().optional(),
+  parentId: z.string().optional().nullable(),
   tags: z.array(z.string()).optional(),
   metrics: z.array(z.any()).optional(),
   resources: z.array(z.any()).optional(),
@@ -116,9 +116,7 @@ export async function POST(req: NextRequest) {
       weight
     } = validation.data;
 
-    // 在个人使用版本中，暂时跳过用户验证
-    // 在未来添加用户认证时，可以取消注释以下代码
-    /*
+    // 验证用户是否存在
     const user = await prisma.user.findUnique({
       where: { id: userId },
     });
@@ -129,7 +127,44 @@ export async function POST(req: NextRequest) {
         { status: 404 }
       );
     }
-    */
+
+    // 如果提供了父目标ID，验证父目标是否存在
+    // 确保 parentId 不是空字符串
+    const validParentId = parentId && parentId.trim() !== '' ? parentId : null;
+
+    if (validParentId) {
+      const parentGoal = await prisma.goal.findUnique({
+        where: { id: validParentId },
+      });
+
+      if (!parentGoal) {
+        return NextResponse.json(
+          { error: "Parent goal not found" },
+          { status: 404 }
+        );
+      }
+    }
+
+    // 如果提供了标签，验证标签是否存在
+    if (tagIds && tagIds.length > 0) {
+      const tags = await prisma.tag.findMany({
+        where: {
+          id: { in: tagIds }
+        },
+        select: { id: true }
+      });
+
+      // 检查是否所有标签都存在
+      const foundTagIds = tags.map(tag => tag.id);
+      const missingTagIds = tagIds.filter(id => !foundTagIds.includes(id));
+
+      if (missingTagIds.length > 0) {
+        return NextResponse.json(
+          { error: `Tags not found: ${missingTagIds.join(', ')}` },
+          { status: 404 }
+        );
+      }
+    }
 
     // 创建目标
     const goal = await prisma.goal.create({
@@ -141,7 +176,8 @@ export async function POST(req: NextRequest) {
         startDate: new Date(startDate),
         endDate: new Date(endDate),
         userId,
-        parentId,
+        // 只在提供了有效的父目标ID时才包含该字段
+        ...(validParentId ? { parentId: validParentId } : {}),
         metrics: metrics ? JSON.stringify(metrics) : undefined,
         resources: resources ? JSON.stringify(resources) : undefined,
         priority: priority || 1,
@@ -162,8 +198,14 @@ export async function POST(req: NextRequest) {
     return NextResponse.json(goal, { status: 201 });
   } catch (error) {
     console.error("Error creating goal:", error);
+    // 返回更详细的错误信息
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error';
     return NextResponse.json(
-      { error: "Failed to create goal" },
+      {
+        error: "Failed to create goal",
+        details: errorMessage,
+        stack: error instanceof Error ? error.stack : undefined
+      },
       { status: 500 }
     );
   }

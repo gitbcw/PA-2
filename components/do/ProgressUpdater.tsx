@@ -9,6 +9,8 @@ import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Slider } from "@/components/ui/slider";
+import { Separator } from "@/components/ui/separator";
+import AiAnalysis from "./AiAnalysis";
 import {
   Select,
   SelectContent,
@@ -106,7 +108,7 @@ export default function ProgressUpdater() {
       const allTasks = await response.json();
 
       // 筛选未完成的任务
-      const activeTasks = allTasks.filter((task: TaskWithRelations) => 
+      const activeTasks = allTasks.filter((task: TaskWithRelations) =>
         task.status !== "COMPLETED" && task.status !== "CANCELLED"
       );
 
@@ -130,7 +132,7 @@ export default function ProgressUpdater() {
       const allGoals = await response.json();
 
       // 筛选活跃的目标
-      const activeGoals = allGoals.filter((goal: GoalWithRelations) => 
+      const activeGoals = allGoals.filter((goal: GoalWithRelations) =>
         goal.status === "ACTIVE"
       );
 
@@ -151,11 +153,11 @@ export default function ProgressUpdater() {
       setLoading(true);
       // 获取今天的日期
       const today = new Date().toISOString().split('T')[0];
-      
+
       const response = await fetch(`/api/progress-logs?userId=${userId}&date=${today}`);
       if (!response.ok) throw new Error("Failed to fetch progress logs");
       const logs = await response.json();
-      
+
       setProgressLogs(logs);
     } catch (error) {
       console.error("Error loading progress logs:", error);
@@ -185,15 +187,15 @@ export default function ProgressUpdater() {
           ...(selectedItemType === "task" ? { taskId: selectedItemId } : { goalId: selectedItemId }),
         }),
       });
-      
+
       if (!response.ok) {
         throw new Error("Failed to save progress update");
       }
-      
+
       toast.success("进度更新已保存");
       setProgress(0);
       setNote("");
-      
+
       // 重新加载数据
       loadProgressLogs();
       loadTasks();
@@ -207,7 +209,7 @@ export default function ProgressUpdater() {
   // 编辑进度日志
   const editProgressLog = async () => {
     if (!selectedLog) return;
-    
+
     try {
       const response = await fetch(`/api/progress-logs/${selectedLog.id}`, {
         method: "PUT",
@@ -219,14 +221,14 @@ export default function ProgressUpdater() {
           note: editNote,
         }),
       });
-      
+
       if (!response.ok) {
         throw new Error("Failed to update progress log");
       }
-      
+
       toast.success("进度日志已更新");
       setOpenDialog(false);
-      
+
       // 重新加载数据
       loadProgressLogs();
       loadTasks();
@@ -243,13 +245,13 @@ export default function ProgressUpdater() {
       const response = await fetch(`/api/progress-logs/${id}`, {
         method: "DELETE",
       });
-      
+
       if (!response.ok) {
         throw new Error("Failed to delete progress log");
       }
-      
+
       toast.success("进度日志已删除");
-      
+
       // 重新加载数据
       loadProgressLogs();
     } catch (error) {
@@ -269,7 +271,7 @@ export default function ProgressUpdater() {
   // 获取任务或目标的当前进度
   const getCurrentProgress = () => {
     if (!selectedItemId) return 0;
-    
+
     if (selectedItemType === "task") {
       const task = tasks.find(t => t.id === selectedItemId);
       // 任务没有进度字段，根据状态返回进度
@@ -286,7 +288,7 @@ export default function ProgressUpdater() {
       const goal = goals.find(g => g.id === selectedItemId);
       return goal ? goal.progress : 0;
     }
-    
+
     return 0;
   };
 
@@ -325,7 +327,7 @@ export default function ProgressUpdater() {
             目标进度
           </TabsTrigger>
         </TabsList>
-        
+
         <TabsContent value="tasks" className="space-y-4">
           <div className="space-y-2">
             <label className="text-sm font-medium">选择任务</label>
@@ -348,7 +350,7 @@ export default function ProgressUpdater() {
               </SelectContent>
             </Select>
           </div>
-          
+
           {selectedItemId && selectedItemType === "task" && (
             <Card>
               <CardHeader>
@@ -361,25 +363,25 @@ export default function ProgressUpdater() {
                   <div className="flex justify-between">
                     <label className="text-sm font-medium">进度: {progress}%</label>
                     <div className="flex gap-2">
-                      <Button 
-                        variant="outline" 
-                        size="sm" 
+                      <Button
+                        variant="outline"
+                        size="sm"
                         onClick={() => setProgress(0)}
                         className="h-6 px-2"
                       >
                         0%
                       </Button>
-                      <Button 
-                        variant="outline" 
-                        size="sm" 
+                      <Button
+                        variant="outline"
+                        size="sm"
                         onClick={() => setProgress(50)}
                         className="h-6 px-2"
                       >
                         50%
                       </Button>
-                      <Button 
-                        variant="outline" 
-                        size="sm" 
+                      <Button
+                        variant="outline"
+                        size="sm"
                         onClick={() => setProgress(100)}
                         className="h-6 px-2"
                       >
@@ -395,7 +397,7 @@ export default function ProgressUpdater() {
                     onValueChange={(values) => setProgress(values[0])}
                   />
                 </div>
-                
+
                 <div className="space-y-2">
                   <label className="text-sm font-medium">备注</label>
                   <Textarea
@@ -406,16 +408,27 @@ export default function ProgressUpdater() {
                   />
                 </div>
               </CardContent>
-              <CardFooter>
+              <CardFooter className="flex-col space-y-4">
                 <Button onClick={submitProgressUpdate} className="w-full">
                   <BarChart2 className="h-4 w-4 mr-2" />
                   更新进度
                 </Button>
+
+                {/* AI分析组件 */}
+                {selectedItemId && (
+                  <AiAnalysis
+                    itemType="task"
+                    itemId={selectedItemId}
+                    itemTitle={tasks.find(t => t.id === selectedItemId)?.title || ""}
+                    progress={progress}
+                    note={note}
+                  />
+                )}
               </CardFooter>
             </Card>
           )}
         </TabsContent>
-        
+
         <TabsContent value="goals" className="space-y-4">
           <div className="space-y-2">
             <label className="text-sm font-medium">选择目标</label>
@@ -438,7 +451,7 @@ export default function ProgressUpdater() {
               </SelectContent>
             </Select>
           </div>
-          
+
           {selectedItemId && selectedItemType === "goal" && (
             <Card>
               <CardHeader>
@@ -451,41 +464,41 @@ export default function ProgressUpdater() {
                   <div className="flex justify-between">
                     <label className="text-sm font-medium">进度: {progress}%</label>
                     <div className="flex gap-2">
-                      <Button 
-                        variant="outline" 
-                        size="sm" 
+                      <Button
+                        variant="outline"
+                        size="sm"
                         onClick={() => setProgress(0)}
                         className="h-6 px-2"
                       >
                         0%
                       </Button>
-                      <Button 
-                        variant="outline" 
-                        size="sm" 
+                      <Button
+                        variant="outline"
+                        size="sm"
                         onClick={() => setProgress(25)}
                         className="h-6 px-2"
                       >
                         25%
                       </Button>
-                      <Button 
-                        variant="outline" 
-                        size="sm" 
+                      <Button
+                        variant="outline"
+                        size="sm"
                         onClick={() => setProgress(50)}
                         className="h-6 px-2"
                       >
                         50%
                       </Button>
-                      <Button 
-                        variant="outline" 
-                        size="sm" 
+                      <Button
+                        variant="outline"
+                        size="sm"
                         onClick={() => setProgress(75)}
                         className="h-6 px-2"
                       >
                         75%
                       </Button>
-                      <Button 
-                        variant="outline" 
-                        size="sm" 
+                      <Button
+                        variant="outline"
+                        size="sm"
                         onClick={() => setProgress(100)}
                         className="h-6 px-2"
                       >
@@ -501,7 +514,7 @@ export default function ProgressUpdater() {
                     onValueChange={(values) => setProgress(values[0])}
                   />
                 </div>
-                
+
                 <div className="space-y-2">
                   <label className="text-sm font-medium">备注</label>
                   <Textarea
@@ -512,21 +525,32 @@ export default function ProgressUpdater() {
                   />
                 </div>
               </CardContent>
-              <CardFooter>
+              <CardFooter className="flex-col space-y-4">
                 <Button onClick={submitProgressUpdate} className="w-full">
                   <BarChart2 className="h-4 w-4 mr-2" />
                   更新进度
                 </Button>
+
+                {/* AI分析组件 */}
+                {selectedItemId && (
+                  <AiAnalysis
+                    itemType="goal"
+                    itemId={selectedItemId}
+                    itemTitle={goals.find(g => g.id === selectedItemId)?.title || ""}
+                    progress={progress}
+                    note={note}
+                  />
+                )}
               </CardFooter>
             </Card>
           )}
         </TabsContent>
       </Tabs>
-      
+
       {/* 进度日志列表 */}
       <div>
         <h3 className="text-lg font-medium mb-4">今日进度记录</h3>
-        
+
         {loading ? (
           <div className="text-center py-12">
             <p className="text-muted-foreground">加载中...</p>
@@ -591,7 +615,7 @@ export default function ProgressUpdater() {
           </div>
         )}
       </div>
-      
+
       {/* 编辑对话框 */}
       <Dialog open={openDialog} onOpenChange={setOpenDialog}>
         <DialogContent>
@@ -601,16 +625,16 @@ export default function ProgressUpdater() {
               修改此进度记录的信息
             </DialogDescription>
           </DialogHeader>
-          
+
           <div className="space-y-4 py-4">
             <div className="space-y-2">
               <label className="text-sm font-medium">项目</label>
-              <Input 
-                value={selectedLog?.task?.title || selectedLog?.goal?.title || ""} 
-                disabled 
+              <Input
+                value={selectedLog?.task?.title || selectedLog?.goal?.title || ""}
+                disabled
               />
             </div>
-            
+
             <div className="space-y-2">
               <div className="flex justify-between">
                 <label className="text-sm font-medium">进度: {editProgress}%</label>
@@ -623,7 +647,7 @@ export default function ProgressUpdater() {
                 onValueChange={(values) => setEditProgress(values[0])}
               />
             </div>
-            
+
             <div className="space-y-2">
               <label className="text-sm font-medium">备注</label>
               <Textarea
@@ -634,7 +658,7 @@ export default function ProgressUpdater() {
               />
             </div>
           </div>
-          
+
           <DialogFooter>
             <Button variant="outline" onClick={() => setOpenDialog(false)}>
               取消

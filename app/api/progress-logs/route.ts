@@ -2,6 +2,35 @@ import { NextRequest, NextResponse } from "next/server";
 import { PrismaClient } from "../../../app/generated/prisma";
 import { z } from "zod";
 
+// 模拟AI分析功能
+const analyzeProgress = async (taskId: string | undefined, goalId: string | undefined, progress: number, note: string) => {
+  // 实际实现中，这里应该调用AI服务进行分析
+  // 返回分析结果
+  return {
+    insights: [
+      {
+        type: "progress",
+        content: progress < 30 ? "进度较慢，可能需要额外支持" :
+          progress < 70 ? "进度正常，继续保持" :
+            "进度良好，即将完成",
+      },
+      {
+        type: "suggestion",
+        content: note.length > 0 ?
+          `根据备注内容，建议关注: ${note.substring(0, 50)}${note.length > 50 ? "..." : ""}` :
+          "没有提供详细备注，建议添加更多信息以便更好地跟踪进度",
+      }
+    ],
+    suggestedTasks: note.length > 0 ? [
+      {
+        title: `跟进: ${note.substring(0, 30)}${note.length > 30 ? "..." : ""}`,
+        description: note,
+        priority: "MEDIUM",
+      }
+    ] : [],
+  };
+};
+
 // 创建 Prisma 客户端
 const prisma = new PrismaClient();
 
@@ -44,10 +73,10 @@ export async function GET(req: NextRequest) {
     if (date) {
       const startDate = new Date(date);
       startDate.setHours(0, 0, 0, 0);
-      
+
       const endDate = new Date(date);
       endDate.setHours(23, 59, 59, 999);
-      
+
       where.createdAt = {
         gte: startDate,
         lte: endDate,
@@ -117,6 +146,9 @@ export async function POST(req: NextRequest) {
       );
     }
 
+    // 使用AI分析进度
+    const analysisResult = await analyzeProgress(taskId, goalId, progress, note || "");
+
     // 创建进度日志
     const progressLog = await prisma.progressLog.create({
       data: {
@@ -125,6 +157,10 @@ export async function POST(req: NextRequest) {
         userId,
         taskId,
         goalId,
+        // 存储AI分析结果
+        metadata: {
+          aiAnalysis: analysisResult
+        },
       },
       include: {
         task: taskId ? {
@@ -154,7 +190,7 @@ export async function POST(req: NextRequest) {
             status: "COMPLETED",
           },
         });
-      } 
+      }
       // 如果进度大于0%但小于100%，将任务状态更新为进行中
       else if (progress > 0) {
         await prisma.task.update({
@@ -176,6 +212,30 @@ export async function POST(req: NextRequest) {
           ...(progress === 100 ? { status: "COMPLETED" } : {}),
         },
       });
+    }
+
+    // 如果AI分析建议创建新任务，自动创建
+    if (analysisResult.suggestedTasks && analysisResult.suggestedTasks.length > 0) {
+      // 在实际实现中，可以根据需要决定是否自动创建任务
+      // 这里只是记录建议，不自动创建
+      console.log("AI suggested tasks:", analysisResult.suggestedTasks);
+
+      // 如果需要自动创建任务，可以取消下面的注释
+      /*
+      for (const taskSuggestion of analysisResult.suggestedTasks) {
+        await prisma.task.create({
+          data: {
+            title: taskSuggestion.title,
+            description: taskSuggestion.description,
+            priority: taskSuggestion.priority,
+            status: "TODO",
+            userId,
+            // 如果是任务的进度更新，将新任务关联到同一个目标
+            goalId: taskId ? (await prisma.task.findUnique({ where: { id: taskId }, select: { goalId: true } }))?.goalId : goalId,
+          }
+        });
+      }
+      */
     }
 
     return NextResponse.json(progressLog, { status: 201 });

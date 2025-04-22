@@ -4,10 +4,11 @@ import { useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Calendar, Clock, BarChart2, PlusCircle } from "lucide-react";
+import { Calendar, Clock, BarChart2, PlusCircle, Bell } from "lucide-react";
 import TodayTasks from "@/components/do/TodayTasks";
 import TimeTracker from "@/components/do/TimeTracker";
 import ProgressUpdater from "@/components/do/ProgressUpdater";
+import Notifications from "@/components/do/Notifications";
 
 export default function DoPage() {
   const [activeTab, setActiveTab] = useState("today");
@@ -34,7 +35,7 @@ export default function DoPage() {
       </div>
 
       <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-4">
-        <TabsList className="grid w-full grid-cols-3">
+        <TabsList className="grid w-full grid-cols-4">
           <TabsTrigger value="today">
             <Calendar className="h-4 w-4 mr-2" />
             今日任务
@@ -47,8 +48,12 @@ export default function DoPage() {
             <BarChart2 className="h-4 w-4 mr-2" />
             进度更新
           </TabsTrigger>
+          <TabsTrigger value="notifications">
+            <Bell className="h-4 w-4 mr-2" />
+            提醒中心
+          </TabsTrigger>
         </TabsList>
-        
+
         <TabsContent value="today">
           <Card>
             <CardHeader>
@@ -62,7 +67,7 @@ export default function DoPage() {
             </CardContent>
           </Card>
         </TabsContent>
-        
+
         <TabsContent value="time">
           <Card>
             <CardHeader>
@@ -76,7 +81,7 @@ export default function DoPage() {
             </CardContent>
           </Card>
         </TabsContent>
-        
+
         <TabsContent value="progress">
           <Card>
             <CardHeader>
@@ -87,6 +92,20 @@ export default function DoPage() {
             </CardHeader>
             <CardContent>
               <ProgressUpdater />
+            </CardContent>
+          </Card>
+        </TabsContent>
+
+        <TabsContent value="notifications">
+          <Card>
+            <CardHeader>
+              <CardTitle>提醒中心</CardTitle>
+              <CardDescription>
+                查看任务期限提醒、进度更新建议和AI分析结果
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <Notifications />
             </CardContent>
           </Card>
         </TabsContent>
