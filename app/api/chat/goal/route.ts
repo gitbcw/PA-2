@@ -38,6 +38,7 @@ export async function POST(req: NextRequest) {
     const body = await req.json();
     const messages = body.messages as VercelChatMessage[];
     const userId = body.userId as string;
+    const prompt = body.prompt as string | undefined;
 
     if (!userId) {
       return NextResponse.json(
@@ -56,19 +57,28 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // 调用LLM
-    const response = await chain.invoke({
-      input: lastMessage.content,
-    });
+    let llmResponse: string;
+    if (prompt) {
+      // 前端自定义 prompt，直接用 LLM 生成
+      const llm = createLLMFromEnv();
+      const output = await llm.invoke(prompt);
+      llmResponse = typeof output === "string" ? output : JSON.stringify(output);
+    } else {
+      // 兼容原有模板逻辑
+      const response = await chain.invoke({
+        input: lastMessage.content,
+      });
+      llmResponse = response;
+    }
 
     // 尝试从响应中提取目标数据
-    const extractedGoal = extractGoalFromText(lastMessage.content, response);
+    const extractedGoal = extractGoalFromText(lastMessage.content, llmResponse);
 
     // 创建响应
     const responseMessage: VercelChatMessage = {
       id: crypto.randomUUID(),
       role: "assistant",
-      content: response,
+      content: llmResponse,
     };
 
     // 如果成功提取到目标数据，将其添加到响应头中
@@ -82,7 +92,7 @@ export async function POST(req: NextRequest) {
     // 返回标准的JSON响应，而不是流式响应
     // 这样可以确保消息正确地显示在前端
     return NextResponse.json(
-      { text: response },
+      { text: llmResponse },
       { headers }
     );
   } catch (error) {

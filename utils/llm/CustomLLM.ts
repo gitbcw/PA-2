@@ -66,12 +66,41 @@ export class CustomLLM extends LLM {
     try {
       console.log(`[CustomLLM] 开始调用LLM API, baseUrl: ${this.baseUrl}, model: ${this.model}`);
 
-      // 构建请求体
-      const requestBody: Record<string, any> = {
-        prompt,
-        model: this.model,
-        temperature: this.temperature,
-      };
+      // 动态拼接 endpoint，默认 chat/completions，可扩展更多用途
+      let endpoint = "/chat/completions";
+      if (this.headers && this.headers["x-llm-purpose"]) {
+        // 支持通过 header 传递用途（如 audio, image）
+        switch (this.headers["x-llm-purpose"]) {
+          case "audio":
+            endpoint = "/audio/speech";
+            break;
+          case "image":
+            endpoint = "/images/generations";
+            break;
+          case "completions":
+            endpoint = "/completions";
+            break;
+          // 其他用途可按需扩展
+          default:
+            endpoint = "/chat/completions";
+        }
+      }
+
+      // 动态构造请求体，chat/completions 走 messages，completions 走 prompt
+      let requestBody: Record<string, any>;
+      if (endpoint === "/chat/completions") {
+        requestBody = {
+          model: this.model,
+          messages: [{ role: "user", content: prompt }],
+          temperature: this.temperature,
+        };
+      } else {
+        requestBody = {
+          prompt,
+          model: this.model,
+          temperature: this.temperature,
+        };
+      }
 
       // 添加可选参数
       if (this.maxTokens) {
@@ -102,7 +131,8 @@ export class CustomLLM extends LLM {
 
       let response: Response;
       let data: any;
-      const apiUrl = `${this.baseUrl}/completions`;
+
+      const apiUrl = `${this.baseUrl}${endpoint}`;
       console.log(`[CustomLLM] 发送请求到: ${apiUrl}`);
 
       if (this.timeout) {

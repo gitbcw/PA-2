@@ -1,29 +1,36 @@
 // 目标分布饼图（环形图）原型，使用模拟数据
-import { ResponsivePie } from "@nivo/pie";
+import { PieChart, Pie, Cell, Tooltip, Legend, ResponsiveContainer } from "recharts";
 
 const data = [
-  { id: "进行中", label: "进行中", value: 6, color: "#3b82f6" },
-  { id: "已完成", label: "已完成", value: 4, color: "#10b981" },
-  { id: "逾期", label: "逾期", value: 2, color: "#ef4444" },
+  { name: "进行中", value: 6, color: "#3b82f6" },
+  { name: "已完成", value: 4, color: "#10b981" },
+  { name: "逾期", value: 2, color: "#ef4444" },
 ];
 
 export default function GoalDistributionPieChart() {
   return (
-    <div style={{ height: 220 }} className="bg-white dark:bg-card rounded-lg shadow p-4 flex items-center justify-center">
-      <ResponsivePie
-        data={data}
-        margin={{ top: 20, right: 40, bottom: 20, left: 40 }}
-        innerRadius={0.6}
-        padAngle={2}
-        cornerRadius={5}
-        colors={{ datum: 'data.color' }}
-        borderWidth={1}
-        enableArcLabels={true}
-        arcLinkLabelsSkipAngle={10}
-        arcLabelsTextColor="#222"
-        arcLinkLabelsTextColor="#666"
-        arcLinkLabelsColor={{ from: 'color' }}
-      />
+    <div style={{ height: 220, width: '100%' }} className="bg-white dark:bg-card rounded-lg shadow p-4 flex items-center justify-center">
+      <ResponsiveContainer width="100%" height={180}>
+        <PieChart>
+          <Pie
+            data={data}
+            dataKey="value"
+            nameKey="name"
+            cx="50%"
+            cy="50%"
+            innerRadius={50}
+            outerRadius={80}
+            paddingAngle={2}
+            label
+          >
+            {data.map((entry, idx) => (
+              <Cell key={`cell-${idx}`} fill={entry.color} />
+            ))}
+          </Pie>
+          <Tooltip />
+          <Legend />
+        </PieChart>
+      </ResponsiveContainer>
     </div>
   );
 }

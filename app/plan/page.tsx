@@ -3,9 +3,9 @@
 import { useState } from "react";
 import { useSession } from "next-auth/react";
 import { redirect } from "next/navigation";
-import { GoalChatLayout } from "@/components/goal-chat/GoalChatLayout";
-import { GoalChat } from "@/components/goal-chat/GoalChat";
-import { GoalVisualization } from "@/components/goal-chat/GoalVisualization";
+import { GoalChatLayout } from "@/components/plan/GoalChatLayout";
+import { GoalChat } from "@/components/plan/GoalChat";
+import { ObjectiveVisualization } from "@/components/plan/GoalVisualization";
 import { Goal } from "@prisma/client";
 
 export default function GoalChatPage() {
@@ -14,7 +14,7 @@ export default function GoalChatPage() {
 
   // 如果用户未登录，重定向到登录页面
   if (status === "unauthenticated") {
-    redirect("/login?callbackUrl=/goal-chat");
+    redirect("/login?callbackUrl=" + encodeURIComponent("http://localhost:3000/plan"));
   }
 
   // 如果会话正在加载，显示加载状态
@@ -42,7 +42,7 @@ export default function GoalChatPage() {
   return (
     <div className="container mx-auto py-6">
       <div className="mb-6">
-        <h1 className="text-3xl font-bold">目标对话</h1>
+        <h1 className="text-3xl font-bold">计划（Plan）</h1>
         <p className="text-muted-foreground mt-1">
           与AI助手对话，制定和管理你的目标
         </p>
@@ -56,9 +56,9 @@ export default function GoalChatPage() {
           />
         }
         visualizationComponent={
-          <GoalVisualization 
+          <ObjectiveVisualization 
             userId={userId} 
-            extractedGoal={extractedGoal} 
+            extractedObjective={extractedGoal} 
           />
         }
       />

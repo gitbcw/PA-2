@@ -15,4 +15,26 @@ Node >=16
 - 每次记录log.md不需要用户来确认，直接记录即可
 
 # 项目技术栈
-- 项目技术栈参考 design.md
+
+### 前端架构
+
+- **框架**：Next.js + TypeScript
+- **UI组件**：TailwindCSS + Radix UI
+- **状态管理**：React Context + Hooks
+- **路由**：Next.js App Router
+
+### 后端架构
+
+- **框架**：Next.js API Routes
+- **数据库**：
+  - MVP阶段：localStorage + IndexedDB
+  - 后期：Prisma + PostgreSQL
+- **AI框架**：LangChain.js
+
+# 代码风格
+- 遵循TypeScript的编码规范
+- 遵循Next.js的编码规范
+- 遵循TailwindCSS的编码规范
+- 遵循Radix UI的编码规范
+- 遵循React的编码规范
+- 遵循ES6+的编码规范

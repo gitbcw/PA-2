@@ -1,5 +1,5 @@
 // 目标进度条形图原型，使用模拟数据
-import { ResponsiveBar } from "@nivo/bar";
+import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Legend, CartesianGrid } from "recharts";
 
 const data = [
   { goal: "英语学习", progress: 80 },
@@ -10,21 +10,17 @@ const data = [
 
 export default function GoalProgressBarChart() {
   return (
-    <div style={{ height: 220 }} className="bg-white dark:bg-card rounded-lg shadow p-4 flex items-center justify-center">
-      <ResponsiveBar
-        data={data}
-        keys={["progress"]}
-        indexBy="goal"
-        margin={{ top: 20, right: 30, bottom: 40, left: 50 }}
-        padding={0.4}
-        colors={["#3b82f6"]}
-        axisBottom={{ tickSize: 5, tickPadding: 5, tickRotation: 0 }}
-        axisLeft={{ tickSize: 5, tickPadding: 5, tickRotation: 0 }}
-        labelSkipWidth={20}
-        labelSkipHeight={12}
-        labelTextColor="#222"
-        maxValue={100}
-      />
+    <div style={{ height: 220, width: '100%' }} className="bg-white dark:bg-card rounded-lg shadow p-4 flex items-center justify-center">
+      <ResponsiveContainer width="100%" height={180}>
+        <BarChart data={data} margin={{ top: 20, right: 30, bottom: 40, left: 50 }}>
+          <CartesianGrid strokeDasharray="3 3" />
+          <XAxis dataKey="goal" />
+          <YAxis domain={[0, 100]} />
+          <Tooltip />
+          <Legend />
+          <Bar dataKey="progress" fill="#3b82f6" maxBarSize={40} label={{ position: 'top', fill: '#222' }} />
+        </BarChart>
+      </ResponsiveContainer>
     </div>
   );
 }

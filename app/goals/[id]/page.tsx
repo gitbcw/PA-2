@@ -3,7 +3,6 @@
 import { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import { use } from "react";
 import { Goal, Task } from "@prisma/client";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
@@ -14,16 +13,13 @@ import {
   ArrowLeft,
   Edit,
   Calendar,
-  CheckCircle2,
   Clock,
   Target,
-  ListTodo,
   LoaderCircle,
-  Share2,
 } from "lucide-react";
 import { GoalHierarchy } from "@/components/goals/GoalHierarchy";
 import Link from "next/link";
-import { formatDate, formatLocalDate } from "@/utils/date";
+import { formatLocalDate } from "@/utils/date";
 
 interface GoalWithRelations extends Goal {
   tasks: Task[];

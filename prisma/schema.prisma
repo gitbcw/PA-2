@@ -19,6 +19,7 @@ model User {
   timeRecords  TimeRecord[]
   progressLogs ProgressLog[]
   importedFiles ImportedFile[]
+  objectives   Objective[]   @relation("UserObjectives")
 
   @@map("users")
 }
@@ -40,7 +41,7 @@ model Objective {
   totalTime    Int              @default(0) @map("total_time")
   parent       Objective?       @relation("SubObjectives", fields: [parentId], references: [id])
   subObjectives Objective[]     @relation("SubObjectives")
-  user         User             @relation(fields: [userId], references: [id])
+  user         User             @relation("UserObjectives", fields: [userId], references: [id])
   tags         Tag[]            @relation("ObjectiveTags")
   progressLogs ProgressLog[]
   timeRecords  TimeRecord[]

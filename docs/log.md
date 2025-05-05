@@ -1,35 +1,87 @@
 # 项目日志
 
-2025-04-22 21:26 - 修复了 /api/goals/today/route.ts 中关于 prisma level 枚举类型的类型兼容问题，避免 GoalLevel 类型导入路径及类型推断报错，现已兼容字符串数组。
+2025-04-23 16:37
+- 新增 app/api/objectives/[id]/route.ts，支持 DELETE 方法，修复前端删除目标时报 404 的问题，现已可正常删除目标。
 
-2025-04-22 21:38 - 按照 docs/design-pdca.md 设计重构 Check 页面：
-- 新建极简原型，包含顶部标题、统计图表区（CheckSummaryCharts）、目标评估卡片列表区（GoalCheckCardList）。
-- 组件已分拆，便于后续对接 AI 评估和数据可视化。
+2025-04-23 16:26
+- 修复了 components/plan/GoalVisualization.tsx 组件 return 结构缺失闭合括号导致的 '}' expected 语法错误，并去除了多余的括号，解决了结尾 lint 报错（Declaration or statement expected.）。
 
-2025-04-22 19:17 - 修复了 components/plan/GoalManager.tsx 中 GoalManager 组件结束后多余的闭合标签和括号，解决了“Declaration or statement expected.”语法错误。
-2025-04-22 19:18 - 移除了 components/plan/GoalManager.tsx 文件中重复的 export default 导出，修复了“the name `default` is exported multiple times”构建错误。
+2025-04-23 16:23
+- 修复了 components/plan/GoalVisualization.tsx 文件中的 TSX 结构错误（缺失大括号/标签闭合导致的 '}' expected 报错），保证所有 JSX 标签和 return 结构正确闭合。
 
-2025-04-22 20:11:53
-- Plan 页面已重构为仅包含 AI 对话生成目标与目标时间线视图，原页面已备份为 page_bak.tsx。
-- 新增 ObjectiveChatLayout/ObjectiveChat 组件，交互更流畅。
-- 用户反馈构建报错：page.tsx 存在 `<Calendar className=... />` 语法，导致解析错误（多余的遗留 JSX 片段未清理）。
-- 已彻底清理遗留 <Calendar>、Tabs、Button 等无效 JSX，修复构建问题，Plan 页面现已极简可用。
+2025-04-23 16:10
+- 修复了 components/plan/GoalVisualization.tsx 文件在第305行附近的语法错误（Declaration or statement expected.）。原因是 JSX 结构中多余的 </div> 标签，已移除多余标签，确保 return 语句只返回一个根元素。
 
-2025-04-22 20:18:16
-- Plan 页面完全照搬 goal-chat/page.tsx 页面结构与登录、AI对话、目标管理等逻辑，并在右上角加“时间线视图”按钮。
-- ObjectiveTimeline 组件已支持通过 props 传入 objectives，方便页面本地状态与服务端数据灵活切换。
-- 代码已去除所有重复与无效实现，后续可直接基于此做交互和体验优化。
+2025-04-23 15:46
+- 修复了 app/plan/page.tsx 页面加载时报的两个错误：
+  1. Functions are not valid as a React child. 主要原因是 GoalVisualization.tsx 里错误地在 JSX 中单独使用了 <DialogFooter />，现已移除。
+  2. Error: objective is not defined. 主要原因是 map 时变量名为 goal，但后续引用用错成 objective，现已统一为 goal。
+- 另外修复了一处 import 语句被错误写入 JSX 的问题。
 
-2025-04-22 19:20 - 拆分重构 TaskManager 组件：
-- 新增 TaskList、TaskCard、TaskFormDialog 子组件，将任务列表、任务卡片、任务表单弹窗分别独立封装。
-- TaskManager 只负责状态管理和组合子组件，极大提升了可维护性和代码清晰度。
+已验证代码结构，等待用户进一步反馈。
 
-2025-04-22 18:45 - 智能化改造GoalManager.tsx，集成AI生成目标、SMART原则校验等功能。
+## 2025-04-23 15:55 结构清理
+- GoalVisualization.tsx 只保留唯一useState和副作用实现，修复组件return结构和闭合，彻底去除重复声明和未闭合错误。
 
-2025-04-22 17:09 - 更新PDCA设计方案，重新设计四个PDCA相关页面，增强用户主动汇报进度和AI分析反馈功能
+## 2025-04-23 16:01 新建、编辑目标对话框组件拆分与重构
+- 新建 NewObjectiveDialog、EditObjectiveDialog 两个小组件，GoalVisualization.tsx 只负责业务主逻辑。
+- 解决类型和导出等 lint 问题，保证新建与编辑流程职责分离、易维护。
 
 2025-04-23 14:30 - 增强执行页面，添加AI分析和通知中心功能，实现用户主动汇报进度和AI分析反馈
 
-2025-04-22 21:08 - Do 页面重构演示区块：新增 GoalInfoCard、GoalRecordInput、GoalRecordList 组件，并在页面顶部集成演示，支持极简自由文本记录与逾期高亮。
+2025-04-23 13:22 - 04-23T13:22:36+08:00
+- 修复 plan 页面目标对话接口（app/api/chat/goal/route.ts）语法错误（多余闭合括号）和变量引用错误（response -> llmResponse），解决编译失败与 500 报错问题。
 
-2025-04-22 10:00 - 集成Milvus向量数据库，实现向量存储和检索功能，并添加测试脚本
+2025-04-23 10:49 - 04-23T10:49:34+08:00
+- 改造 app/api/chat/goal/route.ts，支持前端自定义 prompt 字段（body.prompt）。如有 prompt，直接用 LLM 生成，否则走原有 ChatPromptTemplate 逻辑，保证 prompt 灵活性与前后端一致性。
+
+2025-04-23 10:41 - 04-23 10:41
+- 拓展了 app/prompts/ 下各 PDCA 模块的 prompt 能力，补充了结构化输出、专家角色、分类摘要、多级目标分解、行动清单等高级 prompt 模板。
+- 涉及文件：
+  - app/prompts/planPrompts.ts
+  - app/prompts/doPrompts.ts
+  - app/prompts/checkPrompts.ts
+  - app/prompts/actPrompts.ts
+- 这些模板可直接用于业务代码，满足更复杂和智能化的场景需求。
+
+2025-04-23 10:07 - 04-23T10:07:19+08:00
+- 将 components/goal-chat 目录下的 GoalChat.tsx、GoalChatLayout.tsx、GoalVisualization.tsx 移动到 components/plan 目录。
+- 删除空的 components/goal-chat 目录。
+
+2025-04-23 09:59 - 04-23T09:59:36+08:00
+- 修复了 prisma/schema.prisma 的 User 与 Objective 关系定义，指定 relation 名称，确保双向一一对应。
+- 成功执行 yarn prisma generate，Prisma Client 已正常生成。
+- 修复 app/plan/page.tsx 中 ObjectiveChatLayout、ObjectiveChat、ObjectiveVisualization 的导入方式，改为花括号导入，解决组件导入错误。
+
+2025-04-23 09:15 - 04-23 09:15
+清理 components/plan 目录下未被其他目录引用的组件：
+- 检查 goal-chat 目录未引用 plan 目录组件。
+- 检查全项目未引用 plan 目录组件（除 plan 目录自身及 app/plan/page_bak.tsx 备份文件外）。
+- 即将删除以下未被其他目录引用的组件文件：
+  - AiAssistant.tsx
+  - AiAssistantDialog.tsx
+  - GoalCard.tsx
+  - GoalFormDialog.tsx
+  - GoalList.tsx
+  - GoalManager.tsx
+  - GoalTaskList.tsx
+  - GoalTimeline.tsx
+  - ObjectiveCard.tsx
+  - ObjectiveChat.tsx
+  - ObjectiveChatLayout.tsx
+  - ObjectiveFormDialog.tsx
+  - ObjectiveList.tsx
+  - ObjectiveManager.tsx
+  - ObjectiveTimeline.tsx
+  - TaskCard.tsx
+  - TaskFormDialog.tsx
+  - TaskList.tsx
+  - TaskManager.tsx
+保留目录结构，后续如需恢复可从版本管理工具找回。
+
+2025-04-23 14:30 - 增强执行页面，添加AI分析和通知中心功能，实现用户主动汇报进度和AI分析反馈
+
+2025-04-23 08:51 - 按用户要求，将 Check 页面（app/check/page.tsx）下所有统计图表全部替换为 Recharts 实现，涉及 GoalDistributionPieChart、GoalProgressBarChart、ProgressTrendLineChart 三个组件，保持原有数据结构和样式风格尽量一致。
+
+### 2025-04-23T17:15:43+08:00
+Investigating why dialog bottom buttons in GoalVisualization.tsx lack styles
