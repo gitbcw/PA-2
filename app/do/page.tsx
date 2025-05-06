@@ -5,9 +5,9 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Calendar, Clock, BarChart2, PlusCircle, Bell } from "lucide-react";
-import TodayTasks from "@/components/do/TodayTasks";
+import TodayGoals from "@/components/do/TodayTasks";
+import GoalRecordDemoBlock from "@/components/do/GoalRecordDemoBlock";
 import TimeTracker from "@/components/do/TimeTracker";
-import ProgressUpdater from "@/components/do/ProgressUpdater";
 import Notifications from "@/components/do/Notifications";
 
 export default function DoPage() {
@@ -35,18 +35,14 @@ export default function DoPage() {
       </div>
 
       <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-4">
-        <TabsList className="grid w-full grid-cols-4">
+        <TabsList className="grid w-full grid-cols-3">
           <TabsTrigger value="today">
             <Calendar className="h-4 w-4 mr-2" />
-            今日任务
+            今日目标
           </TabsTrigger>
-          <TabsTrigger value="time">
+          <TabsTrigger value="records">
             <Clock className="h-4 w-4 mr-2" />
-            时间记录
-          </TabsTrigger>
-          <TabsTrigger value="progress">
-            <BarChart2 className="h-4 w-4 mr-2" />
-            进度更新
+            任务记录
           </TabsTrigger>
           <TabsTrigger value="notifications">
             <Bell className="h-4 w-4 mr-2" />
@@ -57,41 +53,27 @@ export default function DoPage() {
         <TabsContent value="today">
           <Card>
             <CardHeader>
-              <CardTitle>今日任务</CardTitle>
+              <CardTitle>今日目标</CardTitle>
               <CardDescription>
-                查看和管理今天需要完成的任务
+                查看和管理今天需要完成的目标
               </CardDescription>
             </CardHeader>
             <CardContent>
-              <TodayTasks />
+              <TodayGoals />
             </CardContent>
           </Card>
         </TabsContent>
 
-        <TabsContent value="time">
+        <TabsContent value="records">
           <Card>
             <CardHeader>
-              <CardTitle>时间记录</CardTitle>
+              <CardTitle>任务记录</CardTitle>
               <CardDescription>
-                跟踪任务执行时间，提高时间管理效率
+                极简执行记录，支持多条自由文本输入与逾期高亮
               </CardDescription>
             </CardHeader>
             <CardContent>
-              <TimeTracker />
-            </CardContent>
-          </Card>
-        </TabsContent>
-
-        <TabsContent value="progress">
-          <Card>
-            <CardHeader>
-              <CardTitle>进度更新</CardTitle>
-              <CardDescription>
-                更新任务和目标的进度，记录执行过程中的反思
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <ProgressUpdater />
+              <GoalRecordDemoBlock />
             </CardContent>
           </Card>
         </TabsContent>

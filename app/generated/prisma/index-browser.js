@@ -126,40 +126,23 @@ exports.Prisma.UserScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
-exports.Prisma.TaskScalarFieldEnum = {
+exports.Prisma.ObjectiveScalarFieldEnum = {
   id: 'id',
   title: 'title',
   description: 'description',
+  type: 'type',
   status: 'status',
   priority: 'priority',
-  dueDate: 'dueDate',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt',
-  userId: 'userId',
-  parentId: 'parentId',
-  goalId: 'goalId',
-  metadata: 'metadata',
-  totalTime: 'totalTime'
-};
-
-exports.Prisma.GoalScalarFieldEnum = {
-  id: 'id',
-  title: 'title',
-  description: 'description',
-  level: 'level',
-  status: 'status',
   startDate: 'startDate',
   endDate: 'endDate',
   progress: 'progress',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt',
-  userId: 'userId',
   parentId: 'parentId',
-  metrics: 'metrics',
-  resources: 'resources',
-  priority: 'priority',
+  userId: 'userId',
+  metadata: 'metadata',
   weight: 'weight',
-  metadata: 'metadata'
+  totalTime: 'totalTime',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 };
 
 exports.Prisma.MessageScalarFieldEnum = {
@@ -264,40 +247,25 @@ exports.Prisma.JsonNullValueFilter = {
   JsonNull: Prisma.JsonNull,
   AnyNull: Prisma.AnyNull
 };
-exports.TaskStatus = exports.$Enums.TaskStatus = {
-  TODO: 'TODO',
-  IN_PROGRESS: 'IN_PROGRESS',
-  COMPLETED: 'COMPLETED',
-  CANCELLED: 'CANCELLED'
+exports.ObjectiveType = exports.$Enums.ObjectiveType = {
+  GOAL: 'GOAL',
+  TASK: 'TASK',
+  SUBGOAL: 'SUBGOAL',
+  SUBTASK: 'SUBTASK'
 };
 
-exports.TaskPriority = exports.$Enums.TaskPriority = {
-  LOW: 'LOW',
-  MEDIUM: 'MEDIUM',
-  HIGH: 'HIGH',
-  URGENT: 'URGENT'
-};
-
-exports.GoalLevel = exports.$Enums.GoalLevel = {
-  VISION: 'VISION',
-  YEARLY: 'YEARLY',
-  QUARTERLY: 'QUARTERLY',
-  MONTHLY: 'MONTHLY',
-  WEEKLY: 'WEEKLY',
-  DAILY: 'DAILY'
-};
-
-exports.GoalStatus = exports.$Enums.GoalStatus = {
+exports.ObjectiveStatus = exports.$Enums.ObjectiveStatus = {
   ACTIVE: 'ACTIVE',
   COMPLETED: 'COMPLETED',
-  CANCELLED: 'CANCELLED',
-  ARCHIVED: 'ARCHIVED'
+  ARCHIVED: 'ARCHIVED',
+  TODO: 'TODO',
+  IN_PROGRESS: 'IN_PROGRESS',
+  DONE: 'DONE'
 };
 
 exports.Prisma.ModelName = {
   User: 'User',
-  Task: 'Task',
-  Goal: 'Goal',
+  Objective: 'Objective',
   Message: 'Message',
   Category: 'Category',
   Tag: 'Tag',

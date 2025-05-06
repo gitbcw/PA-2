@@ -3,7 +3,6 @@
 import { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import { use } from "react";
 import { Goal, Task } from "@prisma/client";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
@@ -14,16 +13,13 @@ import {
   ArrowLeft,
   Edit,
   Calendar,
-  CheckCircle2,
   Clock,
   Target,
-  ListTodo,
   LoaderCircle,
-  Share2,
 } from "lucide-react";
 import { GoalHierarchy } from "@/components/goals/GoalHierarchy";
 import Link from "next/link";
-import { formatDate, formatLocalDate } from "@/utils/date";
+import { formatLocalDate } from "@/utils/date";
 
 interface GoalWithRelations extends Goal {
   tasks: Task[];
@@ -51,8 +47,8 @@ export default function GoalDetailPage({ params }: GoalDetailPageProps) {
   const [goal, setGoal] = useState<GoalWithRelations | null>(null);
   const [loading, setLoading] = useState(true);
 
-  // 使用 React.use 解包 params
-  const goalId = use(Promise.resolve(params.id));
+  // 直接使用 params.id，无需 use
+  const goalId = params.id;
 
   // 如果用户未登录，重定向到登录页面
   if (status === "unauthenticated") {
@@ -233,69 +229,33 @@ export default function GoalDetailPage({ params }: GoalDetailPageProps) {
         {/* 目标层次结构 */}
         <GoalHierarchy goalId={goal.id} userId={goal.userId} />
 
-        {/* 相关任务 */}
+        {/* 子目标 */}
         <Card>
-          <CardHeader className="flex flex-row items-center justify-between">
-            <CardTitle className="text-lg">相关任务</CardTitle>
-            <div className="flex items-center gap-2">
-              <span className="text-sm text-muted-foreground">
-                {completedTasks}/{totalTasks} 已完成
-              </span>
-              <Progress
-                value={taskCompletionRate}
-                className="h-2 w-24"
-              />
-            </div>
+          <CardHeader>
+            <CardTitle className="text-lg">子目标</CardTitle>
           </CardHeader>
           <CardContent>
-            {goal.tasks.length === 0 ? (
-              <div className="text-center py-4">
-                <ListTodo className="h-8 w-8 mx-auto text-muted-foreground" />
-                <p className="mt-2 text-muted-foreground">
-                  没有相关任务
-                </p>
-                <Button className="mt-4" asChild>
-                  <Link href="/plan?tab=tasks">
-                    创建任务
-                  </Link>
-                </Button>
-              </div>
-            ) : (
+            {goal.subGoals && goal.subGoals.length > 0 ? (
               <ul className="space-y-2">
-                {goal.tasks.map((task) => (
-                  <li key={task.id}>
-                    <div className="flex items-center justify-between hover:bg-accent p-2 rounded-md">
-                      <div className="flex items-center gap-2">
-                        {task.status === "COMPLETED" ? (
-                          <CheckCircle2 className="h-4 w-4 text-success" />
-                        ) : (
-                          <div className="h-4 w-4 rounded-full border border-muted-foreground" />
-                        )}
-                        <span
-                          className={
-                            task.status === "COMPLETED"
-                              ? "line-through text-muted-foreground"
-                              : ""
-                          }
-                        >
-                          {task.title}
-                        </span>
-                      </div>
-                      <Badge
-                        variant={
-                          task.priority === "HIGH" || task.priority === "URGENT"
-                            ? "destructive"
-                            : task.priority === "MEDIUM"
-                              ? "default"
-                              : "secondary"
-                        }
-                      >
-                        {task.priority}
-                      </Badge>
+                {goal.subGoals.map((sub) => (
+                  <li key={sub.id}>
+                    <div className="flex items-center gap-2 p-2 hover:bg-accent rounded-md">
+                      <Target className="h-4 w-4 text-muted-foreground" />
+                      <span className="font-medium">{sub.title}</span>
+                      <span className="ml-2">{getLevelBadge(sub.level)}</span>
+                      <span className="ml-2">{getStatusBadge(sub.status)}</span>
+                      <Button asChild size="sm" variant="outline" className="ml-auto">
+                        <Link href={`/goals/${sub.id}`}>查看</Link>
+                      </Button>
                     </div>
                   </li>
                 ))}
               </ul>
+            ) : (
+              <div className="text-center py-4 text-muted-foreground">
+                <Target className="h-8 w-8 mx-auto mb-2" />
+                没有子目标
+              </div>
             )}
           </CardContent>
         </Card>

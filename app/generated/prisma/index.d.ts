@@ -19,15 +19,10 @@ export type PrismaPromise<T> = $Public.PrismaPromise<T>
  */
 export type User = $Result.DefaultSelection<Prisma.$UserPayload>
 /**
- * Model Task
+ * Model Objective
  * 
  */
-export type Task = $Result.DefaultSelection<Prisma.$TaskPayload>
-/**
- * Model Goal
- * 
- */
-export type Goal = $Result.DefaultSelection<Prisma.$GoalPayload>
+export type Objective = $Result.DefaultSelection<Prisma.$ObjectivePayload>
 /**
  * Model Message
  * 
@@ -68,64 +63,36 @@ export type LogArchive = $Result.DefaultSelection<Prisma.$LogArchivePayload>
  * Enums
  */
 export namespace $Enums {
-  export const TaskStatus: {
-  TODO: 'TODO',
-  IN_PROGRESS: 'IN_PROGRESS',
-  COMPLETED: 'COMPLETED',
-  CANCELLED: 'CANCELLED'
+  export const ObjectiveType: {
+  GOAL: 'GOAL',
+  TASK: 'TASK',
+  SUBGOAL: 'SUBGOAL',
+  SUBTASK: 'SUBTASK'
 };
 
-export type TaskStatus = (typeof TaskStatus)[keyof typeof TaskStatus]
+export type ObjectiveType = (typeof ObjectiveType)[keyof typeof ObjectiveType]
 
 
-export const TaskPriority: {
-  LOW: 'LOW',
-  MEDIUM: 'MEDIUM',
-  HIGH: 'HIGH',
-  URGENT: 'URGENT'
-};
-
-export type TaskPriority = (typeof TaskPriority)[keyof typeof TaskPriority]
-
-
-export const GoalLevel: {
-  VISION: 'VISION',
-  YEARLY: 'YEARLY',
-  QUARTERLY: 'QUARTERLY',
-  MONTHLY: 'MONTHLY',
-  WEEKLY: 'WEEKLY',
-  DAILY: 'DAILY'
-};
-
-export type GoalLevel = (typeof GoalLevel)[keyof typeof GoalLevel]
-
-
-export const GoalStatus: {
+export const ObjectiveStatus: {
   ACTIVE: 'ACTIVE',
   COMPLETED: 'COMPLETED',
-  CANCELLED: 'CANCELLED',
-  ARCHIVED: 'ARCHIVED'
+  ARCHIVED: 'ARCHIVED',
+  TODO: 'TODO',
+  IN_PROGRESS: 'IN_PROGRESS',
+  DONE: 'DONE'
 };
 
-export type GoalStatus = (typeof GoalStatus)[keyof typeof GoalStatus]
+export type ObjectiveStatus = (typeof ObjectiveStatus)[keyof typeof ObjectiveStatus]
 
 }
 
-export type TaskStatus = $Enums.TaskStatus
+export type ObjectiveType = $Enums.ObjectiveType
 
-export const TaskStatus: typeof $Enums.TaskStatus
+export const ObjectiveType: typeof $Enums.ObjectiveType
 
-export type TaskPriority = $Enums.TaskPriority
+export type ObjectiveStatus = $Enums.ObjectiveStatus
 
-export const TaskPriority: typeof $Enums.TaskPriority
-
-export type GoalLevel = $Enums.GoalLevel
-
-export const GoalLevel: typeof $Enums.GoalLevel
-
-export type GoalStatus = $Enums.GoalStatus
-
-export const GoalStatus: typeof $Enums.GoalStatus
+export const ObjectiveStatus: typeof $Enums.ObjectiveStatus
 
 /**
  * ##  Prisma Client ʲˢ
@@ -263,24 +230,14 @@ export class PrismaClient<
   get user(): Prisma.UserDelegate<ExtArgs, ClientOptions>;
 
   /**
-   * `prisma.task`: Exposes CRUD operations for the **Task** model.
+   * `prisma.objective`: Exposes CRUD operations for the **Objective** model.
     * Example usage:
     * ```ts
-    * // Fetch zero or more Tasks
-    * const tasks = await prisma.task.findMany()
+    * // Fetch zero or more Objectives
+    * const objectives = await prisma.objective.findMany()
     * ```
     */
-  get task(): Prisma.TaskDelegate<ExtArgs, ClientOptions>;
-
-  /**
-   * `prisma.goal`: Exposes CRUD operations for the **Goal** model.
-    * Example usage:
-    * ```ts
-    * // Fetch zero or more Goals
-    * const goals = await prisma.goal.findMany()
-    * ```
-    */
-  get goal(): Prisma.GoalDelegate<ExtArgs, ClientOptions>;
+  get objective(): Prisma.ObjectiveDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.message`: Exposes CRUD operations for the **Message** model.
@@ -792,8 +749,7 @@ export namespace Prisma {
 
   export const ModelName: {
     User: 'User',
-    Task: 'Task',
-    Goal: 'Goal',
+    Objective: 'Objective',
     Message: 'Message',
     Category: 'Category',
     Tag: 'Tag',
@@ -819,7 +775,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "task" | "goal" | "message" | "category" | "tag" | "timeRecord" | "progressLog" | "importedFile" | "logArchive"
+      modelProps: "user" | "objective" | "message" | "category" | "tag" | "timeRecord" | "progressLog" | "importedFile" | "logArchive"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -897,151 +853,77 @@ export namespace Prisma {
           }
         }
       }
-      Task: {
-        payload: Prisma.$TaskPayload<ExtArgs>
-        fields: Prisma.TaskFieldRefs
+      Objective: {
+        payload: Prisma.$ObjectivePayload<ExtArgs>
+        fields: Prisma.ObjectiveFieldRefs
         operations: {
           findUnique: {
-            args: Prisma.TaskFindUniqueArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$TaskPayload> | null
+            args: Prisma.ObjectiveFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ObjectivePayload> | null
           }
           findUniqueOrThrow: {
-            args: Prisma.TaskFindUniqueOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$TaskPayload>
+            args: Prisma.ObjectiveFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ObjectivePayload>
           }
           findFirst: {
-            args: Prisma.TaskFindFirstArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$TaskPayload> | null
+            args: Prisma.ObjectiveFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ObjectivePayload> | null
           }
           findFirstOrThrow: {
-            args: Prisma.TaskFindFirstOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$TaskPayload>
+            args: Prisma.ObjectiveFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ObjectivePayload>
           }
           findMany: {
-            args: Prisma.TaskFindManyArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$TaskPayload>[]
+            args: Prisma.ObjectiveFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ObjectivePayload>[]
           }
           create: {
-            args: Prisma.TaskCreateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$TaskPayload>
+            args: Prisma.ObjectiveCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ObjectivePayload>
           }
           createMany: {
-            args: Prisma.TaskCreateManyArgs<ExtArgs>
+            args: Prisma.ObjectiveCreateManyArgs<ExtArgs>
             result: BatchPayload
           }
           createManyAndReturn: {
-            args: Prisma.TaskCreateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$TaskPayload>[]
+            args: Prisma.ObjectiveCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ObjectivePayload>[]
           }
           delete: {
-            args: Prisma.TaskDeleteArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$TaskPayload>
+            args: Prisma.ObjectiveDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ObjectivePayload>
           }
           update: {
-            args: Prisma.TaskUpdateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$TaskPayload>
+            args: Prisma.ObjectiveUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ObjectivePayload>
           }
           deleteMany: {
-            args: Prisma.TaskDeleteManyArgs<ExtArgs>
+            args: Prisma.ObjectiveDeleteManyArgs<ExtArgs>
             result: BatchPayload
           }
           updateMany: {
-            args: Prisma.TaskUpdateManyArgs<ExtArgs>
+            args: Prisma.ObjectiveUpdateManyArgs<ExtArgs>
             result: BatchPayload
           }
           updateManyAndReturn: {
-            args: Prisma.TaskUpdateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$TaskPayload>[]
+            args: Prisma.ObjectiveUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ObjectivePayload>[]
           }
           upsert: {
-            args: Prisma.TaskUpsertArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$TaskPayload>
+            args: Prisma.ObjectiveUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ObjectivePayload>
           }
           aggregate: {
-            args: Prisma.TaskAggregateArgs<ExtArgs>
-            result: $Utils.Optional<AggregateTask>
+            args: Prisma.ObjectiveAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateObjective>
           }
           groupBy: {
-            args: Prisma.TaskGroupByArgs<ExtArgs>
-            result: $Utils.Optional<TaskGroupByOutputType>[]
+            args: Prisma.ObjectiveGroupByArgs<ExtArgs>
+            result: $Utils.Optional<ObjectiveGroupByOutputType>[]
           }
           count: {
-            args: Prisma.TaskCountArgs<ExtArgs>
-            result: $Utils.Optional<TaskCountAggregateOutputType> | number
-          }
-        }
-      }
-      Goal: {
-        payload: Prisma.$GoalPayload<ExtArgs>
-        fields: Prisma.GoalFieldRefs
-        operations: {
-          findUnique: {
-            args: Prisma.GoalFindUniqueArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$GoalPayload> | null
-          }
-          findUniqueOrThrow: {
-            args: Prisma.GoalFindUniqueOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$GoalPayload>
-          }
-          findFirst: {
-            args: Prisma.GoalFindFirstArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$GoalPayload> | null
-          }
-          findFirstOrThrow: {
-            args: Prisma.GoalFindFirstOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$GoalPayload>
-          }
-          findMany: {
-            args: Prisma.GoalFindManyArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$GoalPayload>[]
-          }
-          create: {
-            args: Prisma.GoalCreateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$GoalPayload>
-          }
-          createMany: {
-            args: Prisma.GoalCreateManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          createManyAndReturn: {
-            args: Prisma.GoalCreateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$GoalPayload>[]
-          }
-          delete: {
-            args: Prisma.GoalDeleteArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$GoalPayload>
-          }
-          update: {
-            args: Prisma.GoalUpdateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$GoalPayload>
-          }
-          deleteMany: {
-            args: Prisma.GoalDeleteManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          updateMany: {
-            args: Prisma.GoalUpdateManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          updateManyAndReturn: {
-            args: Prisma.GoalUpdateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$GoalPayload>[]
-          }
-          upsert: {
-            args: Prisma.GoalUpsertArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$GoalPayload>
-          }
-          aggregate: {
-            args: Prisma.GoalAggregateArgs<ExtArgs>
-            result: $Utils.Optional<AggregateGoal>
-          }
-          groupBy: {
-            args: Prisma.GoalGroupByArgs<ExtArgs>
-            result: $Utils.Optional<GoalGroupByOutputType>[]
-          }
-          count: {
-            args: Prisma.GoalCountArgs<ExtArgs>
-            result: $Utils.Optional<GoalCountAggregateOutputType> | number
+            args: Prisma.ObjectiveCountArgs<ExtArgs>
+            result: $Utils.Optional<ObjectiveCountAggregateOutputType> | number
           }
         }
       }
@@ -1648,8 +1530,7 @@ export namespace Prisma {
   }
   export type GlobalOmitConfig = {
     user?: UserOmit
-    task?: TaskOmit
-    goal?: GoalOmit
+    objective?: ObjectiveOmit
     message?: MessageOmit
     category?: CategoryOmit
     tag?: TagOmit
@@ -1751,21 +1632,19 @@ export namespace Prisma {
    */
 
   export type UserCountOutputType = {
-    goals: number
     messages: number
-    tasks: number
     timeRecords: number
     progressLogs: number
     importedFiles: number
+    objectives: number
   }
 
   export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    goals?: boolean | UserCountOutputTypeCountGoalsArgs
     messages?: boolean | UserCountOutputTypeCountMessagesArgs
-    tasks?: boolean | UserCountOutputTypeCountTasksArgs
     timeRecords?: boolean | UserCountOutputTypeCountTimeRecordsArgs
     progressLogs?: boolean | UserCountOutputTypeCountProgressLogsArgs
     importedFiles?: boolean | UserCountOutputTypeCountImportedFilesArgs
+    objectives?: boolean | UserCountOutputTypeCountObjectivesArgs
   }
 
   // Custom InputTypes
@@ -1782,22 +1661,8 @@ export namespace Prisma {
   /**
    * UserCountOutputType without action
    */
-  export type UserCountOutputTypeCountGoalsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: GoalWhereInput
-  }
-
-  /**
-   * UserCountOutputType without action
-   */
   export type UserCountOutputTypeCountMessagesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: MessageWhereInput
-  }
-
-  /**
-   * UserCountOutputType without action
-   */
-  export type UserCountOutputTypeCountTasksArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: TaskWhereInput
   }
 
   /**
@@ -1821,120 +1686,69 @@ export namespace Prisma {
     where?: ImportedFileWhereInput
   }
 
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountObjectivesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ObjectiveWhereInput
+  }
+
 
   /**
-   * Count Type TaskCountOutputType
+   * Count Type ObjectiveCountOutputType
    */
 
-  export type TaskCountOutputType = {
-    subTasks: number
+  export type ObjectiveCountOutputType = {
+    subObjectives: number
     tags: number
+    progressLogs: number
     timeRecords: number
-    progressLogs: number
   }
 
-  export type TaskCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    subTasks?: boolean | TaskCountOutputTypeCountSubTasksArgs
-    tags?: boolean | TaskCountOutputTypeCountTagsArgs
-    timeRecords?: boolean | TaskCountOutputTypeCountTimeRecordsArgs
-    progressLogs?: boolean | TaskCountOutputTypeCountProgressLogsArgs
+  export type ObjectiveCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    subObjectives?: boolean | ObjectiveCountOutputTypeCountSubObjectivesArgs
+    tags?: boolean | ObjectiveCountOutputTypeCountTagsArgs
+    progressLogs?: boolean | ObjectiveCountOutputTypeCountProgressLogsArgs
+    timeRecords?: boolean | ObjectiveCountOutputTypeCountTimeRecordsArgs
   }
 
   // Custom InputTypes
   /**
-   * TaskCountOutputType without action
+   * ObjectiveCountOutputType without action
    */
-  export type TaskCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ObjectiveCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the TaskCountOutputType
+     * Select specific fields to fetch from the ObjectiveCountOutputType
      */
-    select?: TaskCountOutputTypeSelect<ExtArgs> | null
+    select?: ObjectiveCountOutputTypeSelect<ExtArgs> | null
   }
 
   /**
-   * TaskCountOutputType without action
+   * ObjectiveCountOutputType without action
    */
-  export type TaskCountOutputTypeCountSubTasksArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: TaskWhereInput
+  export type ObjectiveCountOutputTypeCountSubObjectivesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ObjectiveWhereInput
   }
 
   /**
-   * TaskCountOutputType without action
+   * ObjectiveCountOutputType without action
    */
-  export type TaskCountOutputTypeCountTagsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ObjectiveCountOutputTypeCountTagsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: TagWhereInput
   }
 
   /**
-   * TaskCountOutputType without action
+   * ObjectiveCountOutputType without action
    */
-  export type TaskCountOutputTypeCountTimeRecordsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ObjectiveCountOutputTypeCountProgressLogsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ProgressLogWhereInput
+  }
+
+  /**
+   * ObjectiveCountOutputType without action
+   */
+  export type ObjectiveCountOutputTypeCountTimeRecordsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: TimeRecordWhereInput
-  }
-
-  /**
-   * TaskCountOutputType without action
-   */
-  export type TaskCountOutputTypeCountProgressLogsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: ProgressLogWhereInput
-  }
-
-
-  /**
-   * Count Type GoalCountOutputType
-   */
-
-  export type GoalCountOutputType = {
-    subGoals: number
-    tasks: number
-    tags: number
-    progressLogs: number
-  }
-
-  export type GoalCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    subGoals?: boolean | GoalCountOutputTypeCountSubGoalsArgs
-    tasks?: boolean | GoalCountOutputTypeCountTasksArgs
-    tags?: boolean | GoalCountOutputTypeCountTagsArgs
-    progressLogs?: boolean | GoalCountOutputTypeCountProgressLogsArgs
-  }
-
-  // Custom InputTypes
-  /**
-   * GoalCountOutputType without action
-   */
-  export type GoalCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the GoalCountOutputType
-     */
-    select?: GoalCountOutputTypeSelect<ExtArgs> | null
-  }
-
-  /**
-   * GoalCountOutputType without action
-   */
-  export type GoalCountOutputTypeCountSubGoalsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: GoalWhereInput
-  }
-
-  /**
-   * GoalCountOutputType without action
-   */
-  export type GoalCountOutputTypeCountTasksArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: TaskWhereInput
-  }
-
-  /**
-   * GoalCountOutputType without action
-   */
-  export type GoalCountOutputTypeCountTagsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: TagWhereInput
-  }
-
-  /**
-   * GoalCountOutputType without action
-   */
-  export type GoalCountOutputTypeCountProgressLogsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: ProgressLogWhereInput
   }
 
 
@@ -2014,15 +1828,13 @@ export namespace Prisma {
    */
 
   export type TagCountOutputType = {
-    goals: number
+    objectives: number
     messages: number
-    tasks: number
   }
 
   export type TagCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    goals?: boolean | TagCountOutputTypeCountGoalsArgs
+    objectives?: boolean | TagCountOutputTypeCountObjectivesArgs
     messages?: boolean | TagCountOutputTypeCountMessagesArgs
-    tasks?: boolean | TagCountOutputTypeCountTasksArgs
   }
 
   // Custom InputTypes
@@ -2039,8 +1851,8 @@ export namespace Prisma {
   /**
    * TagCountOutputType without action
    */
-  export type TagCountOutputTypeCountGoalsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: GoalWhereInput
+  export type TagCountOutputTypeCountObjectivesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ObjectiveWhereInput
   }
 
   /**
@@ -2048,13 +1860,6 @@ export namespace Prisma {
    */
   export type TagCountOutputTypeCountMessagesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: MessageWhereInput
-  }
-
-  /**
-   * TagCountOutputType without action
-   */
-  export type TagCountOutputTypeCountTasksArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: TaskWhereInput
   }
 
 
@@ -2234,12 +2039,11 @@ export namespace Prisma {
     password?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    goals?: boolean | User$goalsArgs<ExtArgs>
     messages?: boolean | User$messagesArgs<ExtArgs>
-    tasks?: boolean | User$tasksArgs<ExtArgs>
     timeRecords?: boolean | User$timeRecordsArgs<ExtArgs>
     progressLogs?: boolean | User$progressLogsArgs<ExtArgs>
     importedFiles?: boolean | User$importedFilesArgs<ExtArgs>
+    objectives?: boolean | User$objectivesArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
@@ -2272,12 +2076,11 @@ export namespace Prisma {
 
   export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "email" | "name" | "password" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    goals?: boolean | User$goalsArgs<ExtArgs>
     messages?: boolean | User$messagesArgs<ExtArgs>
-    tasks?: boolean | User$tasksArgs<ExtArgs>
     timeRecords?: boolean | User$timeRecordsArgs<ExtArgs>
     progressLogs?: boolean | User$progressLogsArgs<ExtArgs>
     importedFiles?: boolean | User$importedFilesArgs<ExtArgs>
+    objectives?: boolean | User$objectivesArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type UserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -2286,12 +2089,11 @@ export namespace Prisma {
   export type $UserPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "User"
     objects: {
-      goals: Prisma.$GoalPayload<ExtArgs>[]
       messages: Prisma.$MessagePayload<ExtArgs>[]
-      tasks: Prisma.$TaskPayload<ExtArgs>[]
       timeRecords: Prisma.$TimeRecordPayload<ExtArgs>[]
       progressLogs: Prisma.$ProgressLogPayload<ExtArgs>[]
       importedFiles: Prisma.$ImportedFilePayload<ExtArgs>[]
+      objectives: Prisma.$ObjectivePayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -2694,12 +2496,11 @@ export namespace Prisma {
    */
   export interface Prisma__UserClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    goals<T extends User$goalsArgs<ExtArgs> = {}>(args?: Subset<T, User$goalsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$GoalPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     messages<T extends User$messagesArgs<ExtArgs> = {}>(args?: Subset<T, User$messagesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MessagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    tasks<T extends User$tasksArgs<ExtArgs> = {}>(args?: Subset<T, User$tasksArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TaskPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     timeRecords<T extends User$timeRecordsArgs<ExtArgs> = {}>(args?: Subset<T, User$timeRecordsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TimeRecordPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     progressLogs<T extends User$progressLogsArgs<ExtArgs> = {}>(args?: Subset<T, User$progressLogsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProgressLogPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     importedFiles<T extends User$importedFilesArgs<ExtArgs> = {}>(args?: Subset<T, User$importedFilesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ImportedFilePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    objectives<T extends User$objectivesArgs<ExtArgs> = {}>(args?: Subset<T, User$objectivesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ObjectivePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -3123,30 +2924,6 @@ export namespace Prisma {
   }
 
   /**
-   * User.goals
-   */
-  export type User$goalsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Goal
-     */
-    select?: GoalSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Goal
-     */
-    omit?: GoalOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: GoalInclude<ExtArgs> | null
-    where?: GoalWhereInput
-    orderBy?: GoalOrderByWithRelationInput | GoalOrderByWithRelationInput[]
-    cursor?: GoalWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: GoalScalarFieldEnum | GoalScalarFieldEnum[]
-  }
-
-  /**
    * User.messages
    */
   export type User$messagesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -3168,30 +2945,6 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: MessageScalarFieldEnum | MessageScalarFieldEnum[]
-  }
-
-  /**
-   * User.tasks
-   */
-  export type User$tasksArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Task
-     */
-    select?: TaskSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Task
-     */
-    omit?: TaskOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: TaskInclude<ExtArgs> | null
-    where?: TaskWhereInput
-    orderBy?: TaskOrderByWithRelationInput | TaskOrderByWithRelationInput[]
-    cursor?: TaskWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: TaskScalarFieldEnum | TaskScalarFieldEnum[]
   }
 
   /**
@@ -3267,6 +3020,30 @@ export namespace Prisma {
   }
 
   /**
+   * User.objectives
+   */
+  export type User$objectivesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Objective
+     */
+    select?: ObjectiveSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Objective
+     */
+    omit?: ObjectiveOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ObjectiveInclude<ExtArgs> | null
+    where?: ObjectiveWhereInput
+    orderBy?: ObjectiveOrderByWithRelationInput | ObjectiveOrderByWithRelationInput[]
+    cursor?: ObjectiveWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ObjectiveScalarFieldEnum | ObjectiveScalarFieldEnum[]
+  }
+
+  /**
    * User without action
    */
   export type UserDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -3286,504 +3063,545 @@ export namespace Prisma {
 
 
   /**
-   * Model Task
+   * Model Objective
    */
 
-  export type AggregateTask = {
-    _count: TaskCountAggregateOutputType | null
-    _avg: TaskAvgAggregateOutputType | null
-    _sum: TaskSumAggregateOutputType | null
-    _min: TaskMinAggregateOutputType | null
-    _max: TaskMaxAggregateOutputType | null
+  export type AggregateObjective = {
+    _count: ObjectiveCountAggregateOutputType | null
+    _avg: ObjectiveAvgAggregateOutputType | null
+    _sum: ObjectiveSumAggregateOutputType | null
+    _min: ObjectiveMinAggregateOutputType | null
+    _max: ObjectiveMaxAggregateOutputType | null
   }
 
-  export type TaskAvgAggregateOutputType = {
+  export type ObjectiveAvgAggregateOutputType = {
+    priority: number | null
+    progress: number | null
+    weight: number | null
     totalTime: number | null
   }
 
-  export type TaskSumAggregateOutputType = {
+  export type ObjectiveSumAggregateOutputType = {
+    priority: number | null
+    progress: number | null
+    weight: number | null
     totalTime: number | null
   }
 
-  export type TaskMinAggregateOutputType = {
+  export type ObjectiveMinAggregateOutputType = {
     id: string | null
     title: string | null
     description: string | null
-    status: $Enums.TaskStatus | null
-    priority: $Enums.TaskPriority | null
-    dueDate: Date | null
+    type: $Enums.ObjectiveType | null
+    status: $Enums.ObjectiveStatus | null
+    priority: number | null
+    startDate: Date | null
+    endDate: Date | null
+    progress: number | null
+    parentId: string | null
+    userId: string | null
+    weight: number | null
+    totalTime: number | null
     createdAt: Date | null
     updatedAt: Date | null
-    userId: string | null
-    parentId: string | null
-    goalId: string | null
-    totalTime: number | null
   }
 
-  export type TaskMaxAggregateOutputType = {
+  export type ObjectiveMaxAggregateOutputType = {
     id: string | null
     title: string | null
     description: string | null
-    status: $Enums.TaskStatus | null
-    priority: $Enums.TaskPriority | null
-    dueDate: Date | null
+    type: $Enums.ObjectiveType | null
+    status: $Enums.ObjectiveStatus | null
+    priority: number | null
+    startDate: Date | null
+    endDate: Date | null
+    progress: number | null
+    parentId: string | null
+    userId: string | null
+    weight: number | null
+    totalTime: number | null
     createdAt: Date | null
     updatedAt: Date | null
-    userId: string | null
-    parentId: string | null
-    goalId: string | null
-    totalTime: number | null
   }
 
-  export type TaskCountAggregateOutputType = {
+  export type ObjectiveCountAggregateOutputType = {
     id: number
     title: number
     description: number
+    type: number
     status: number
     priority: number
-    dueDate: number
+    startDate: number
+    endDate: number
+    progress: number
+    parentId: number
+    userId: number
+    metadata: number
+    weight: number
+    totalTime: number
     createdAt: number
     updatedAt: number
-    userId: number
-    parentId: number
-    goalId: number
-    metadata: number
-    totalTime: number
     _all: number
   }
 
 
-  export type TaskAvgAggregateInputType = {
+  export type ObjectiveAvgAggregateInputType = {
+    priority?: true
+    progress?: true
+    weight?: true
     totalTime?: true
   }
 
-  export type TaskSumAggregateInputType = {
+  export type ObjectiveSumAggregateInputType = {
+    priority?: true
+    progress?: true
+    weight?: true
     totalTime?: true
   }
 
-  export type TaskMinAggregateInputType = {
+  export type ObjectiveMinAggregateInputType = {
     id?: true
     title?: true
     description?: true
+    type?: true
     status?: true
     priority?: true
-    dueDate?: true
+    startDate?: true
+    endDate?: true
+    progress?: true
+    parentId?: true
+    userId?: true
+    weight?: true
+    totalTime?: true
     createdAt?: true
     updatedAt?: true
-    userId?: true
-    parentId?: true
-    goalId?: true
-    totalTime?: true
   }
 
-  export type TaskMaxAggregateInputType = {
+  export type ObjectiveMaxAggregateInputType = {
     id?: true
     title?: true
     description?: true
+    type?: true
     status?: true
     priority?: true
-    dueDate?: true
+    startDate?: true
+    endDate?: true
+    progress?: true
+    parentId?: true
+    userId?: true
+    weight?: true
+    totalTime?: true
     createdAt?: true
     updatedAt?: true
-    userId?: true
-    parentId?: true
-    goalId?: true
-    totalTime?: true
   }
 
-  export type TaskCountAggregateInputType = {
+  export type ObjectiveCountAggregateInputType = {
     id?: true
     title?: true
     description?: true
+    type?: true
     status?: true
     priority?: true
-    dueDate?: true
-    createdAt?: true
-    updatedAt?: true
-    userId?: true
+    startDate?: true
+    endDate?: true
+    progress?: true
     parentId?: true
-    goalId?: true
+    userId?: true
     metadata?: true
+    weight?: true
     totalTime?: true
+    createdAt?: true
+    updatedAt?: true
     _all?: true
   }
 
-  export type TaskAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ObjectiveAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Filter which Task to aggregate.
+     * Filter which Objective to aggregate.
      */
-    where?: TaskWhereInput
+    where?: ObjectiveWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of Tasks to fetch.
+     * Determine the order of Objectives to fetch.
      */
-    orderBy?: TaskOrderByWithRelationInput | TaskOrderByWithRelationInput[]
+    orderBy?: ObjectiveOrderByWithRelationInput | ObjectiveOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
      * Sets the start position
      */
-    cursor?: TaskWhereUniqueInput
+    cursor?: ObjectiveWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` Tasks from the position of the cursor.
+     * Take `±n` Objectives from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` Tasks.
+     * Skip the first `n` Objectives.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
-     * Count returned Tasks
+     * Count returned Objectives
     **/
-    _count?: true | TaskCountAggregateInputType
+    _count?: true | ObjectiveCountAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to average
     **/
-    _avg?: TaskAvgAggregateInputType
+    _avg?: ObjectiveAvgAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to sum
     **/
-    _sum?: TaskSumAggregateInputType
+    _sum?: ObjectiveSumAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to find the minimum value
     **/
-    _min?: TaskMinAggregateInputType
+    _min?: ObjectiveMinAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to find the maximum value
     **/
-    _max?: TaskMaxAggregateInputType
+    _max?: ObjectiveMaxAggregateInputType
   }
 
-  export type GetTaskAggregateType<T extends TaskAggregateArgs> = {
-        [P in keyof T & keyof AggregateTask]: P extends '_count' | 'count'
+  export type GetObjectiveAggregateType<T extends ObjectiveAggregateArgs> = {
+        [P in keyof T & keyof AggregateObjective]: P extends '_count' | 'count'
       ? T[P] extends true
         ? number
-        : GetScalarType<T[P], AggregateTask[P]>
-      : GetScalarType<T[P], AggregateTask[P]>
+        : GetScalarType<T[P], AggregateObjective[P]>
+      : GetScalarType<T[P], AggregateObjective[P]>
   }
 
 
 
 
-  export type TaskGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: TaskWhereInput
-    orderBy?: TaskOrderByWithAggregationInput | TaskOrderByWithAggregationInput[]
-    by: TaskScalarFieldEnum[] | TaskScalarFieldEnum
-    having?: TaskScalarWhereWithAggregatesInput
+  export type ObjectiveGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ObjectiveWhereInput
+    orderBy?: ObjectiveOrderByWithAggregationInput | ObjectiveOrderByWithAggregationInput[]
+    by: ObjectiveScalarFieldEnum[] | ObjectiveScalarFieldEnum
+    having?: ObjectiveScalarWhereWithAggregatesInput
     take?: number
     skip?: number
-    _count?: TaskCountAggregateInputType | true
-    _avg?: TaskAvgAggregateInputType
-    _sum?: TaskSumAggregateInputType
-    _min?: TaskMinAggregateInputType
-    _max?: TaskMaxAggregateInputType
+    _count?: ObjectiveCountAggregateInputType | true
+    _avg?: ObjectiveAvgAggregateInputType
+    _sum?: ObjectiveSumAggregateInputType
+    _min?: ObjectiveMinAggregateInputType
+    _max?: ObjectiveMaxAggregateInputType
   }
 
-  export type TaskGroupByOutputType = {
+  export type ObjectiveGroupByOutputType = {
     id: string
     title: string
     description: string | null
-    status: $Enums.TaskStatus
-    priority: $Enums.TaskPriority
-    dueDate: Date | null
+    type: $Enums.ObjectiveType
+    status: $Enums.ObjectiveStatus
+    priority: number
+    startDate: Date | null
+    endDate: Date | null
+    progress: number
+    parentId: string | null
+    userId: string
+    metadata: JsonValue | null
+    weight: number
+    totalTime: number
     createdAt: Date
     updatedAt: Date
-    userId: string
-    parentId: string | null
-    goalId: string | null
-    metadata: JsonValue | null
-    totalTime: number
-    _count: TaskCountAggregateOutputType | null
-    _avg: TaskAvgAggregateOutputType | null
-    _sum: TaskSumAggregateOutputType | null
-    _min: TaskMinAggregateOutputType | null
-    _max: TaskMaxAggregateOutputType | null
+    _count: ObjectiveCountAggregateOutputType | null
+    _avg: ObjectiveAvgAggregateOutputType | null
+    _sum: ObjectiveSumAggregateOutputType | null
+    _min: ObjectiveMinAggregateOutputType | null
+    _max: ObjectiveMaxAggregateOutputType | null
   }
 
-  type GetTaskGroupByPayload<T extends TaskGroupByArgs> = Prisma.PrismaPromise<
+  type GetObjectiveGroupByPayload<T extends ObjectiveGroupByArgs> = Prisma.PrismaPromise<
     Array<
-      PickEnumerable<TaskGroupByOutputType, T['by']> &
+      PickEnumerable<ObjectiveGroupByOutputType, T['by']> &
         {
-          [P in ((keyof T) & (keyof TaskGroupByOutputType))]: P extends '_count'
+          [P in ((keyof T) & (keyof ObjectiveGroupByOutputType))]: P extends '_count'
             ? T[P] extends boolean
               ? number
-              : GetScalarType<T[P], TaskGroupByOutputType[P]>
-            : GetScalarType<T[P], TaskGroupByOutputType[P]>
+              : GetScalarType<T[P], ObjectiveGroupByOutputType[P]>
+            : GetScalarType<T[P], ObjectiveGroupByOutputType[P]>
         }
       >
     >
 
 
-  export type TaskSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type ObjectiveSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     title?: boolean
     description?: boolean
+    type?: boolean
     status?: boolean
     priority?: boolean
-    dueDate?: boolean
+    startDate?: boolean
+    endDate?: boolean
+    progress?: boolean
+    parentId?: boolean
+    userId?: boolean
+    metadata?: boolean
+    weight?: boolean
+    totalTime?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    userId?: boolean
-    parentId?: boolean
-    goalId?: boolean
-    metadata?: boolean
-    totalTime?: boolean
-    goal?: boolean | Task$goalArgs<ExtArgs>
-    parent?: boolean | Task$parentArgs<ExtArgs>
-    subTasks?: boolean | Task$subTasksArgs<ExtArgs>
+    parent?: boolean | Objective$parentArgs<ExtArgs>
+    subObjectives?: boolean | Objective$subObjectivesArgs<ExtArgs>
     user?: boolean | UserDefaultArgs<ExtArgs>
-    tags?: boolean | Task$tagsArgs<ExtArgs>
-    timeRecords?: boolean | Task$timeRecordsArgs<ExtArgs>
-    progressLogs?: boolean | Task$progressLogsArgs<ExtArgs>
-    _count?: boolean | TaskCountOutputTypeDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["task"]>
+    tags?: boolean | Objective$tagsArgs<ExtArgs>
+    progressLogs?: boolean | Objective$progressLogsArgs<ExtArgs>
+    timeRecords?: boolean | Objective$timeRecordsArgs<ExtArgs>
+    _count?: boolean | ObjectiveCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["objective"]>
 
-  export type TaskSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type ObjectiveSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     title?: boolean
     description?: boolean
+    type?: boolean
     status?: boolean
     priority?: boolean
-    dueDate?: boolean
+    startDate?: boolean
+    endDate?: boolean
+    progress?: boolean
+    parentId?: boolean
+    userId?: boolean
+    metadata?: boolean
+    weight?: boolean
+    totalTime?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    userId?: boolean
-    parentId?: boolean
-    goalId?: boolean
-    metadata?: boolean
-    totalTime?: boolean
-    goal?: boolean | Task$goalArgs<ExtArgs>
-    parent?: boolean | Task$parentArgs<ExtArgs>
+    parent?: boolean | Objective$parentArgs<ExtArgs>
     user?: boolean | UserDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["task"]>
+  }, ExtArgs["result"]["objective"]>
 
-  export type TaskSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type ObjectiveSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     title?: boolean
     description?: boolean
+    type?: boolean
     status?: boolean
     priority?: boolean
-    dueDate?: boolean
+    startDate?: boolean
+    endDate?: boolean
+    progress?: boolean
+    parentId?: boolean
+    userId?: boolean
+    metadata?: boolean
+    weight?: boolean
+    totalTime?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    userId?: boolean
-    parentId?: boolean
-    goalId?: boolean
-    metadata?: boolean
-    totalTime?: boolean
-    goal?: boolean | Task$goalArgs<ExtArgs>
-    parent?: boolean | Task$parentArgs<ExtArgs>
+    parent?: boolean | Objective$parentArgs<ExtArgs>
     user?: boolean | UserDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["task"]>
+  }, ExtArgs["result"]["objective"]>
 
-  export type TaskSelectScalar = {
+  export type ObjectiveSelectScalar = {
     id?: boolean
     title?: boolean
     description?: boolean
+    type?: boolean
     status?: boolean
     priority?: boolean
-    dueDate?: boolean
+    startDate?: boolean
+    endDate?: boolean
+    progress?: boolean
+    parentId?: boolean
+    userId?: boolean
+    metadata?: boolean
+    weight?: boolean
+    totalTime?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    userId?: boolean
-    parentId?: boolean
-    goalId?: boolean
-    metadata?: boolean
-    totalTime?: boolean
   }
 
-  export type TaskOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "description" | "status" | "priority" | "dueDate" | "createdAt" | "updatedAt" | "userId" | "parentId" | "goalId" | "metadata" | "totalTime", ExtArgs["result"]["task"]>
-  export type TaskInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    goal?: boolean | Task$goalArgs<ExtArgs>
-    parent?: boolean | Task$parentArgs<ExtArgs>
-    subTasks?: boolean | Task$subTasksArgs<ExtArgs>
+  export type ObjectiveOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "description" | "type" | "status" | "priority" | "startDate" | "endDate" | "progress" | "parentId" | "userId" | "metadata" | "weight" | "totalTime" | "createdAt" | "updatedAt", ExtArgs["result"]["objective"]>
+  export type ObjectiveInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    parent?: boolean | Objective$parentArgs<ExtArgs>
+    subObjectives?: boolean | Objective$subObjectivesArgs<ExtArgs>
     user?: boolean | UserDefaultArgs<ExtArgs>
-    tags?: boolean | Task$tagsArgs<ExtArgs>
-    timeRecords?: boolean | Task$timeRecordsArgs<ExtArgs>
-    progressLogs?: boolean | Task$progressLogsArgs<ExtArgs>
-    _count?: boolean | TaskCountOutputTypeDefaultArgs<ExtArgs>
+    tags?: boolean | Objective$tagsArgs<ExtArgs>
+    progressLogs?: boolean | Objective$progressLogsArgs<ExtArgs>
+    timeRecords?: boolean | Objective$timeRecordsArgs<ExtArgs>
+    _count?: boolean | ObjectiveCountOutputTypeDefaultArgs<ExtArgs>
   }
-  export type TaskIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    goal?: boolean | Task$goalArgs<ExtArgs>
-    parent?: boolean | Task$parentArgs<ExtArgs>
+  export type ObjectiveIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    parent?: boolean | Objective$parentArgs<ExtArgs>
     user?: boolean | UserDefaultArgs<ExtArgs>
   }
-  export type TaskIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    goal?: boolean | Task$goalArgs<ExtArgs>
-    parent?: boolean | Task$parentArgs<ExtArgs>
+  export type ObjectiveIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    parent?: boolean | Objective$parentArgs<ExtArgs>
     user?: boolean | UserDefaultArgs<ExtArgs>
   }
 
-  export type $TaskPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    name: "Task"
+  export type $ObjectivePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Objective"
     objects: {
-      goal: Prisma.$GoalPayload<ExtArgs> | null
-      parent: Prisma.$TaskPayload<ExtArgs> | null
-      subTasks: Prisma.$TaskPayload<ExtArgs>[]
+      parent: Prisma.$ObjectivePayload<ExtArgs> | null
+      subObjectives: Prisma.$ObjectivePayload<ExtArgs>[]
       user: Prisma.$UserPayload<ExtArgs>
       tags: Prisma.$TagPayload<ExtArgs>[]
-      timeRecords: Prisma.$TimeRecordPayload<ExtArgs>[]
       progressLogs: Prisma.$ProgressLogPayload<ExtArgs>[]
+      timeRecords: Prisma.$TimeRecordPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
       title: string
       description: string | null
-      status: $Enums.TaskStatus
-      priority: $Enums.TaskPriority
-      dueDate: Date | null
+      type: $Enums.ObjectiveType
+      status: $Enums.ObjectiveStatus
+      priority: number
+      startDate: Date | null
+      endDate: Date | null
+      progress: number
+      parentId: string | null
+      userId: string
+      metadata: Prisma.JsonValue | null
+      weight: number
+      totalTime: number
       createdAt: Date
       updatedAt: Date
-      userId: string
-      parentId: string | null
-      goalId: string | null
-      metadata: Prisma.JsonValue | null
-      totalTime: number
-    }, ExtArgs["result"]["task"]>
+    }, ExtArgs["result"]["objective"]>
     composites: {}
   }
 
-  type TaskGetPayload<S extends boolean | null | undefined | TaskDefaultArgs> = $Result.GetResult<Prisma.$TaskPayload, S>
+  type ObjectiveGetPayload<S extends boolean | null | undefined | ObjectiveDefaultArgs> = $Result.GetResult<Prisma.$ObjectivePayload, S>
 
-  type TaskCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
-    Omit<TaskFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
-      select?: TaskCountAggregateInputType | true
+  type ObjectiveCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<ObjectiveFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: ObjectiveCountAggregateInputType | true
     }
 
-  export interface TaskDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
-    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Task'], meta: { name: 'Task' } }
+  export interface ObjectiveDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Objective'], meta: { name: 'Objective' } }
     /**
-     * Find zero or one Task that matches the filter.
-     * @param {TaskFindUniqueArgs} args - Arguments to find a Task
+     * Find zero or one Objective that matches the filter.
+     * @param {ObjectiveFindUniqueArgs} args - Arguments to find a Objective
      * @example
-     * // Get one Task
-     * const task = await prisma.task.findUnique({
+     * // Get one Objective
+     * const objective = await prisma.objective.findUnique({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findUnique<T extends TaskFindUniqueArgs>(args: SelectSubset<T, TaskFindUniqueArgs<ExtArgs>>): Prisma__TaskClient<$Result.GetResult<Prisma.$TaskPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    findUnique<T extends ObjectiveFindUniqueArgs>(args: SelectSubset<T, ObjectiveFindUniqueArgs<ExtArgs>>): Prisma__ObjectiveClient<$Result.GetResult<Prisma.$ObjectivePayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find one Task that matches the filter or throw an error with `error.code='P2025'`
+     * Find one Objective that matches the filter or throw an error with `error.code='P2025'`
      * if no matches were found.
-     * @param {TaskFindUniqueOrThrowArgs} args - Arguments to find a Task
+     * @param {ObjectiveFindUniqueOrThrowArgs} args - Arguments to find a Objective
      * @example
-     * // Get one Task
-     * const task = await prisma.task.findUniqueOrThrow({
+     * // Get one Objective
+     * const objective = await prisma.objective.findUniqueOrThrow({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findUniqueOrThrow<T extends TaskFindUniqueOrThrowArgs>(args: SelectSubset<T, TaskFindUniqueOrThrowArgs<ExtArgs>>): Prisma__TaskClient<$Result.GetResult<Prisma.$TaskPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    findUniqueOrThrow<T extends ObjectiveFindUniqueOrThrowArgs>(args: SelectSubset<T, ObjectiveFindUniqueOrThrowArgs<ExtArgs>>): Prisma__ObjectiveClient<$Result.GetResult<Prisma.$ObjectivePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find the first Task that matches the filter.
+     * Find the first Objective that matches the filter.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {TaskFindFirstArgs} args - Arguments to find a Task
+     * @param {ObjectiveFindFirstArgs} args - Arguments to find a Objective
      * @example
-     * // Get one Task
-     * const task = await prisma.task.findFirst({
+     * // Get one Objective
+     * const objective = await prisma.objective.findFirst({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findFirst<T extends TaskFindFirstArgs>(args?: SelectSubset<T, TaskFindFirstArgs<ExtArgs>>): Prisma__TaskClient<$Result.GetResult<Prisma.$TaskPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    findFirst<T extends ObjectiveFindFirstArgs>(args?: SelectSubset<T, ObjectiveFindFirstArgs<ExtArgs>>): Prisma__ObjectiveClient<$Result.GetResult<Prisma.$ObjectivePayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find the first Task that matches the filter or
+     * Find the first Objective that matches the filter or
      * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {TaskFindFirstOrThrowArgs} args - Arguments to find a Task
+     * @param {ObjectiveFindFirstOrThrowArgs} args - Arguments to find a Objective
      * @example
-     * // Get one Task
-     * const task = await prisma.task.findFirstOrThrow({
+     * // Get one Objective
+     * const objective = await prisma.objective.findFirstOrThrow({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findFirstOrThrow<T extends TaskFindFirstOrThrowArgs>(args?: SelectSubset<T, TaskFindFirstOrThrowArgs<ExtArgs>>): Prisma__TaskClient<$Result.GetResult<Prisma.$TaskPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    findFirstOrThrow<T extends ObjectiveFindFirstOrThrowArgs>(args?: SelectSubset<T, ObjectiveFindFirstOrThrowArgs<ExtArgs>>): Prisma__ObjectiveClient<$Result.GetResult<Prisma.$ObjectivePayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find zero or more Tasks that matches the filter.
+     * Find zero or more Objectives that matches the filter.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {TaskFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @param {ObjectiveFindManyArgs} args - Arguments to filter and select certain fields only.
      * @example
-     * // Get all Tasks
-     * const tasks = await prisma.task.findMany()
+     * // Get all Objectives
+     * const objectives = await prisma.objective.findMany()
      * 
-     * // Get first 10 Tasks
-     * const tasks = await prisma.task.findMany({ take: 10 })
+     * // Get first 10 Objectives
+     * const objectives = await prisma.objective.findMany({ take: 10 })
      * 
      * // Only select the `id`
-     * const taskWithIdOnly = await prisma.task.findMany({ select: { id: true } })
+     * const objectiveWithIdOnly = await prisma.objective.findMany({ select: { id: true } })
      * 
      */
-    findMany<T extends TaskFindManyArgs>(args?: SelectSubset<T, TaskFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TaskPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+    findMany<T extends ObjectiveFindManyArgs>(args?: SelectSubset<T, ObjectiveFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ObjectivePayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
 
     /**
-     * Create a Task.
-     * @param {TaskCreateArgs} args - Arguments to create a Task.
+     * Create a Objective.
+     * @param {ObjectiveCreateArgs} args - Arguments to create a Objective.
      * @example
-     * // Create one Task
-     * const Task = await prisma.task.create({
+     * // Create one Objective
+     * const Objective = await prisma.objective.create({
      *   data: {
-     *     // ... data to create a Task
+     *     // ... data to create a Objective
      *   }
      * })
      * 
      */
-    create<T extends TaskCreateArgs>(args: SelectSubset<T, TaskCreateArgs<ExtArgs>>): Prisma__TaskClient<$Result.GetResult<Prisma.$TaskPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    create<T extends ObjectiveCreateArgs>(args: SelectSubset<T, ObjectiveCreateArgs<ExtArgs>>): Prisma__ObjectiveClient<$Result.GetResult<Prisma.$ObjectivePayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Create many Tasks.
-     * @param {TaskCreateManyArgs} args - Arguments to create many Tasks.
+     * Create many Objectives.
+     * @param {ObjectiveCreateManyArgs} args - Arguments to create many Objectives.
      * @example
-     * // Create many Tasks
-     * const task = await prisma.task.createMany({
+     * // Create many Objectives
+     * const objective = await prisma.objective.createMany({
      *   data: [
      *     // ... provide data here
      *   ]
      * })
      *     
      */
-    createMany<T extends TaskCreateManyArgs>(args?: SelectSubset<T, TaskCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    createMany<T extends ObjectiveCreateManyArgs>(args?: SelectSubset<T, ObjectiveCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Create many Tasks and returns the data saved in the database.
-     * @param {TaskCreateManyAndReturnArgs} args - Arguments to create many Tasks.
+     * Create many Objectives and returns the data saved in the database.
+     * @param {ObjectiveCreateManyAndReturnArgs} args - Arguments to create many Objectives.
      * @example
-     * // Create many Tasks
-     * const task = await prisma.task.createManyAndReturn({
+     * // Create many Objectives
+     * const objective = await prisma.objective.createManyAndReturn({
      *   data: [
      *     // ... provide data here
      *   ]
      * })
      * 
-     * // Create many Tasks and only return the `id`
-     * const taskWithIdOnly = await prisma.task.createManyAndReturn({
+     * // Create many Objectives and only return the `id`
+     * const objectiveWithIdOnly = await prisma.objective.createManyAndReturn({
      *   select: { id: true },
      *   data: [
      *     // ... provide data here
@@ -3793,28 +3611,28 @@ export namespace Prisma {
      * Read more here: https://pris.ly/d/null-undefined
      * 
      */
-    createManyAndReturn<T extends TaskCreateManyAndReturnArgs>(args?: SelectSubset<T, TaskCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TaskPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+    createManyAndReturn<T extends ObjectiveCreateManyAndReturnArgs>(args?: SelectSubset<T, ObjectiveCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ObjectivePayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
 
     /**
-     * Delete a Task.
-     * @param {TaskDeleteArgs} args - Arguments to delete one Task.
+     * Delete a Objective.
+     * @param {ObjectiveDeleteArgs} args - Arguments to delete one Objective.
      * @example
-     * // Delete one Task
-     * const Task = await prisma.task.delete({
+     * // Delete one Objective
+     * const Objective = await prisma.objective.delete({
      *   where: {
-     *     // ... filter to delete one Task
+     *     // ... filter to delete one Objective
      *   }
      * })
      * 
      */
-    delete<T extends TaskDeleteArgs>(args: SelectSubset<T, TaskDeleteArgs<ExtArgs>>): Prisma__TaskClient<$Result.GetResult<Prisma.$TaskPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    delete<T extends ObjectiveDeleteArgs>(args: SelectSubset<T, ObjectiveDeleteArgs<ExtArgs>>): Prisma__ObjectiveClient<$Result.GetResult<Prisma.$ObjectivePayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Update one Task.
-     * @param {TaskUpdateArgs} args - Arguments to update one Task.
+     * Update one Objective.
+     * @param {ObjectiveUpdateArgs} args - Arguments to update one Objective.
      * @example
-     * // Update one Task
-     * const task = await prisma.task.update({
+     * // Update one Objective
+     * const objective = await prisma.objective.update({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -3824,30 +3642,30 @@ export namespace Prisma {
      * })
      * 
      */
-    update<T extends TaskUpdateArgs>(args: SelectSubset<T, TaskUpdateArgs<ExtArgs>>): Prisma__TaskClient<$Result.GetResult<Prisma.$TaskPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    update<T extends ObjectiveUpdateArgs>(args: SelectSubset<T, ObjectiveUpdateArgs<ExtArgs>>): Prisma__ObjectiveClient<$Result.GetResult<Prisma.$ObjectivePayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Delete zero or more Tasks.
-     * @param {TaskDeleteManyArgs} args - Arguments to filter Tasks to delete.
+     * Delete zero or more Objectives.
+     * @param {ObjectiveDeleteManyArgs} args - Arguments to filter Objectives to delete.
      * @example
-     * // Delete a few Tasks
-     * const { count } = await prisma.task.deleteMany({
+     * // Delete a few Objectives
+     * const { count } = await prisma.objective.deleteMany({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      * 
      */
-    deleteMany<T extends TaskDeleteManyArgs>(args?: SelectSubset<T, TaskDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    deleteMany<T extends ObjectiveDeleteManyArgs>(args?: SelectSubset<T, ObjectiveDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Update zero or more Tasks.
+     * Update zero or more Objectives.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {TaskUpdateManyArgs} args - Arguments to update one or more rows.
+     * @param {ObjectiveUpdateManyArgs} args - Arguments to update one or more rows.
      * @example
-     * // Update many Tasks
-     * const task = await prisma.task.updateMany({
+     * // Update many Objectives
+     * const objective = await prisma.objective.updateMany({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -3857,14 +3675,14 @@ export namespace Prisma {
      * })
      * 
      */
-    updateMany<T extends TaskUpdateManyArgs>(args: SelectSubset<T, TaskUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    updateMany<T extends ObjectiveUpdateManyArgs>(args: SelectSubset<T, ObjectiveUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Update zero or more Tasks and returns the data updated in the database.
-     * @param {TaskUpdateManyAndReturnArgs} args - Arguments to update many Tasks.
+     * Update zero or more Objectives and returns the data updated in the database.
+     * @param {ObjectiveUpdateManyAndReturnArgs} args - Arguments to update many Objectives.
      * @example
-     * // Update many Tasks
-     * const task = await prisma.task.updateManyAndReturn({
+     * // Update many Objectives
+     * const objective = await prisma.objective.updateManyAndReturn({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -3873,8 +3691,8 @@ export namespace Prisma {
      *   ]
      * })
      * 
-     * // Update zero or more Tasks and only return the `id`
-     * const taskWithIdOnly = await prisma.task.updateManyAndReturn({
+     * // Update zero or more Objectives and only return the `id`
+     * const objectiveWithIdOnly = await prisma.objective.updateManyAndReturn({
      *   select: { id: true },
      *   where: {
      *     // ... provide filter here
@@ -3887,56 +3705,56 @@ export namespace Prisma {
      * Read more here: https://pris.ly/d/null-undefined
      * 
      */
-    updateManyAndReturn<T extends TaskUpdateManyAndReturnArgs>(args: SelectSubset<T, TaskUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TaskPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+    updateManyAndReturn<T extends ObjectiveUpdateManyAndReturnArgs>(args: SelectSubset<T, ObjectiveUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ObjectivePayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
     /**
-     * Create or update one Task.
-     * @param {TaskUpsertArgs} args - Arguments to update or create a Task.
+     * Create or update one Objective.
+     * @param {ObjectiveUpsertArgs} args - Arguments to update or create a Objective.
      * @example
-     * // Update or create a Task
-     * const task = await prisma.task.upsert({
+     * // Update or create a Objective
+     * const objective = await prisma.objective.upsert({
      *   create: {
-     *     // ... data to create a Task
+     *     // ... data to create a Objective
      *   },
      *   update: {
      *     // ... in case it already exists, update
      *   },
      *   where: {
-     *     // ... the filter for the Task we want to update
+     *     // ... the filter for the Objective we want to update
      *   }
      * })
      */
-    upsert<T extends TaskUpsertArgs>(args: SelectSubset<T, TaskUpsertArgs<ExtArgs>>): Prisma__TaskClient<$Result.GetResult<Prisma.$TaskPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    upsert<T extends ObjectiveUpsertArgs>(args: SelectSubset<T, ObjectiveUpsertArgs<ExtArgs>>): Prisma__ObjectiveClient<$Result.GetResult<Prisma.$ObjectivePayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
 
     /**
-     * Count the number of Tasks.
+     * Count the number of Objectives.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {TaskCountArgs} args - Arguments to filter Tasks to count.
+     * @param {ObjectiveCountArgs} args - Arguments to filter Objectives to count.
      * @example
-     * // Count the number of Tasks
-     * const count = await prisma.task.count({
+     * // Count the number of Objectives
+     * const count = await prisma.objective.count({
      *   where: {
-     *     // ... the filter for the Tasks we want to count
+     *     // ... the filter for the Objectives we want to count
      *   }
      * })
     **/
-    count<T extends TaskCountArgs>(
-      args?: Subset<T, TaskCountArgs>,
+    count<T extends ObjectiveCountArgs>(
+      args?: Subset<T, ObjectiveCountArgs>,
     ): Prisma.PrismaPromise<
       T extends $Utils.Record<'select', any>
         ? T['select'] extends true
           ? number
-          : GetScalarType<T['select'], TaskCountAggregateOutputType>
+          : GetScalarType<T['select'], ObjectiveCountAggregateOutputType>
         : number
     >
 
     /**
-     * Allows you to perform aggregations operations on a Task.
+     * Allows you to perform aggregations operations on a Objective.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {TaskAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @param {ObjectiveAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
      * @example
      * // Ordered by age ascending
      * // Where email contains prisma.io
@@ -3956,13 +3774,13 @@ export namespace Prisma {
      *   take: 10,
      * })
     **/
-    aggregate<T extends TaskAggregateArgs>(args: Subset<T, TaskAggregateArgs>): Prisma.PrismaPromise<GetTaskAggregateType<T>>
+    aggregate<T extends ObjectiveAggregateArgs>(args: Subset<T, ObjectiveAggregateArgs>): Prisma.PrismaPromise<GetObjectiveAggregateType<T>>
 
     /**
-     * Group by Task.
+     * Group by Objective.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {TaskGroupByArgs} args - Group by arguments.
+     * @param {ObjectiveGroupByArgs} args - Group by arguments.
      * @example
      * // Group by city, order by createdAt, get count
      * const result = await prisma.user.groupBy({
@@ -3977,14 +3795,14 @@ export namespace Prisma {
      * 
     **/
     groupBy<
-      T extends TaskGroupByArgs,
+      T extends ObjectiveGroupByArgs,
       HasSelectOrTake extends Or<
         Extends<'skip', Keys<T>>,
         Extends<'take', Keys<T>>
       >,
       OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: TaskGroupByArgs['orderBy'] }
-        : { orderBy?: TaskGroupByArgs['orderBy'] },
+        ? { orderBy: ObjectiveGroupByArgs['orderBy'] }
+        : { orderBy?: ObjectiveGroupByArgs['orderBy'] },
       OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
       ByFields extends MaybeTupleToUnion<T['by']>,
       ByValid extends Has<ByFields, OrderFields>,
@@ -4033,28 +3851,27 @@ export namespace Prisma {
             ? never
             : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
         }[OrderFields]
-    >(args: SubsetIntersection<T, TaskGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetTaskGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+    >(args: SubsetIntersection<T, ObjectiveGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetObjectiveGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
   /**
-   * Fields of the Task model
+   * Fields of the Objective model
    */
-  readonly fields: TaskFieldRefs;
+  readonly fields: ObjectiveFieldRefs;
   }
 
   /**
-   * The delegate class that acts as a "Promise-like" for Task.
+   * The delegate class that acts as a "Promise-like" for Objective.
    * Why is this prefixed with `Prisma__`?
    * Because we want to prevent naming conflicts as mentioned in
    * https://github.com/prisma/prisma-client-js/issues/707
    */
-  export interface Prisma__TaskClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+  export interface Prisma__ObjectiveClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    goal<T extends Task$goalArgs<ExtArgs> = {}>(args?: Subset<T, Task$goalArgs<ExtArgs>>): Prisma__GoalClient<$Result.GetResult<Prisma.$GoalPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-    parent<T extends Task$parentArgs<ExtArgs> = {}>(args?: Subset<T, Task$parentArgs<ExtArgs>>): Prisma__TaskClient<$Result.GetResult<Prisma.$TaskPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-    subTasks<T extends Task$subTasksArgs<ExtArgs> = {}>(args?: Subset<T, Task$subTasksArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TaskPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    parent<T extends Objective$parentArgs<ExtArgs> = {}>(args?: Subset<T, Objective$parentArgs<ExtArgs>>): Prisma__ObjectiveClient<$Result.GetResult<Prisma.$ObjectivePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    subObjectives<T extends Objective$subObjectivesArgs<ExtArgs> = {}>(args?: Subset<T, Objective$subObjectivesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ObjectivePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-    tags<T extends Task$tagsArgs<ExtArgs> = {}>(args?: Subset<T, Task$tagsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TagPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    timeRecords<T extends Task$timeRecordsArgs<ExtArgs> = {}>(args?: Subset<T, Task$timeRecordsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TimeRecordPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    progressLogs<T extends Task$progressLogsArgs<ExtArgs> = {}>(args?: Subset<T, Task$progressLogsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProgressLogPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    tags<T extends Objective$tagsArgs<ExtArgs> = {}>(args?: Subset<T, Objective$tagsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TagPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    progressLogs<T extends Objective$progressLogsArgs<ExtArgs> = {}>(args?: Subset<T, Objective$progressLogsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProgressLogPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    timeRecords<T extends Objective$timeRecordsArgs<ExtArgs> = {}>(args?: Subset<T, Objective$timeRecordsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TimeRecordPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -4081,483 +3898,467 @@ export namespace Prisma {
 
 
   /**
-   * Fields of the Task model
+   * Fields of the Objective model
    */
-  interface TaskFieldRefs {
-    readonly id: FieldRef<"Task", 'String'>
-    readonly title: FieldRef<"Task", 'String'>
-    readonly description: FieldRef<"Task", 'String'>
-    readonly status: FieldRef<"Task", 'TaskStatus'>
-    readonly priority: FieldRef<"Task", 'TaskPriority'>
-    readonly dueDate: FieldRef<"Task", 'DateTime'>
-    readonly createdAt: FieldRef<"Task", 'DateTime'>
-    readonly updatedAt: FieldRef<"Task", 'DateTime'>
-    readonly userId: FieldRef<"Task", 'String'>
-    readonly parentId: FieldRef<"Task", 'String'>
-    readonly goalId: FieldRef<"Task", 'String'>
-    readonly metadata: FieldRef<"Task", 'Json'>
-    readonly totalTime: FieldRef<"Task", 'Int'>
+  interface ObjectiveFieldRefs {
+    readonly id: FieldRef<"Objective", 'String'>
+    readonly title: FieldRef<"Objective", 'String'>
+    readonly description: FieldRef<"Objective", 'String'>
+    readonly type: FieldRef<"Objective", 'ObjectiveType'>
+    readonly status: FieldRef<"Objective", 'ObjectiveStatus'>
+    readonly priority: FieldRef<"Objective", 'Int'>
+    readonly startDate: FieldRef<"Objective", 'DateTime'>
+    readonly endDate: FieldRef<"Objective", 'DateTime'>
+    readonly progress: FieldRef<"Objective", 'Float'>
+    readonly parentId: FieldRef<"Objective", 'String'>
+    readonly userId: FieldRef<"Objective", 'String'>
+    readonly metadata: FieldRef<"Objective", 'Json'>
+    readonly weight: FieldRef<"Objective", 'Float'>
+    readonly totalTime: FieldRef<"Objective", 'Int'>
+    readonly createdAt: FieldRef<"Objective", 'DateTime'>
+    readonly updatedAt: FieldRef<"Objective", 'DateTime'>
   }
     
 
   // Custom InputTypes
   /**
-   * Task findUnique
+   * Objective findUnique
    */
-  export type TaskFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ObjectiveFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Task
+     * Select specific fields to fetch from the Objective
      */
-    select?: TaskSelect<ExtArgs> | null
+    select?: ObjectiveSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Task
+     * Omit specific fields from the Objective
      */
-    omit?: TaskOmit<ExtArgs> | null
+    omit?: ObjectiveOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: TaskInclude<ExtArgs> | null
+    include?: ObjectiveInclude<ExtArgs> | null
     /**
-     * Filter, which Task to fetch.
+     * Filter, which Objective to fetch.
      */
-    where: TaskWhereUniqueInput
+    where: ObjectiveWhereUniqueInput
   }
 
   /**
-   * Task findUniqueOrThrow
+   * Objective findUniqueOrThrow
    */
-  export type TaskFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ObjectiveFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Task
+     * Select specific fields to fetch from the Objective
      */
-    select?: TaskSelect<ExtArgs> | null
+    select?: ObjectiveSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Task
+     * Omit specific fields from the Objective
      */
-    omit?: TaskOmit<ExtArgs> | null
+    omit?: ObjectiveOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: TaskInclude<ExtArgs> | null
+    include?: ObjectiveInclude<ExtArgs> | null
     /**
-     * Filter, which Task to fetch.
+     * Filter, which Objective to fetch.
      */
-    where: TaskWhereUniqueInput
+    where: ObjectiveWhereUniqueInput
   }
 
   /**
-   * Task findFirst
+   * Objective findFirst
    */
-  export type TaskFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ObjectiveFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Task
+     * Select specific fields to fetch from the Objective
      */
-    select?: TaskSelect<ExtArgs> | null
+    select?: ObjectiveSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Task
+     * Omit specific fields from the Objective
      */
-    omit?: TaskOmit<ExtArgs> | null
+    omit?: ObjectiveOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: TaskInclude<ExtArgs> | null
+    include?: ObjectiveInclude<ExtArgs> | null
     /**
-     * Filter, which Task to fetch.
+     * Filter, which Objective to fetch.
      */
-    where?: TaskWhereInput
+    where?: ObjectiveWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of Tasks to fetch.
+     * Determine the order of Objectives to fetch.
      */
-    orderBy?: TaskOrderByWithRelationInput | TaskOrderByWithRelationInput[]
+    orderBy?: ObjectiveOrderByWithRelationInput | ObjectiveOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for searching for Tasks.
+     * Sets the position for searching for Objectives.
      */
-    cursor?: TaskWhereUniqueInput
+    cursor?: ObjectiveWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` Tasks from the position of the cursor.
+     * Take `±n` Objectives from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` Tasks.
+     * Skip the first `n` Objectives.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
      * 
-     * Filter by unique combinations of Tasks.
+     * Filter by unique combinations of Objectives.
      */
-    distinct?: TaskScalarFieldEnum | TaskScalarFieldEnum[]
+    distinct?: ObjectiveScalarFieldEnum | ObjectiveScalarFieldEnum[]
   }
 
   /**
-   * Task findFirstOrThrow
+   * Objective findFirstOrThrow
    */
-  export type TaskFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ObjectiveFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Task
+     * Select specific fields to fetch from the Objective
      */
-    select?: TaskSelect<ExtArgs> | null
+    select?: ObjectiveSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Task
+     * Omit specific fields from the Objective
      */
-    omit?: TaskOmit<ExtArgs> | null
+    omit?: ObjectiveOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: TaskInclude<ExtArgs> | null
+    include?: ObjectiveInclude<ExtArgs> | null
     /**
-     * Filter, which Task to fetch.
+     * Filter, which Objective to fetch.
      */
-    where?: TaskWhereInput
+    where?: ObjectiveWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of Tasks to fetch.
+     * Determine the order of Objectives to fetch.
      */
-    orderBy?: TaskOrderByWithRelationInput | TaskOrderByWithRelationInput[]
+    orderBy?: ObjectiveOrderByWithRelationInput | ObjectiveOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for searching for Tasks.
+     * Sets the position for searching for Objectives.
      */
-    cursor?: TaskWhereUniqueInput
+    cursor?: ObjectiveWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` Tasks from the position of the cursor.
+     * Take `±n` Objectives from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` Tasks.
+     * Skip the first `n` Objectives.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
      * 
-     * Filter by unique combinations of Tasks.
+     * Filter by unique combinations of Objectives.
      */
-    distinct?: TaskScalarFieldEnum | TaskScalarFieldEnum[]
+    distinct?: ObjectiveScalarFieldEnum | ObjectiveScalarFieldEnum[]
   }
 
   /**
-   * Task findMany
+   * Objective findMany
    */
-  export type TaskFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ObjectiveFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Task
+     * Select specific fields to fetch from the Objective
      */
-    select?: TaskSelect<ExtArgs> | null
+    select?: ObjectiveSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Task
+     * Omit specific fields from the Objective
      */
-    omit?: TaskOmit<ExtArgs> | null
+    omit?: ObjectiveOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: TaskInclude<ExtArgs> | null
+    include?: ObjectiveInclude<ExtArgs> | null
     /**
-     * Filter, which Tasks to fetch.
+     * Filter, which Objectives to fetch.
      */
-    where?: TaskWhereInput
+    where?: ObjectiveWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of Tasks to fetch.
+     * Determine the order of Objectives to fetch.
      */
-    orderBy?: TaskOrderByWithRelationInput | TaskOrderByWithRelationInput[]
+    orderBy?: ObjectiveOrderByWithRelationInput | ObjectiveOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for listing Tasks.
+     * Sets the position for listing Objectives.
      */
-    cursor?: TaskWhereUniqueInput
+    cursor?: ObjectiveWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` Tasks from the position of the cursor.
+     * Take `±n` Objectives from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` Tasks.
+     * Skip the first `n` Objectives.
      */
     skip?: number
-    distinct?: TaskScalarFieldEnum | TaskScalarFieldEnum[]
+    distinct?: ObjectiveScalarFieldEnum | ObjectiveScalarFieldEnum[]
   }
 
   /**
-   * Task create
+   * Objective create
    */
-  export type TaskCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ObjectiveCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Task
+     * Select specific fields to fetch from the Objective
      */
-    select?: TaskSelect<ExtArgs> | null
+    select?: ObjectiveSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Task
+     * Omit specific fields from the Objective
      */
-    omit?: TaskOmit<ExtArgs> | null
+    omit?: ObjectiveOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: TaskInclude<ExtArgs> | null
+    include?: ObjectiveInclude<ExtArgs> | null
     /**
-     * The data needed to create a Task.
+     * The data needed to create a Objective.
      */
-    data: XOR<TaskCreateInput, TaskUncheckedCreateInput>
+    data: XOR<ObjectiveCreateInput, ObjectiveUncheckedCreateInput>
   }
 
   /**
-   * Task createMany
+   * Objective createMany
    */
-  export type TaskCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ObjectiveCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * The data used to create many Tasks.
+     * The data used to create many Objectives.
      */
-    data: TaskCreateManyInput | TaskCreateManyInput[]
+    data: ObjectiveCreateManyInput | ObjectiveCreateManyInput[]
     skipDuplicates?: boolean
   }
 
   /**
-   * Task createManyAndReturn
+   * Objective createManyAndReturn
    */
-  export type TaskCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ObjectiveCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Task
+     * Select specific fields to fetch from the Objective
      */
-    select?: TaskSelectCreateManyAndReturn<ExtArgs> | null
+    select?: ObjectiveSelectCreateManyAndReturn<ExtArgs> | null
     /**
-     * Omit specific fields from the Task
+     * Omit specific fields from the Objective
      */
-    omit?: TaskOmit<ExtArgs> | null
+    omit?: ObjectiveOmit<ExtArgs> | null
     /**
-     * The data used to create many Tasks.
+     * The data used to create many Objectives.
      */
-    data: TaskCreateManyInput | TaskCreateManyInput[]
+    data: ObjectiveCreateManyInput | ObjectiveCreateManyInput[]
     skipDuplicates?: boolean
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: TaskIncludeCreateManyAndReturn<ExtArgs> | null
+    include?: ObjectiveIncludeCreateManyAndReturn<ExtArgs> | null
   }
 
   /**
-   * Task update
+   * Objective update
    */
-  export type TaskUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ObjectiveUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Task
+     * Select specific fields to fetch from the Objective
      */
-    select?: TaskSelect<ExtArgs> | null
+    select?: ObjectiveSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Task
+     * Omit specific fields from the Objective
      */
-    omit?: TaskOmit<ExtArgs> | null
+    omit?: ObjectiveOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: TaskInclude<ExtArgs> | null
+    include?: ObjectiveInclude<ExtArgs> | null
     /**
-     * The data needed to update a Task.
+     * The data needed to update a Objective.
      */
-    data: XOR<TaskUpdateInput, TaskUncheckedUpdateInput>
+    data: XOR<ObjectiveUpdateInput, ObjectiveUncheckedUpdateInput>
     /**
-     * Choose, which Task to update.
+     * Choose, which Objective to update.
      */
-    where: TaskWhereUniqueInput
+    where: ObjectiveWhereUniqueInput
   }
 
   /**
-   * Task updateMany
+   * Objective updateMany
    */
-  export type TaskUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ObjectiveUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * The data used to update Tasks.
+     * The data used to update Objectives.
      */
-    data: XOR<TaskUpdateManyMutationInput, TaskUncheckedUpdateManyInput>
+    data: XOR<ObjectiveUpdateManyMutationInput, ObjectiveUncheckedUpdateManyInput>
     /**
-     * Filter which Tasks to update
+     * Filter which Objectives to update
      */
-    where?: TaskWhereInput
+    where?: ObjectiveWhereInput
     /**
-     * Limit how many Tasks to update.
+     * Limit how many Objectives to update.
      */
     limit?: number
   }
 
   /**
-   * Task updateManyAndReturn
+   * Objective updateManyAndReturn
    */
-  export type TaskUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ObjectiveUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Task
+     * Select specific fields to fetch from the Objective
      */
-    select?: TaskSelectUpdateManyAndReturn<ExtArgs> | null
+    select?: ObjectiveSelectUpdateManyAndReturn<ExtArgs> | null
     /**
-     * Omit specific fields from the Task
+     * Omit specific fields from the Objective
      */
-    omit?: TaskOmit<ExtArgs> | null
+    omit?: ObjectiveOmit<ExtArgs> | null
     /**
-     * The data used to update Tasks.
+     * The data used to update Objectives.
      */
-    data: XOR<TaskUpdateManyMutationInput, TaskUncheckedUpdateManyInput>
+    data: XOR<ObjectiveUpdateManyMutationInput, ObjectiveUncheckedUpdateManyInput>
     /**
-     * Filter which Tasks to update
+     * Filter which Objectives to update
      */
-    where?: TaskWhereInput
+    where?: ObjectiveWhereInput
     /**
-     * Limit how many Tasks to update.
+     * Limit how many Objectives to update.
      */
     limit?: number
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: TaskIncludeUpdateManyAndReturn<ExtArgs> | null
+    include?: ObjectiveIncludeUpdateManyAndReturn<ExtArgs> | null
   }
 
   /**
-   * Task upsert
+   * Objective upsert
    */
-  export type TaskUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ObjectiveUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Task
+     * Select specific fields to fetch from the Objective
      */
-    select?: TaskSelect<ExtArgs> | null
+    select?: ObjectiveSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Task
+     * Omit specific fields from the Objective
      */
-    omit?: TaskOmit<ExtArgs> | null
+    omit?: ObjectiveOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: TaskInclude<ExtArgs> | null
+    include?: ObjectiveInclude<ExtArgs> | null
     /**
-     * The filter to search for the Task to update in case it exists.
+     * The filter to search for the Objective to update in case it exists.
      */
-    where: TaskWhereUniqueInput
+    where: ObjectiveWhereUniqueInput
     /**
-     * In case the Task found by the `where` argument doesn't exist, create a new Task with this data.
+     * In case the Objective found by the `where` argument doesn't exist, create a new Objective with this data.
      */
-    create: XOR<TaskCreateInput, TaskUncheckedCreateInput>
+    create: XOR<ObjectiveCreateInput, ObjectiveUncheckedCreateInput>
     /**
-     * In case the Task was found with the provided `where` argument, update it with this data.
+     * In case the Objective was found with the provided `where` argument, update it with this data.
      */
-    update: XOR<TaskUpdateInput, TaskUncheckedUpdateInput>
+    update: XOR<ObjectiveUpdateInput, ObjectiveUncheckedUpdateInput>
   }
 
   /**
-   * Task delete
+   * Objective delete
    */
-  export type TaskDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ObjectiveDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Task
+     * Select specific fields to fetch from the Objective
      */
-    select?: TaskSelect<ExtArgs> | null
+    select?: ObjectiveSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Task
+     * Omit specific fields from the Objective
      */
-    omit?: TaskOmit<ExtArgs> | null
+    omit?: ObjectiveOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: TaskInclude<ExtArgs> | null
+    include?: ObjectiveInclude<ExtArgs> | null
     /**
-     * Filter which Task to delete.
+     * Filter which Objective to delete.
      */
-    where: TaskWhereUniqueInput
+    where: ObjectiveWhereUniqueInput
   }
 
   /**
-   * Task deleteMany
+   * Objective deleteMany
    */
-  export type TaskDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ObjectiveDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Filter which Tasks to delete
+     * Filter which Objectives to delete
      */
-    where?: TaskWhereInput
+    where?: ObjectiveWhereInput
     /**
-     * Limit how many Tasks to delete.
+     * Limit how many Objectives to delete.
      */
     limit?: number
   }
 
   /**
-   * Task.goal
+   * Objective.parent
    */
-  export type Task$goalArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type Objective$parentArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Goal
+     * Select specific fields to fetch from the Objective
      */
-    select?: GoalSelect<ExtArgs> | null
+    select?: ObjectiveSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Goal
+     * Omit specific fields from the Objective
      */
-    omit?: GoalOmit<ExtArgs> | null
+    omit?: ObjectiveOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: GoalInclude<ExtArgs> | null
-    where?: GoalWhereInput
+    include?: ObjectiveInclude<ExtArgs> | null
+    where?: ObjectiveWhereInput
   }
 
   /**
-   * Task.parent
+   * Objective.subObjectives
    */
-  export type Task$parentArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type Objective$subObjectivesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Task
+     * Select specific fields to fetch from the Objective
      */
-    select?: TaskSelect<ExtArgs> | null
+    select?: ObjectiveSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Task
+     * Omit specific fields from the Objective
      */
-    omit?: TaskOmit<ExtArgs> | null
+    omit?: ObjectiveOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: TaskInclude<ExtArgs> | null
-    where?: TaskWhereInput
-  }
-
-  /**
-   * Task.subTasks
-   */
-  export type Task$subTasksArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Task
-     */
-    select?: TaskSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Task
-     */
-    omit?: TaskOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: TaskInclude<ExtArgs> | null
-    where?: TaskWhereInput
-    orderBy?: TaskOrderByWithRelationInput | TaskOrderByWithRelationInput[]
-    cursor?: TaskWhereUniqueInput
+    include?: ObjectiveInclude<ExtArgs> | null
+    where?: ObjectiveWhereInput
+    orderBy?: ObjectiveOrderByWithRelationInput | ObjectiveOrderByWithRelationInput[]
+    cursor?: ObjectiveWhereUniqueInput
     take?: number
     skip?: number
-    distinct?: TaskScalarFieldEnum | TaskScalarFieldEnum[]
+    distinct?: ObjectiveScalarFieldEnum | ObjectiveScalarFieldEnum[]
   }
 
   /**
-   * Task.tags
+   * Objective.tags
    */
-  export type Task$tagsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type Objective$tagsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
      * Select specific fields to fetch from the Tag
      */
@@ -4579,9 +4380,33 @@ export namespace Prisma {
   }
 
   /**
-   * Task.timeRecords
+   * Objective.progressLogs
    */
-  export type Task$timeRecordsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type Objective$progressLogsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProgressLog
+     */
+    select?: ProgressLogSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProgressLog
+     */
+    omit?: ProgressLogOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProgressLogInclude<ExtArgs> | null
+    where?: ProgressLogWhereInput
+    orderBy?: ProgressLogOrderByWithRelationInput | ProgressLogOrderByWithRelationInput[]
+    cursor?: ProgressLogWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ProgressLogScalarFieldEnum | ProgressLogScalarFieldEnum[]
+  }
+
+  /**
+   * Objective.timeRecords
+   */
+  export type Objective$timeRecordsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
      * Select specific fields to fetch from the TimeRecord
      */
@@ -4603,1430 +4428,21 @@ export namespace Prisma {
   }
 
   /**
-   * Task.progressLogs
+   * Objective without action
    */
-  export type Task$progressLogsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ObjectiveDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the ProgressLog
+     * Select specific fields to fetch from the Objective
      */
-    select?: ProgressLogSelect<ExtArgs> | null
+    select?: ObjectiveSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the ProgressLog
+     * Omit specific fields from the Objective
      */
-    omit?: ProgressLogOmit<ExtArgs> | null
+    omit?: ObjectiveOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: ProgressLogInclude<ExtArgs> | null
-    where?: ProgressLogWhereInput
-    orderBy?: ProgressLogOrderByWithRelationInput | ProgressLogOrderByWithRelationInput[]
-    cursor?: ProgressLogWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: ProgressLogScalarFieldEnum | ProgressLogScalarFieldEnum[]
-  }
-
-  /**
-   * Task without action
-   */
-  export type TaskDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Task
-     */
-    select?: TaskSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Task
-     */
-    omit?: TaskOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: TaskInclude<ExtArgs> | null
-  }
-
-
-  /**
-   * Model Goal
-   */
-
-  export type AggregateGoal = {
-    _count: GoalCountAggregateOutputType | null
-    _avg: GoalAvgAggregateOutputType | null
-    _sum: GoalSumAggregateOutputType | null
-    _min: GoalMinAggregateOutputType | null
-    _max: GoalMaxAggregateOutputType | null
-  }
-
-  export type GoalAvgAggregateOutputType = {
-    progress: number | null
-    priority: number | null
-    weight: number | null
-  }
-
-  export type GoalSumAggregateOutputType = {
-    progress: number | null
-    priority: number | null
-    weight: number | null
-  }
-
-  export type GoalMinAggregateOutputType = {
-    id: string | null
-    title: string | null
-    description: string | null
-    level: $Enums.GoalLevel | null
-    status: $Enums.GoalStatus | null
-    startDate: Date | null
-    endDate: Date | null
-    progress: number | null
-    createdAt: Date | null
-    updatedAt: Date | null
-    userId: string | null
-    parentId: string | null
-    priority: number | null
-    weight: number | null
-  }
-
-  export type GoalMaxAggregateOutputType = {
-    id: string | null
-    title: string | null
-    description: string | null
-    level: $Enums.GoalLevel | null
-    status: $Enums.GoalStatus | null
-    startDate: Date | null
-    endDate: Date | null
-    progress: number | null
-    createdAt: Date | null
-    updatedAt: Date | null
-    userId: string | null
-    parentId: string | null
-    priority: number | null
-    weight: number | null
-  }
-
-  export type GoalCountAggregateOutputType = {
-    id: number
-    title: number
-    description: number
-    level: number
-    status: number
-    startDate: number
-    endDate: number
-    progress: number
-    createdAt: number
-    updatedAt: number
-    userId: number
-    parentId: number
-    metrics: number
-    resources: number
-    priority: number
-    weight: number
-    metadata: number
-    _all: number
-  }
-
-
-  export type GoalAvgAggregateInputType = {
-    progress?: true
-    priority?: true
-    weight?: true
-  }
-
-  export type GoalSumAggregateInputType = {
-    progress?: true
-    priority?: true
-    weight?: true
-  }
-
-  export type GoalMinAggregateInputType = {
-    id?: true
-    title?: true
-    description?: true
-    level?: true
-    status?: true
-    startDate?: true
-    endDate?: true
-    progress?: true
-    createdAt?: true
-    updatedAt?: true
-    userId?: true
-    parentId?: true
-    priority?: true
-    weight?: true
-  }
-
-  export type GoalMaxAggregateInputType = {
-    id?: true
-    title?: true
-    description?: true
-    level?: true
-    status?: true
-    startDate?: true
-    endDate?: true
-    progress?: true
-    createdAt?: true
-    updatedAt?: true
-    userId?: true
-    parentId?: true
-    priority?: true
-    weight?: true
-  }
-
-  export type GoalCountAggregateInputType = {
-    id?: true
-    title?: true
-    description?: true
-    level?: true
-    status?: true
-    startDate?: true
-    endDate?: true
-    progress?: true
-    createdAt?: true
-    updatedAt?: true
-    userId?: true
-    parentId?: true
-    metrics?: true
-    resources?: true
-    priority?: true
-    weight?: true
-    metadata?: true
-    _all?: true
-  }
-
-  export type GoalAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Filter which Goal to aggregate.
-     */
-    where?: GoalWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of Goals to fetch.
-     */
-    orderBy?: GoalOrderByWithRelationInput | GoalOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the start position
-     */
-    cursor?: GoalWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` Goals from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` Goals.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Count returned Goals
-    **/
-    _count?: true | GoalCountAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to average
-    **/
-    _avg?: GoalAvgAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to sum
-    **/
-    _sum?: GoalSumAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the minimum value
-    **/
-    _min?: GoalMinAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the maximum value
-    **/
-    _max?: GoalMaxAggregateInputType
-  }
-
-  export type GetGoalAggregateType<T extends GoalAggregateArgs> = {
-        [P in keyof T & keyof AggregateGoal]: P extends '_count' | 'count'
-      ? T[P] extends true
-        ? number
-        : GetScalarType<T[P], AggregateGoal[P]>
-      : GetScalarType<T[P], AggregateGoal[P]>
-  }
-
-
-
-
-  export type GoalGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: GoalWhereInput
-    orderBy?: GoalOrderByWithAggregationInput | GoalOrderByWithAggregationInput[]
-    by: GoalScalarFieldEnum[] | GoalScalarFieldEnum
-    having?: GoalScalarWhereWithAggregatesInput
-    take?: number
-    skip?: number
-    _count?: GoalCountAggregateInputType | true
-    _avg?: GoalAvgAggregateInputType
-    _sum?: GoalSumAggregateInputType
-    _min?: GoalMinAggregateInputType
-    _max?: GoalMaxAggregateInputType
-  }
-
-  export type GoalGroupByOutputType = {
-    id: string
-    title: string
-    description: string | null
-    level: $Enums.GoalLevel
-    status: $Enums.GoalStatus
-    startDate: Date
-    endDate: Date
-    progress: number
-    createdAt: Date
-    updatedAt: Date
-    userId: string
-    parentId: string | null
-    metrics: JsonValue | null
-    resources: JsonValue | null
-    priority: number
-    weight: number
-    metadata: JsonValue | null
-    _count: GoalCountAggregateOutputType | null
-    _avg: GoalAvgAggregateOutputType | null
-    _sum: GoalSumAggregateOutputType | null
-    _min: GoalMinAggregateOutputType | null
-    _max: GoalMaxAggregateOutputType | null
-  }
-
-  type GetGoalGroupByPayload<T extends GoalGroupByArgs> = Prisma.PrismaPromise<
-    Array<
-      PickEnumerable<GoalGroupByOutputType, T['by']> &
-        {
-          [P in ((keyof T) & (keyof GoalGroupByOutputType))]: P extends '_count'
-            ? T[P] extends boolean
-              ? number
-              : GetScalarType<T[P], GoalGroupByOutputType[P]>
-            : GetScalarType<T[P], GoalGroupByOutputType[P]>
-        }
-      >
-    >
-
-
-  export type GoalSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    title?: boolean
-    description?: boolean
-    level?: boolean
-    status?: boolean
-    startDate?: boolean
-    endDate?: boolean
-    progress?: boolean
-    createdAt?: boolean
-    updatedAt?: boolean
-    userId?: boolean
-    parentId?: boolean
-    metrics?: boolean
-    resources?: boolean
-    priority?: boolean
-    weight?: boolean
-    metadata?: boolean
-    parent?: boolean | Goal$parentArgs<ExtArgs>
-    subGoals?: boolean | Goal$subGoalsArgs<ExtArgs>
-    user?: boolean | UserDefaultArgs<ExtArgs>
-    tasks?: boolean | Goal$tasksArgs<ExtArgs>
-    tags?: boolean | Goal$tagsArgs<ExtArgs>
-    progressLogs?: boolean | Goal$progressLogsArgs<ExtArgs>
-    _count?: boolean | GoalCountOutputTypeDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["goal"]>
-
-  export type GoalSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    title?: boolean
-    description?: boolean
-    level?: boolean
-    status?: boolean
-    startDate?: boolean
-    endDate?: boolean
-    progress?: boolean
-    createdAt?: boolean
-    updatedAt?: boolean
-    userId?: boolean
-    parentId?: boolean
-    metrics?: boolean
-    resources?: boolean
-    priority?: boolean
-    weight?: boolean
-    metadata?: boolean
-    parent?: boolean | Goal$parentArgs<ExtArgs>
-    user?: boolean | UserDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["goal"]>
-
-  export type GoalSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    title?: boolean
-    description?: boolean
-    level?: boolean
-    status?: boolean
-    startDate?: boolean
-    endDate?: boolean
-    progress?: boolean
-    createdAt?: boolean
-    updatedAt?: boolean
-    userId?: boolean
-    parentId?: boolean
-    metrics?: boolean
-    resources?: boolean
-    priority?: boolean
-    weight?: boolean
-    metadata?: boolean
-    parent?: boolean | Goal$parentArgs<ExtArgs>
-    user?: boolean | UserDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["goal"]>
-
-  export type GoalSelectScalar = {
-    id?: boolean
-    title?: boolean
-    description?: boolean
-    level?: boolean
-    status?: boolean
-    startDate?: boolean
-    endDate?: boolean
-    progress?: boolean
-    createdAt?: boolean
-    updatedAt?: boolean
-    userId?: boolean
-    parentId?: boolean
-    metrics?: boolean
-    resources?: boolean
-    priority?: boolean
-    weight?: boolean
-    metadata?: boolean
-  }
-
-  export type GoalOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "description" | "level" | "status" | "startDate" | "endDate" | "progress" | "createdAt" | "updatedAt" | "userId" | "parentId" | "metrics" | "resources" | "priority" | "weight" | "metadata", ExtArgs["result"]["goal"]>
-  export type GoalInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    parent?: boolean | Goal$parentArgs<ExtArgs>
-    subGoals?: boolean | Goal$subGoalsArgs<ExtArgs>
-    user?: boolean | UserDefaultArgs<ExtArgs>
-    tasks?: boolean | Goal$tasksArgs<ExtArgs>
-    tags?: boolean | Goal$tagsArgs<ExtArgs>
-    progressLogs?: boolean | Goal$progressLogsArgs<ExtArgs>
-    _count?: boolean | GoalCountOutputTypeDefaultArgs<ExtArgs>
-  }
-  export type GoalIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    parent?: boolean | Goal$parentArgs<ExtArgs>
-    user?: boolean | UserDefaultArgs<ExtArgs>
-  }
-  export type GoalIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    parent?: boolean | Goal$parentArgs<ExtArgs>
-    user?: boolean | UserDefaultArgs<ExtArgs>
-  }
-
-  export type $GoalPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    name: "Goal"
-    objects: {
-      parent: Prisma.$GoalPayload<ExtArgs> | null
-      subGoals: Prisma.$GoalPayload<ExtArgs>[]
-      user: Prisma.$UserPayload<ExtArgs>
-      tasks: Prisma.$TaskPayload<ExtArgs>[]
-      tags: Prisma.$TagPayload<ExtArgs>[]
-      progressLogs: Prisma.$ProgressLogPayload<ExtArgs>[]
-    }
-    scalars: $Extensions.GetPayloadResult<{
-      id: string
-      title: string
-      description: string | null
-      level: $Enums.GoalLevel
-      status: $Enums.GoalStatus
-      startDate: Date
-      endDate: Date
-      progress: number
-      createdAt: Date
-      updatedAt: Date
-      userId: string
-      parentId: string | null
-      metrics: Prisma.JsonValue | null
-      resources: Prisma.JsonValue | null
-      priority: number
-      weight: number
-      metadata: Prisma.JsonValue | null
-    }, ExtArgs["result"]["goal"]>
-    composites: {}
-  }
-
-  type GoalGetPayload<S extends boolean | null | undefined | GoalDefaultArgs> = $Result.GetResult<Prisma.$GoalPayload, S>
-
-  type GoalCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
-    Omit<GoalFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
-      select?: GoalCountAggregateInputType | true
-    }
-
-  export interface GoalDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
-    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Goal'], meta: { name: 'Goal' } }
-    /**
-     * Find zero or one Goal that matches the filter.
-     * @param {GoalFindUniqueArgs} args - Arguments to find a Goal
-     * @example
-     * // Get one Goal
-     * const goal = await prisma.goal.findUnique({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findUnique<T extends GoalFindUniqueArgs>(args: SelectSubset<T, GoalFindUniqueArgs<ExtArgs>>): Prisma__GoalClient<$Result.GetResult<Prisma.$GoalPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find one Goal that matches the filter or throw an error with `error.code='P2025'`
-     * if no matches were found.
-     * @param {GoalFindUniqueOrThrowArgs} args - Arguments to find a Goal
-     * @example
-     * // Get one Goal
-     * const goal = await prisma.goal.findUniqueOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findUniqueOrThrow<T extends GoalFindUniqueOrThrowArgs>(args: SelectSubset<T, GoalFindUniqueOrThrowArgs<ExtArgs>>): Prisma__GoalClient<$Result.GetResult<Prisma.$GoalPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find the first Goal that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {GoalFindFirstArgs} args - Arguments to find a Goal
-     * @example
-     * // Get one Goal
-     * const goal = await prisma.goal.findFirst({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findFirst<T extends GoalFindFirstArgs>(args?: SelectSubset<T, GoalFindFirstArgs<ExtArgs>>): Prisma__GoalClient<$Result.GetResult<Prisma.$GoalPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find the first Goal that matches the filter or
-     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {GoalFindFirstOrThrowArgs} args - Arguments to find a Goal
-     * @example
-     * // Get one Goal
-     * const goal = await prisma.goal.findFirstOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findFirstOrThrow<T extends GoalFindFirstOrThrowArgs>(args?: SelectSubset<T, GoalFindFirstOrThrowArgs<ExtArgs>>): Prisma__GoalClient<$Result.GetResult<Prisma.$GoalPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find zero or more Goals that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {GoalFindManyArgs} args - Arguments to filter and select certain fields only.
-     * @example
-     * // Get all Goals
-     * const goals = await prisma.goal.findMany()
-     * 
-     * // Get first 10 Goals
-     * const goals = await prisma.goal.findMany({ take: 10 })
-     * 
-     * // Only select the `id`
-     * const goalWithIdOnly = await prisma.goal.findMany({ select: { id: true } })
-     * 
-     */
-    findMany<T extends GoalFindManyArgs>(args?: SelectSubset<T, GoalFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$GoalPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
-
-    /**
-     * Create a Goal.
-     * @param {GoalCreateArgs} args - Arguments to create a Goal.
-     * @example
-     * // Create one Goal
-     * const Goal = await prisma.goal.create({
-     *   data: {
-     *     // ... data to create a Goal
-     *   }
-     * })
-     * 
-     */
-    create<T extends GoalCreateArgs>(args: SelectSubset<T, GoalCreateArgs<ExtArgs>>): Prisma__GoalClient<$Result.GetResult<Prisma.$GoalPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Create many Goals.
-     * @param {GoalCreateManyArgs} args - Arguments to create many Goals.
-     * @example
-     * // Create many Goals
-     * const goal = await prisma.goal.createMany({
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     *     
-     */
-    createMany<T extends GoalCreateManyArgs>(args?: SelectSubset<T, GoalCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Create many Goals and returns the data saved in the database.
-     * @param {GoalCreateManyAndReturnArgs} args - Arguments to create many Goals.
-     * @example
-     * // Create many Goals
-     * const goal = await prisma.goal.createManyAndReturn({
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * 
-     * // Create many Goals and only return the `id`
-     * const goalWithIdOnly = await prisma.goal.createManyAndReturn({
-     *   select: { id: true },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * 
-     */
-    createManyAndReturn<T extends GoalCreateManyAndReturnArgs>(args?: SelectSubset<T, GoalCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$GoalPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
-
-    /**
-     * Delete a Goal.
-     * @param {GoalDeleteArgs} args - Arguments to delete one Goal.
-     * @example
-     * // Delete one Goal
-     * const Goal = await prisma.goal.delete({
-     *   where: {
-     *     // ... filter to delete one Goal
-     *   }
-     * })
-     * 
-     */
-    delete<T extends GoalDeleteArgs>(args: SelectSubset<T, GoalDeleteArgs<ExtArgs>>): Prisma__GoalClient<$Result.GetResult<Prisma.$GoalPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Update one Goal.
-     * @param {GoalUpdateArgs} args - Arguments to update one Goal.
-     * @example
-     * // Update one Goal
-     * const goal = await prisma.goal.update({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-     */
-    update<T extends GoalUpdateArgs>(args: SelectSubset<T, GoalUpdateArgs<ExtArgs>>): Prisma__GoalClient<$Result.GetResult<Prisma.$GoalPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Delete zero or more Goals.
-     * @param {GoalDeleteManyArgs} args - Arguments to filter Goals to delete.
-     * @example
-     * // Delete a few Goals
-     * const { count } = await prisma.goal.deleteMany({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     * 
-     */
-    deleteMany<T extends GoalDeleteManyArgs>(args?: SelectSubset<T, GoalDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more Goals.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {GoalUpdateManyArgs} args - Arguments to update one or more rows.
-     * @example
-     * // Update many Goals
-     * const goal = await prisma.goal.updateMany({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-     */
-    updateMany<T extends GoalUpdateManyArgs>(args: SelectSubset<T, GoalUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more Goals and returns the data updated in the database.
-     * @param {GoalUpdateManyAndReturnArgs} args - Arguments to update many Goals.
-     * @example
-     * // Update many Goals
-     * const goal = await prisma.goal.updateManyAndReturn({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * 
-     * // Update zero or more Goals and only return the `id`
-     * const goalWithIdOnly = await prisma.goal.updateManyAndReturn({
-     *   select: { id: true },
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * 
-     */
-    updateManyAndReturn<T extends GoalUpdateManyAndReturnArgs>(args: SelectSubset<T, GoalUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$GoalPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
-
-    /**
-     * Create or update one Goal.
-     * @param {GoalUpsertArgs} args - Arguments to update or create a Goal.
-     * @example
-     * // Update or create a Goal
-     * const goal = await prisma.goal.upsert({
-     *   create: {
-     *     // ... data to create a Goal
-     *   },
-     *   update: {
-     *     // ... in case it already exists, update
-     *   },
-     *   where: {
-     *     // ... the filter for the Goal we want to update
-     *   }
-     * })
-     */
-    upsert<T extends GoalUpsertArgs>(args: SelectSubset<T, GoalUpsertArgs<ExtArgs>>): Prisma__GoalClient<$Result.GetResult<Prisma.$GoalPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-
-    /**
-     * Count the number of Goals.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {GoalCountArgs} args - Arguments to filter Goals to count.
-     * @example
-     * // Count the number of Goals
-     * const count = await prisma.goal.count({
-     *   where: {
-     *     // ... the filter for the Goals we want to count
-     *   }
-     * })
-    **/
-    count<T extends GoalCountArgs>(
-      args?: Subset<T, GoalCountArgs>,
-    ): Prisma.PrismaPromise<
-      T extends $Utils.Record<'select', any>
-        ? T['select'] extends true
-          ? number
-          : GetScalarType<T['select'], GoalCountAggregateOutputType>
-        : number
-    >
-
-    /**
-     * Allows you to perform aggregations operations on a Goal.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {GoalAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
-     * @example
-     * // Ordered by age ascending
-     * // Where email contains prisma.io
-     * // Limited to the 10 users
-     * const aggregations = await prisma.user.aggregate({
-     *   _avg: {
-     *     age: true,
-     *   },
-     *   where: {
-     *     email: {
-     *       contains: "prisma.io",
-     *     },
-     *   },
-     *   orderBy: {
-     *     age: "asc",
-     *   },
-     *   take: 10,
-     * })
-    **/
-    aggregate<T extends GoalAggregateArgs>(args: Subset<T, GoalAggregateArgs>): Prisma.PrismaPromise<GetGoalAggregateType<T>>
-
-    /**
-     * Group by Goal.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {GoalGroupByArgs} args - Group by arguments.
-     * @example
-     * // Group by city, order by createdAt, get count
-     * const result = await prisma.user.groupBy({
-     *   by: ['city', 'createdAt'],
-     *   orderBy: {
-     *     createdAt: true
-     *   },
-     *   _count: {
-     *     _all: true
-     *   },
-     * })
-     * 
-    **/
-    groupBy<
-      T extends GoalGroupByArgs,
-      HasSelectOrTake extends Or<
-        Extends<'skip', Keys<T>>,
-        Extends<'take', Keys<T>>
-      >,
-      OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: GoalGroupByArgs['orderBy'] }
-        : { orderBy?: GoalGroupByArgs['orderBy'] },
-      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
-      ByFields extends MaybeTupleToUnion<T['by']>,
-      ByValid extends Has<ByFields, OrderFields>,
-      HavingFields extends GetHavingFields<T['having']>,
-      HavingValid extends Has<ByFields, HavingFields>,
-      ByEmpty extends T['by'] extends never[] ? True : False,
-      InputErrors extends ByEmpty extends True
-      ? `Error: "by" must not be empty.`
-      : HavingValid extends False
-      ? {
-          [P in HavingFields]: P extends ByFields
-            ? never
-            : P extends string
-            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
-            : [
-                Error,
-                'Field ',
-                P,
-                ` in "having" needs to be provided in "by"`,
-              ]
-        }[HavingFields]
-      : 'take' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "take", you also need to provide "orderBy"'
-      : 'skip' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "skip", you also need to provide "orderBy"'
-      : ByValid extends True
-      ? {}
-      : {
-          [P in OrderFields]: P extends ByFields
-            ? never
-            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-        }[OrderFields]
-    >(args: SubsetIntersection<T, GoalGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetGoalGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
-  /**
-   * Fields of the Goal model
-   */
-  readonly fields: GoalFieldRefs;
-  }
-
-  /**
-   * The delegate class that acts as a "Promise-like" for Goal.
-   * Why is this prefixed with `Prisma__`?
-   * Because we want to prevent naming conflicts as mentioned in
-   * https://github.com/prisma/prisma-client-js/issues/707
-   */
-  export interface Prisma__GoalClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
-    readonly [Symbol.toStringTag]: "PrismaPromise"
-    parent<T extends Goal$parentArgs<ExtArgs> = {}>(args?: Subset<T, Goal$parentArgs<ExtArgs>>): Prisma__GoalClient<$Result.GetResult<Prisma.$GoalPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-    subGoals<T extends Goal$subGoalsArgs<ExtArgs> = {}>(args?: Subset<T, Goal$subGoalsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$GoalPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-    tasks<T extends Goal$tasksArgs<ExtArgs> = {}>(args?: Subset<T, Goal$tasksArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TaskPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    tags<T extends Goal$tagsArgs<ExtArgs> = {}>(args?: Subset<T, Goal$tagsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TagPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    progressLogs<T extends Goal$progressLogsArgs<ExtArgs> = {}>(args?: Subset<T, Goal$progressLogsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProgressLogPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    /**
-     * Attaches callbacks for the resolution and/or rejection of the Promise.
-     * @param onfulfilled The callback to execute when the Promise is resolved.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of which ever callback is executed.
-     */
-    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
-    /**
-     * Attaches a callback for only the rejection of the Promise.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of the callback.
-     */
-    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
-    /**
-     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
-     * resolved value cannot be modified from the callback.
-     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
-     * @returns A Promise for the completion of the callback.
-     */
-    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
-  }
-
-
-
-
-  /**
-   * Fields of the Goal model
-   */
-  interface GoalFieldRefs {
-    readonly id: FieldRef<"Goal", 'String'>
-    readonly title: FieldRef<"Goal", 'String'>
-    readonly description: FieldRef<"Goal", 'String'>
-    readonly level: FieldRef<"Goal", 'GoalLevel'>
-    readonly status: FieldRef<"Goal", 'GoalStatus'>
-    readonly startDate: FieldRef<"Goal", 'DateTime'>
-    readonly endDate: FieldRef<"Goal", 'DateTime'>
-    readonly progress: FieldRef<"Goal", 'Float'>
-    readonly createdAt: FieldRef<"Goal", 'DateTime'>
-    readonly updatedAt: FieldRef<"Goal", 'DateTime'>
-    readonly userId: FieldRef<"Goal", 'String'>
-    readonly parentId: FieldRef<"Goal", 'String'>
-    readonly metrics: FieldRef<"Goal", 'Json'>
-    readonly resources: FieldRef<"Goal", 'Json'>
-    readonly priority: FieldRef<"Goal", 'Int'>
-    readonly weight: FieldRef<"Goal", 'Float'>
-    readonly metadata: FieldRef<"Goal", 'Json'>
-  }
-    
-
-  // Custom InputTypes
-  /**
-   * Goal findUnique
-   */
-  export type GoalFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Goal
-     */
-    select?: GoalSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Goal
-     */
-    omit?: GoalOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: GoalInclude<ExtArgs> | null
-    /**
-     * Filter, which Goal to fetch.
-     */
-    where: GoalWhereUniqueInput
-  }
-
-  /**
-   * Goal findUniqueOrThrow
-   */
-  export type GoalFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Goal
-     */
-    select?: GoalSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Goal
-     */
-    omit?: GoalOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: GoalInclude<ExtArgs> | null
-    /**
-     * Filter, which Goal to fetch.
-     */
-    where: GoalWhereUniqueInput
-  }
-
-  /**
-   * Goal findFirst
-   */
-  export type GoalFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Goal
-     */
-    select?: GoalSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Goal
-     */
-    omit?: GoalOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: GoalInclude<ExtArgs> | null
-    /**
-     * Filter, which Goal to fetch.
-     */
-    where?: GoalWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of Goals to fetch.
-     */
-    orderBy?: GoalOrderByWithRelationInput | GoalOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for Goals.
-     */
-    cursor?: GoalWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` Goals from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` Goals.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of Goals.
-     */
-    distinct?: GoalScalarFieldEnum | GoalScalarFieldEnum[]
-  }
-
-  /**
-   * Goal findFirstOrThrow
-   */
-  export type GoalFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Goal
-     */
-    select?: GoalSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Goal
-     */
-    omit?: GoalOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: GoalInclude<ExtArgs> | null
-    /**
-     * Filter, which Goal to fetch.
-     */
-    where?: GoalWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of Goals to fetch.
-     */
-    orderBy?: GoalOrderByWithRelationInput | GoalOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for Goals.
-     */
-    cursor?: GoalWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` Goals from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` Goals.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of Goals.
-     */
-    distinct?: GoalScalarFieldEnum | GoalScalarFieldEnum[]
-  }
-
-  /**
-   * Goal findMany
-   */
-  export type GoalFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Goal
-     */
-    select?: GoalSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Goal
-     */
-    omit?: GoalOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: GoalInclude<ExtArgs> | null
-    /**
-     * Filter, which Goals to fetch.
-     */
-    where?: GoalWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of Goals to fetch.
-     */
-    orderBy?: GoalOrderByWithRelationInput | GoalOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for listing Goals.
-     */
-    cursor?: GoalWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` Goals from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` Goals.
-     */
-    skip?: number
-    distinct?: GoalScalarFieldEnum | GoalScalarFieldEnum[]
-  }
-
-  /**
-   * Goal create
-   */
-  export type GoalCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Goal
-     */
-    select?: GoalSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Goal
-     */
-    omit?: GoalOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: GoalInclude<ExtArgs> | null
-    /**
-     * The data needed to create a Goal.
-     */
-    data: XOR<GoalCreateInput, GoalUncheckedCreateInput>
-  }
-
-  /**
-   * Goal createMany
-   */
-  export type GoalCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * The data used to create many Goals.
-     */
-    data: GoalCreateManyInput | GoalCreateManyInput[]
-    skipDuplicates?: boolean
-  }
-
-  /**
-   * Goal createManyAndReturn
-   */
-  export type GoalCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Goal
-     */
-    select?: GoalSelectCreateManyAndReturn<ExtArgs> | null
-    /**
-     * Omit specific fields from the Goal
-     */
-    omit?: GoalOmit<ExtArgs> | null
-    /**
-     * The data used to create many Goals.
-     */
-    data: GoalCreateManyInput | GoalCreateManyInput[]
-    skipDuplicates?: boolean
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: GoalIncludeCreateManyAndReturn<ExtArgs> | null
-  }
-
-  /**
-   * Goal update
-   */
-  export type GoalUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Goal
-     */
-    select?: GoalSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Goal
-     */
-    omit?: GoalOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: GoalInclude<ExtArgs> | null
-    /**
-     * The data needed to update a Goal.
-     */
-    data: XOR<GoalUpdateInput, GoalUncheckedUpdateInput>
-    /**
-     * Choose, which Goal to update.
-     */
-    where: GoalWhereUniqueInput
-  }
-
-  /**
-   * Goal updateMany
-   */
-  export type GoalUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * The data used to update Goals.
-     */
-    data: XOR<GoalUpdateManyMutationInput, GoalUncheckedUpdateManyInput>
-    /**
-     * Filter which Goals to update
-     */
-    where?: GoalWhereInput
-    /**
-     * Limit how many Goals to update.
-     */
-    limit?: number
-  }
-
-  /**
-   * Goal updateManyAndReturn
-   */
-  export type GoalUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Goal
-     */
-    select?: GoalSelectUpdateManyAndReturn<ExtArgs> | null
-    /**
-     * Omit specific fields from the Goal
-     */
-    omit?: GoalOmit<ExtArgs> | null
-    /**
-     * The data used to update Goals.
-     */
-    data: XOR<GoalUpdateManyMutationInput, GoalUncheckedUpdateManyInput>
-    /**
-     * Filter which Goals to update
-     */
-    where?: GoalWhereInput
-    /**
-     * Limit how many Goals to update.
-     */
-    limit?: number
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: GoalIncludeUpdateManyAndReturn<ExtArgs> | null
-  }
-
-  /**
-   * Goal upsert
-   */
-  export type GoalUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Goal
-     */
-    select?: GoalSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Goal
-     */
-    omit?: GoalOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: GoalInclude<ExtArgs> | null
-    /**
-     * The filter to search for the Goal to update in case it exists.
-     */
-    where: GoalWhereUniqueInput
-    /**
-     * In case the Goal found by the `where` argument doesn't exist, create a new Goal with this data.
-     */
-    create: XOR<GoalCreateInput, GoalUncheckedCreateInput>
-    /**
-     * In case the Goal was found with the provided `where` argument, update it with this data.
-     */
-    update: XOR<GoalUpdateInput, GoalUncheckedUpdateInput>
-  }
-
-  /**
-   * Goal delete
-   */
-  export type GoalDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Goal
-     */
-    select?: GoalSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Goal
-     */
-    omit?: GoalOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: GoalInclude<ExtArgs> | null
-    /**
-     * Filter which Goal to delete.
-     */
-    where: GoalWhereUniqueInput
-  }
-
-  /**
-   * Goal deleteMany
-   */
-  export type GoalDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Filter which Goals to delete
-     */
-    where?: GoalWhereInput
-    /**
-     * Limit how many Goals to delete.
-     */
-    limit?: number
-  }
-
-  /**
-   * Goal.parent
-   */
-  export type Goal$parentArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Goal
-     */
-    select?: GoalSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Goal
-     */
-    omit?: GoalOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: GoalInclude<ExtArgs> | null
-    where?: GoalWhereInput
-  }
-
-  /**
-   * Goal.subGoals
-   */
-  export type Goal$subGoalsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Goal
-     */
-    select?: GoalSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Goal
-     */
-    omit?: GoalOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: GoalInclude<ExtArgs> | null
-    where?: GoalWhereInput
-    orderBy?: GoalOrderByWithRelationInput | GoalOrderByWithRelationInput[]
-    cursor?: GoalWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: GoalScalarFieldEnum | GoalScalarFieldEnum[]
-  }
-
-  /**
-   * Goal.tasks
-   */
-  export type Goal$tasksArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Task
-     */
-    select?: TaskSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Task
-     */
-    omit?: TaskOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: TaskInclude<ExtArgs> | null
-    where?: TaskWhereInput
-    orderBy?: TaskOrderByWithRelationInput | TaskOrderByWithRelationInput[]
-    cursor?: TaskWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: TaskScalarFieldEnum | TaskScalarFieldEnum[]
-  }
-
-  /**
-   * Goal.tags
-   */
-  export type Goal$tagsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Tag
-     */
-    select?: TagSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Tag
-     */
-    omit?: TagOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: TagInclude<ExtArgs> | null
-    where?: TagWhereInput
-    orderBy?: TagOrderByWithRelationInput | TagOrderByWithRelationInput[]
-    cursor?: TagWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: TagScalarFieldEnum | TagScalarFieldEnum[]
-  }
-
-  /**
-   * Goal.progressLogs
-   */
-  export type Goal$progressLogsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the ProgressLog
-     */
-    select?: ProgressLogSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the ProgressLog
-     */
-    omit?: ProgressLogOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: ProgressLogInclude<ExtArgs> | null
-    where?: ProgressLogWhereInput
-    orderBy?: ProgressLogOrderByWithRelationInput | ProgressLogOrderByWithRelationInput[]
-    cursor?: ProgressLogWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: ProgressLogScalarFieldEnum | ProgressLogScalarFieldEnum[]
-  }
-
-  /**
-   * Goal without action
-   */
-  export type GoalDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Goal
-     */
-    select?: GoalSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Goal
-     */
-    omit?: GoalOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: GoalInclude<ExtArgs> | null
+    include?: ObjectiveInclude<ExtArgs> | null
   }
 
 
@@ -8518,9 +6934,8 @@ export namespace Prisma {
     color?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    goals?: boolean | Tag$goalsArgs<ExtArgs>
+    objectives?: boolean | Tag$objectivesArgs<ExtArgs>
     messages?: boolean | Tag$messagesArgs<ExtArgs>
-    tasks?: boolean | Tag$tasksArgs<ExtArgs>
     _count?: boolean | TagCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["tag"]>
 
@@ -8550,9 +6965,8 @@ export namespace Prisma {
 
   export type TagOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "color" | "createdAt" | "updatedAt", ExtArgs["result"]["tag"]>
   export type TagInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    goals?: boolean | Tag$goalsArgs<ExtArgs>
+    objectives?: boolean | Tag$objectivesArgs<ExtArgs>
     messages?: boolean | Tag$messagesArgs<ExtArgs>
-    tasks?: boolean | Tag$tasksArgs<ExtArgs>
     _count?: boolean | TagCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type TagIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -8561,9 +6975,8 @@ export namespace Prisma {
   export type $TagPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Tag"
     objects: {
-      goals: Prisma.$GoalPayload<ExtArgs>[]
+      objectives: Prisma.$ObjectivePayload<ExtArgs>[]
       messages: Prisma.$MessagePayload<ExtArgs>[]
-      tasks: Prisma.$TaskPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -8965,9 +7378,8 @@ export namespace Prisma {
    */
   export interface Prisma__TagClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    goals<T extends Tag$goalsArgs<ExtArgs> = {}>(args?: Subset<T, Tag$goalsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$GoalPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    objectives<T extends Tag$objectivesArgs<ExtArgs> = {}>(args?: Subset<T, Tag$objectivesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ObjectivePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     messages<T extends Tag$messagesArgs<ExtArgs> = {}>(args?: Subset<T, Tag$messagesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MessagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    tasks<T extends Tag$tasksArgs<ExtArgs> = {}>(args?: Subset<T, Tag$tasksArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TaskPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -9390,27 +7802,27 @@ export namespace Prisma {
   }
 
   /**
-   * Tag.goals
+   * Tag.objectives
    */
-  export type Tag$goalsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type Tag$objectivesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Goal
+     * Select specific fields to fetch from the Objective
      */
-    select?: GoalSelect<ExtArgs> | null
+    select?: ObjectiveSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Goal
+     * Omit specific fields from the Objective
      */
-    omit?: GoalOmit<ExtArgs> | null
+    omit?: ObjectiveOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: GoalInclude<ExtArgs> | null
-    where?: GoalWhereInput
-    orderBy?: GoalOrderByWithRelationInput | GoalOrderByWithRelationInput[]
-    cursor?: GoalWhereUniqueInput
+    include?: ObjectiveInclude<ExtArgs> | null
+    where?: ObjectiveWhereInput
+    orderBy?: ObjectiveOrderByWithRelationInput | ObjectiveOrderByWithRelationInput[]
+    cursor?: ObjectiveWhereUniqueInput
     take?: number
     skip?: number
-    distinct?: GoalScalarFieldEnum | GoalScalarFieldEnum[]
+    distinct?: ObjectiveScalarFieldEnum | ObjectiveScalarFieldEnum[]
   }
 
   /**
@@ -9435,30 +7847,6 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: MessageScalarFieldEnum | MessageScalarFieldEnum[]
-  }
-
-  /**
-   * Tag.tasks
-   */
-  export type Tag$tasksArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Task
-     */
-    select?: TaskSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Task
-     */
-    omit?: TaskOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: TaskInclude<ExtArgs> | null
-    where?: TaskWhereInput
-    orderBy?: TaskOrderByWithRelationInput | TaskOrderByWithRelationInput[]
-    cursor?: TaskWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: TaskScalarFieldEnum | TaskScalarFieldEnum[]
   }
 
   /**
@@ -9711,7 +8099,7 @@ export namespace Prisma {
     userId?: boolean
     taskId?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
-    task?: boolean | TaskDefaultArgs<ExtArgs>
+    objective?: boolean | ObjectiveDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["timeRecord"]>
 
   export type TimeRecordSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -9725,7 +8113,7 @@ export namespace Prisma {
     userId?: boolean
     taskId?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
-    task?: boolean | TaskDefaultArgs<ExtArgs>
+    objective?: boolean | ObjectiveDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["timeRecord"]>
 
   export type TimeRecordSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -9739,7 +8127,7 @@ export namespace Prisma {
     userId?: boolean
     taskId?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
-    task?: boolean | TaskDefaultArgs<ExtArgs>
+    objective?: boolean | ObjectiveDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["timeRecord"]>
 
   export type TimeRecordSelectScalar = {
@@ -9757,22 +8145,22 @@ export namespace Prisma {
   export type TimeRecordOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "startTime" | "endTime" | "duration" | "note" | "createdAt" | "updatedAt" | "userId" | "taskId", ExtArgs["result"]["timeRecord"]>
   export type TimeRecordInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
-    task?: boolean | TaskDefaultArgs<ExtArgs>
+    objective?: boolean | ObjectiveDefaultArgs<ExtArgs>
   }
   export type TimeRecordIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
-    task?: boolean | TaskDefaultArgs<ExtArgs>
+    objective?: boolean | ObjectiveDefaultArgs<ExtArgs>
   }
   export type TimeRecordIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
-    task?: boolean | TaskDefaultArgs<ExtArgs>
+    objective?: boolean | ObjectiveDefaultArgs<ExtArgs>
   }
 
   export type $TimeRecordPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "TimeRecord"
     objects: {
       user: Prisma.$UserPayload<ExtArgs>
-      task: Prisma.$TaskPayload<ExtArgs>
+      objective: Prisma.$ObjectivePayload<ExtArgs>
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -10179,7 +8567,7 @@ export namespace Prisma {
   export interface Prisma__TimeRecordClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-    task<T extends TaskDefaultArgs<ExtArgs> = {}>(args?: Subset<T, TaskDefaultArgs<ExtArgs>>): Prisma__TaskClient<$Result.GetResult<Prisma.$TaskPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    objective<T extends ObjectiveDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ObjectiveDefaultArgs<ExtArgs>>): Prisma__ObjectiveClient<$Result.GetResult<Prisma.$ObjectivePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -10855,8 +9243,7 @@ export namespace Prisma {
     taskId?: boolean
     goalId?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
-    task?: boolean | ProgressLog$taskArgs<ExtArgs>
-    goal?: boolean | ProgressLog$goalArgs<ExtArgs>
+    objective?: boolean | ProgressLog$objectiveArgs<ExtArgs>
   }, ExtArgs["result"]["progressLog"]>
 
   export type ProgressLogSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -10869,8 +9256,7 @@ export namespace Prisma {
     taskId?: boolean
     goalId?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
-    task?: boolean | ProgressLog$taskArgs<ExtArgs>
-    goal?: boolean | ProgressLog$goalArgs<ExtArgs>
+    objective?: boolean | ProgressLog$objectiveArgs<ExtArgs>
   }, ExtArgs["result"]["progressLog"]>
 
   export type ProgressLogSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -10883,8 +9269,7 @@ export namespace Prisma {
     taskId?: boolean
     goalId?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
-    task?: boolean | ProgressLog$taskArgs<ExtArgs>
-    goal?: boolean | ProgressLog$goalArgs<ExtArgs>
+    objective?: boolean | ProgressLog$objectiveArgs<ExtArgs>
   }, ExtArgs["result"]["progressLog"]>
 
   export type ProgressLogSelectScalar = {
@@ -10901,26 +9286,22 @@ export namespace Prisma {
   export type ProgressLogOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "progress" | "note" | "createdAt" | "updatedAt" | "userId" | "taskId" | "goalId", ExtArgs["result"]["progressLog"]>
   export type ProgressLogInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
-    task?: boolean | ProgressLog$taskArgs<ExtArgs>
-    goal?: boolean | ProgressLog$goalArgs<ExtArgs>
+    objective?: boolean | ProgressLog$objectiveArgs<ExtArgs>
   }
   export type ProgressLogIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
-    task?: boolean | ProgressLog$taskArgs<ExtArgs>
-    goal?: boolean | ProgressLog$goalArgs<ExtArgs>
+    objective?: boolean | ProgressLog$objectiveArgs<ExtArgs>
   }
   export type ProgressLogIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
-    task?: boolean | ProgressLog$taskArgs<ExtArgs>
-    goal?: boolean | ProgressLog$goalArgs<ExtArgs>
+    objective?: boolean | ProgressLog$objectiveArgs<ExtArgs>
   }
 
   export type $ProgressLogPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "ProgressLog"
     objects: {
       user: Prisma.$UserPayload<ExtArgs>
-      task: Prisma.$TaskPayload<ExtArgs> | null
-      goal: Prisma.$GoalPayload<ExtArgs> | null
+      objective: Prisma.$ObjectivePayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -11326,8 +9707,7 @@ export namespace Prisma {
   export interface Prisma__ProgressLogClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-    task<T extends ProgressLog$taskArgs<ExtArgs> = {}>(args?: Subset<T, ProgressLog$taskArgs<ExtArgs>>): Prisma__TaskClient<$Result.GetResult<Prisma.$TaskPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-    goal<T extends ProgressLog$goalArgs<ExtArgs> = {}>(args?: Subset<T, ProgressLog$goalArgs<ExtArgs>>): Prisma__GoalClient<$Result.GetResult<Prisma.$GoalPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    objective<T extends ProgressLog$objectiveArgs<ExtArgs> = {}>(args?: Subset<T, ProgressLog$objectiveArgs<ExtArgs>>): Prisma__ObjectiveClient<$Result.GetResult<Prisma.$ObjectivePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -11761,41 +10141,22 @@ export namespace Prisma {
   }
 
   /**
-   * ProgressLog.task
+   * ProgressLog.objective
    */
-  export type ProgressLog$taskArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ProgressLog$objectiveArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Task
+     * Select specific fields to fetch from the Objective
      */
-    select?: TaskSelect<ExtArgs> | null
+    select?: ObjectiveSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Task
+     * Omit specific fields from the Objective
      */
-    omit?: TaskOmit<ExtArgs> | null
+    omit?: ObjectiveOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: TaskInclude<ExtArgs> | null
-    where?: TaskWhereInput
-  }
-
-  /**
-   * ProgressLog.goal
-   */
-  export type ProgressLog$goalArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Goal
-     */
-    select?: GoalSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Goal
-     */
-    omit?: GoalOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: GoalInclude<ExtArgs> | null
-    where?: GoalWhereInput
+    include?: ObjectiveInclude<ExtArgs> | null
+    where?: ObjectiveWhereInput
   }
 
   /**
@@ -14068,46 +12429,26 @@ export namespace Prisma {
   export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
 
 
-  export const TaskScalarFieldEnum: {
+  export const ObjectiveScalarFieldEnum: {
     id: 'id',
     title: 'title',
     description: 'description',
+    type: 'type',
     status: 'status',
     priority: 'priority',
-    dueDate: 'dueDate',
-    createdAt: 'createdAt',
-    updatedAt: 'updatedAt',
-    userId: 'userId',
-    parentId: 'parentId',
-    goalId: 'goalId',
-    metadata: 'metadata',
-    totalTime: 'totalTime'
-  };
-
-  export type TaskScalarFieldEnum = (typeof TaskScalarFieldEnum)[keyof typeof TaskScalarFieldEnum]
-
-
-  export const GoalScalarFieldEnum: {
-    id: 'id',
-    title: 'title',
-    description: 'description',
-    level: 'level',
-    status: 'status',
     startDate: 'startDate',
     endDate: 'endDate',
     progress: 'progress',
-    createdAt: 'createdAt',
-    updatedAt: 'updatedAt',
-    userId: 'userId',
     parentId: 'parentId',
-    metrics: 'metrics',
-    resources: 'resources',
-    priority: 'priority',
+    userId: 'userId',
+    metadata: 'metadata',
     weight: 'weight',
-    metadata: 'metadata'
+    totalTime: 'totalTime',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
   };
 
-  export type GoalScalarFieldEnum = (typeof GoalScalarFieldEnum)[keyof typeof GoalScalarFieldEnum]
+  export type ObjectiveScalarFieldEnum = (typeof ObjectiveScalarFieldEnum)[keyof typeof ObjectiveScalarFieldEnum]
 
 
   export const MessageScalarFieldEnum: {
@@ -14283,44 +12624,30 @@ export namespace Prisma {
 
 
   /**
-   * Reference to a field of type 'TaskStatus'
+   * Reference to a field of type 'ObjectiveType'
    */
-  export type EnumTaskStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'TaskStatus'>
+  export type EnumObjectiveTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ObjectiveType'>
     
 
 
   /**
-   * Reference to a field of type 'TaskStatus[]'
+   * Reference to a field of type 'ObjectiveType[]'
    */
-  export type ListEnumTaskStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'TaskStatus[]'>
+  export type ListEnumObjectiveTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ObjectiveType[]'>
     
 
 
   /**
-   * Reference to a field of type 'TaskPriority'
+   * Reference to a field of type 'ObjectiveStatus'
    */
-  export type EnumTaskPriorityFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'TaskPriority'>
+  export type EnumObjectiveStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ObjectiveStatus'>
     
 
 
   /**
-   * Reference to a field of type 'TaskPriority[]'
+   * Reference to a field of type 'ObjectiveStatus[]'
    */
-  export type ListEnumTaskPriorityFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'TaskPriority[]'>
-    
-
-
-  /**
-   * Reference to a field of type 'Json'
-   */
-  export type JsonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Json'>
-    
-
-
-  /**
-   * Reference to a field of type 'QueryMode'
-   */
-  export type EnumQueryModeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'QueryMode'>
+  export type ListEnumObjectiveStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ObjectiveStatus[]'>
     
 
 
@@ -14339,34 +12666,6 @@ export namespace Prisma {
 
 
   /**
-   * Reference to a field of type 'GoalLevel'
-   */
-  export type EnumGoalLevelFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'GoalLevel'>
-    
-
-
-  /**
-   * Reference to a field of type 'GoalLevel[]'
-   */
-  export type ListEnumGoalLevelFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'GoalLevel[]'>
-    
-
-
-  /**
-   * Reference to a field of type 'GoalStatus'
-   */
-  export type EnumGoalStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'GoalStatus'>
-    
-
-
-  /**
-   * Reference to a field of type 'GoalStatus[]'
-   */
-  export type ListEnumGoalStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'GoalStatus[]'>
-    
-
-
-  /**
    * Reference to a field of type 'Float'
    */
   export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
@@ -14377,6 +12676,20 @@ export namespace Prisma {
    * Reference to a field of type 'Float[]'
    */
   export type ListFloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'Json'
+   */
+  export type JsonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Json'>
+    
+
+
+  /**
+   * Reference to a field of type 'QueryMode'
+   */
+  export type EnumQueryModeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'QueryMode'>
     
   /**
    * Deep Input Types
@@ -14393,12 +12706,11 @@ export namespace Prisma {
     password?: StringFilter<"User"> | string
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
-    goals?: GoalListRelationFilter
     messages?: MessageListRelationFilter
-    tasks?: TaskListRelationFilter
     timeRecords?: TimeRecordListRelationFilter
     progressLogs?: ProgressLogListRelationFilter
     importedFiles?: ImportedFileListRelationFilter
+    objectives?: ObjectiveListRelationFilter
   }
 
   export type UserOrderByWithRelationInput = {
@@ -14408,12 +12720,11 @@ export namespace Prisma {
     password?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    goals?: GoalOrderByRelationAggregateInput
     messages?: MessageOrderByRelationAggregateInput
-    tasks?: TaskOrderByRelationAggregateInput
     timeRecords?: TimeRecordOrderByRelationAggregateInput
     progressLogs?: ProgressLogOrderByRelationAggregateInput
     importedFiles?: ImportedFileOrderByRelationAggregateInput
+    objectives?: ObjectiveOrderByRelationAggregateInput
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -14426,12 +12737,11 @@ export namespace Prisma {
     password?: StringFilter<"User"> | string
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
-    goals?: GoalListRelationFilter
     messages?: MessageListRelationFilter
-    tasks?: TaskListRelationFilter
     timeRecords?: TimeRecordListRelationFilter
     progressLogs?: ProgressLogListRelationFilter
     importedFiles?: ImportedFileListRelationFilter
+    objectives?: ObjectiveListRelationFilter
   }, "id" | "email">
 
   export type UserOrderByWithAggregationInput = {
@@ -14458,251 +12768,131 @@ export namespace Prisma {
     updatedAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
   }
 
-  export type TaskWhereInput = {
-    AND?: TaskWhereInput | TaskWhereInput[]
-    OR?: TaskWhereInput[]
-    NOT?: TaskWhereInput | TaskWhereInput[]
-    id?: StringFilter<"Task"> | string
-    title?: StringFilter<"Task"> | string
-    description?: StringNullableFilter<"Task"> | string | null
-    status?: EnumTaskStatusFilter<"Task"> | $Enums.TaskStatus
-    priority?: EnumTaskPriorityFilter<"Task"> | $Enums.TaskPriority
-    dueDate?: DateTimeNullableFilter<"Task"> | Date | string | null
-    createdAt?: DateTimeFilter<"Task"> | Date | string
-    updatedAt?: DateTimeFilter<"Task"> | Date | string
-    userId?: StringFilter<"Task"> | string
-    parentId?: StringNullableFilter<"Task"> | string | null
-    goalId?: StringNullableFilter<"Task"> | string | null
-    metadata?: JsonNullableFilter<"Task">
-    totalTime?: IntFilter<"Task"> | number
-    goal?: XOR<GoalNullableScalarRelationFilter, GoalWhereInput> | null
-    parent?: XOR<TaskNullableScalarRelationFilter, TaskWhereInput> | null
-    subTasks?: TaskListRelationFilter
+  export type ObjectiveWhereInput = {
+    AND?: ObjectiveWhereInput | ObjectiveWhereInput[]
+    OR?: ObjectiveWhereInput[]
+    NOT?: ObjectiveWhereInput | ObjectiveWhereInput[]
+    id?: StringFilter<"Objective"> | string
+    title?: StringFilter<"Objective"> | string
+    description?: StringNullableFilter<"Objective"> | string | null
+    type?: EnumObjectiveTypeFilter<"Objective"> | $Enums.ObjectiveType
+    status?: EnumObjectiveStatusFilter<"Objective"> | $Enums.ObjectiveStatus
+    priority?: IntFilter<"Objective"> | number
+    startDate?: DateTimeNullableFilter<"Objective"> | Date | string | null
+    endDate?: DateTimeNullableFilter<"Objective"> | Date | string | null
+    progress?: FloatFilter<"Objective"> | number
+    parentId?: StringNullableFilter<"Objective"> | string | null
+    userId?: StringFilter<"Objective"> | string
+    metadata?: JsonNullableFilter<"Objective">
+    weight?: FloatFilter<"Objective"> | number
+    totalTime?: IntFilter<"Objective"> | number
+    createdAt?: DateTimeFilter<"Objective"> | Date | string
+    updatedAt?: DateTimeFilter<"Objective"> | Date | string
+    parent?: XOR<ObjectiveNullableScalarRelationFilter, ObjectiveWhereInput> | null
+    subObjectives?: ObjectiveListRelationFilter
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
     tags?: TagListRelationFilter
-    timeRecords?: TimeRecordListRelationFilter
     progressLogs?: ProgressLogListRelationFilter
+    timeRecords?: TimeRecordListRelationFilter
   }
 
-  export type TaskOrderByWithRelationInput = {
+  export type ObjectiveOrderByWithRelationInput = {
     id?: SortOrder
     title?: SortOrder
     description?: SortOrderInput | SortOrder
+    type?: SortOrder
     status?: SortOrder
     priority?: SortOrder
-    dueDate?: SortOrderInput | SortOrder
+    startDate?: SortOrderInput | SortOrder
+    endDate?: SortOrderInput | SortOrder
+    progress?: SortOrder
+    parentId?: SortOrderInput | SortOrder
+    userId?: SortOrder
+    metadata?: SortOrderInput | SortOrder
+    weight?: SortOrder
+    totalTime?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    userId?: SortOrder
-    parentId?: SortOrderInput | SortOrder
-    goalId?: SortOrderInput | SortOrder
-    metadata?: SortOrderInput | SortOrder
-    totalTime?: SortOrder
-    goal?: GoalOrderByWithRelationInput
-    parent?: TaskOrderByWithRelationInput
-    subTasks?: TaskOrderByRelationAggregateInput
+    parent?: ObjectiveOrderByWithRelationInput
+    subObjectives?: ObjectiveOrderByRelationAggregateInput
     user?: UserOrderByWithRelationInput
     tags?: TagOrderByRelationAggregateInput
+    progressLogs?: ProgressLogOrderByRelationAggregateInput
     timeRecords?: TimeRecordOrderByRelationAggregateInput
-    progressLogs?: ProgressLogOrderByRelationAggregateInput
   }
 
-  export type TaskWhereUniqueInput = Prisma.AtLeast<{
+  export type ObjectiveWhereUniqueInput = Prisma.AtLeast<{
     id?: string
-    AND?: TaskWhereInput | TaskWhereInput[]
-    OR?: TaskWhereInput[]
-    NOT?: TaskWhereInput | TaskWhereInput[]
-    title?: StringFilter<"Task"> | string
-    description?: StringNullableFilter<"Task"> | string | null
-    status?: EnumTaskStatusFilter<"Task"> | $Enums.TaskStatus
-    priority?: EnumTaskPriorityFilter<"Task"> | $Enums.TaskPriority
-    dueDate?: DateTimeNullableFilter<"Task"> | Date | string | null
-    createdAt?: DateTimeFilter<"Task"> | Date | string
-    updatedAt?: DateTimeFilter<"Task"> | Date | string
-    userId?: StringFilter<"Task"> | string
-    parentId?: StringNullableFilter<"Task"> | string | null
-    goalId?: StringNullableFilter<"Task"> | string | null
-    metadata?: JsonNullableFilter<"Task">
-    totalTime?: IntFilter<"Task"> | number
-    goal?: XOR<GoalNullableScalarRelationFilter, GoalWhereInput> | null
-    parent?: XOR<TaskNullableScalarRelationFilter, TaskWhereInput> | null
-    subTasks?: TaskListRelationFilter
+    AND?: ObjectiveWhereInput | ObjectiveWhereInput[]
+    OR?: ObjectiveWhereInput[]
+    NOT?: ObjectiveWhereInput | ObjectiveWhereInput[]
+    title?: StringFilter<"Objective"> | string
+    description?: StringNullableFilter<"Objective"> | string | null
+    type?: EnumObjectiveTypeFilter<"Objective"> | $Enums.ObjectiveType
+    status?: EnumObjectiveStatusFilter<"Objective"> | $Enums.ObjectiveStatus
+    priority?: IntFilter<"Objective"> | number
+    startDate?: DateTimeNullableFilter<"Objective"> | Date | string | null
+    endDate?: DateTimeNullableFilter<"Objective"> | Date | string | null
+    progress?: FloatFilter<"Objective"> | number
+    parentId?: StringNullableFilter<"Objective"> | string | null
+    userId?: StringFilter<"Objective"> | string
+    metadata?: JsonNullableFilter<"Objective">
+    weight?: FloatFilter<"Objective"> | number
+    totalTime?: IntFilter<"Objective"> | number
+    createdAt?: DateTimeFilter<"Objective"> | Date | string
+    updatedAt?: DateTimeFilter<"Objective"> | Date | string
+    parent?: XOR<ObjectiveNullableScalarRelationFilter, ObjectiveWhereInput> | null
+    subObjectives?: ObjectiveListRelationFilter
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
     tags?: TagListRelationFilter
+    progressLogs?: ProgressLogListRelationFilter
     timeRecords?: TimeRecordListRelationFilter
-    progressLogs?: ProgressLogListRelationFilter
   }, "id">
 
-  export type TaskOrderByWithAggregationInput = {
+  export type ObjectiveOrderByWithAggregationInput = {
     id?: SortOrder
     title?: SortOrder
     description?: SortOrderInput | SortOrder
+    type?: SortOrder
     status?: SortOrder
     priority?: SortOrder
-    dueDate?: SortOrderInput | SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-    userId?: SortOrder
+    startDate?: SortOrderInput | SortOrder
+    endDate?: SortOrderInput | SortOrder
+    progress?: SortOrder
     parentId?: SortOrderInput | SortOrder
-    goalId?: SortOrderInput | SortOrder
+    userId?: SortOrder
     metadata?: SortOrderInput | SortOrder
+    weight?: SortOrder
     totalTime?: SortOrder
-    _count?: TaskCountOrderByAggregateInput
-    _avg?: TaskAvgOrderByAggregateInput
-    _max?: TaskMaxOrderByAggregateInput
-    _min?: TaskMinOrderByAggregateInput
-    _sum?: TaskSumOrderByAggregateInput
-  }
-
-  export type TaskScalarWhereWithAggregatesInput = {
-    AND?: TaskScalarWhereWithAggregatesInput | TaskScalarWhereWithAggregatesInput[]
-    OR?: TaskScalarWhereWithAggregatesInput[]
-    NOT?: TaskScalarWhereWithAggregatesInput | TaskScalarWhereWithAggregatesInput[]
-    id?: StringWithAggregatesFilter<"Task"> | string
-    title?: StringWithAggregatesFilter<"Task"> | string
-    description?: StringNullableWithAggregatesFilter<"Task"> | string | null
-    status?: EnumTaskStatusWithAggregatesFilter<"Task"> | $Enums.TaskStatus
-    priority?: EnumTaskPriorityWithAggregatesFilter<"Task"> | $Enums.TaskPriority
-    dueDate?: DateTimeNullableWithAggregatesFilter<"Task"> | Date | string | null
-    createdAt?: DateTimeWithAggregatesFilter<"Task"> | Date | string
-    updatedAt?: DateTimeWithAggregatesFilter<"Task"> | Date | string
-    userId?: StringWithAggregatesFilter<"Task"> | string
-    parentId?: StringNullableWithAggregatesFilter<"Task"> | string | null
-    goalId?: StringNullableWithAggregatesFilter<"Task"> | string | null
-    metadata?: JsonNullableWithAggregatesFilter<"Task">
-    totalTime?: IntWithAggregatesFilter<"Task"> | number
-  }
-
-  export type GoalWhereInput = {
-    AND?: GoalWhereInput | GoalWhereInput[]
-    OR?: GoalWhereInput[]
-    NOT?: GoalWhereInput | GoalWhereInput[]
-    id?: StringFilter<"Goal"> | string
-    title?: StringFilter<"Goal"> | string
-    description?: StringNullableFilter<"Goal"> | string | null
-    level?: EnumGoalLevelFilter<"Goal"> | $Enums.GoalLevel
-    status?: EnumGoalStatusFilter<"Goal"> | $Enums.GoalStatus
-    startDate?: DateTimeFilter<"Goal"> | Date | string
-    endDate?: DateTimeFilter<"Goal"> | Date | string
-    progress?: FloatFilter<"Goal"> | number
-    createdAt?: DateTimeFilter<"Goal"> | Date | string
-    updatedAt?: DateTimeFilter<"Goal"> | Date | string
-    userId?: StringFilter<"Goal"> | string
-    parentId?: StringNullableFilter<"Goal"> | string | null
-    metrics?: JsonNullableFilter<"Goal">
-    resources?: JsonNullableFilter<"Goal">
-    priority?: IntFilter<"Goal"> | number
-    weight?: FloatFilter<"Goal"> | number
-    metadata?: JsonNullableFilter<"Goal">
-    parent?: XOR<GoalNullableScalarRelationFilter, GoalWhereInput> | null
-    subGoals?: GoalListRelationFilter
-    user?: XOR<UserScalarRelationFilter, UserWhereInput>
-    tasks?: TaskListRelationFilter
-    tags?: TagListRelationFilter
-    progressLogs?: ProgressLogListRelationFilter
-  }
-
-  export type GoalOrderByWithRelationInput = {
-    id?: SortOrder
-    title?: SortOrder
-    description?: SortOrderInput | SortOrder
-    level?: SortOrder
-    status?: SortOrder
-    startDate?: SortOrder
-    endDate?: SortOrder
-    progress?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    userId?: SortOrder
-    parentId?: SortOrderInput | SortOrder
-    metrics?: SortOrderInput | SortOrder
-    resources?: SortOrderInput | SortOrder
-    priority?: SortOrder
-    weight?: SortOrder
-    metadata?: SortOrderInput | SortOrder
-    parent?: GoalOrderByWithRelationInput
-    subGoals?: GoalOrderByRelationAggregateInput
-    user?: UserOrderByWithRelationInput
-    tasks?: TaskOrderByRelationAggregateInput
-    tags?: TagOrderByRelationAggregateInput
-    progressLogs?: ProgressLogOrderByRelationAggregateInput
+    _count?: ObjectiveCountOrderByAggregateInput
+    _avg?: ObjectiveAvgOrderByAggregateInput
+    _max?: ObjectiveMaxOrderByAggregateInput
+    _min?: ObjectiveMinOrderByAggregateInput
+    _sum?: ObjectiveSumOrderByAggregateInput
   }
 
-  export type GoalWhereUniqueInput = Prisma.AtLeast<{
-    id?: string
-    AND?: GoalWhereInput | GoalWhereInput[]
-    OR?: GoalWhereInput[]
-    NOT?: GoalWhereInput | GoalWhereInput[]
-    title?: StringFilter<"Goal"> | string
-    description?: StringNullableFilter<"Goal"> | string | null
-    level?: EnumGoalLevelFilter<"Goal"> | $Enums.GoalLevel
-    status?: EnumGoalStatusFilter<"Goal"> | $Enums.GoalStatus
-    startDate?: DateTimeFilter<"Goal"> | Date | string
-    endDate?: DateTimeFilter<"Goal"> | Date | string
-    progress?: FloatFilter<"Goal"> | number
-    createdAt?: DateTimeFilter<"Goal"> | Date | string
-    updatedAt?: DateTimeFilter<"Goal"> | Date | string
-    userId?: StringFilter<"Goal"> | string
-    parentId?: StringNullableFilter<"Goal"> | string | null
-    metrics?: JsonNullableFilter<"Goal">
-    resources?: JsonNullableFilter<"Goal">
-    priority?: IntFilter<"Goal"> | number
-    weight?: FloatFilter<"Goal"> | number
-    metadata?: JsonNullableFilter<"Goal">
-    parent?: XOR<GoalNullableScalarRelationFilter, GoalWhereInput> | null
-    subGoals?: GoalListRelationFilter
-    user?: XOR<UserScalarRelationFilter, UserWhereInput>
-    tasks?: TaskListRelationFilter
-    tags?: TagListRelationFilter
-    progressLogs?: ProgressLogListRelationFilter
-  }, "id">
-
-  export type GoalOrderByWithAggregationInput = {
-    id?: SortOrder
-    title?: SortOrder
-    description?: SortOrderInput | SortOrder
-    level?: SortOrder
-    status?: SortOrder
-    startDate?: SortOrder
-    endDate?: SortOrder
-    progress?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-    userId?: SortOrder
-    parentId?: SortOrderInput | SortOrder
-    metrics?: SortOrderInput | SortOrder
-    resources?: SortOrderInput | SortOrder
-    priority?: SortOrder
-    weight?: SortOrder
-    metadata?: SortOrderInput | SortOrder
-    _count?: GoalCountOrderByAggregateInput
-    _avg?: GoalAvgOrderByAggregateInput
-    _max?: GoalMaxOrderByAggregateInput
-    _min?: GoalMinOrderByAggregateInput
-    _sum?: GoalSumOrderByAggregateInput
-  }
-
-  export type GoalScalarWhereWithAggregatesInput = {
-    AND?: GoalScalarWhereWithAggregatesInput | GoalScalarWhereWithAggregatesInput[]
-    OR?: GoalScalarWhereWithAggregatesInput[]
-    NOT?: GoalScalarWhereWithAggregatesInput | GoalScalarWhereWithAggregatesInput[]
-    id?: StringWithAggregatesFilter<"Goal"> | string
-    title?: StringWithAggregatesFilter<"Goal"> | string
-    description?: StringNullableWithAggregatesFilter<"Goal"> | string | null
-    level?: EnumGoalLevelWithAggregatesFilter<"Goal"> | $Enums.GoalLevel
-    status?: EnumGoalStatusWithAggregatesFilter<"Goal"> | $Enums.GoalStatus
-    startDate?: DateTimeWithAggregatesFilter<"Goal"> | Date | string
-    endDate?: DateTimeWithAggregatesFilter<"Goal"> | Date | string
-    progress?: FloatWithAggregatesFilter<"Goal"> | number
-    createdAt?: DateTimeWithAggregatesFilter<"Goal"> | Date | string
-    updatedAt?: DateTimeWithAggregatesFilter<"Goal"> | Date | string
-    userId?: StringWithAggregatesFilter<"Goal"> | string
-    parentId?: StringNullableWithAggregatesFilter<"Goal"> | string | null
-    metrics?: JsonNullableWithAggregatesFilter<"Goal">
-    resources?: JsonNullableWithAggregatesFilter<"Goal">
-    priority?: IntWithAggregatesFilter<"Goal"> | number
-    weight?: FloatWithAggregatesFilter<"Goal"> | number
-    metadata?: JsonNullableWithAggregatesFilter<"Goal">
+  export type ObjectiveScalarWhereWithAggregatesInput = {
+    AND?: ObjectiveScalarWhereWithAggregatesInput | ObjectiveScalarWhereWithAggregatesInput[]
+    OR?: ObjectiveScalarWhereWithAggregatesInput[]
+    NOT?: ObjectiveScalarWhereWithAggregatesInput | ObjectiveScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"Objective"> | string
+    title?: StringWithAggregatesFilter<"Objective"> | string
+    description?: StringNullableWithAggregatesFilter<"Objective"> | string | null
+    type?: EnumObjectiveTypeWithAggregatesFilter<"Objective"> | $Enums.ObjectiveType
+    status?: EnumObjectiveStatusWithAggregatesFilter<"Objective"> | $Enums.ObjectiveStatus
+    priority?: IntWithAggregatesFilter<"Objective"> | number
+    startDate?: DateTimeNullableWithAggregatesFilter<"Objective"> | Date | string | null
+    endDate?: DateTimeNullableWithAggregatesFilter<"Objective"> | Date | string | null
+    progress?: FloatWithAggregatesFilter<"Objective"> | number
+    parentId?: StringNullableWithAggregatesFilter<"Objective"> | string | null
+    userId?: StringWithAggregatesFilter<"Objective"> | string
+    metadata?: JsonNullableWithAggregatesFilter<"Objective">
+    weight?: FloatWithAggregatesFilter<"Objective"> | number
+    totalTime?: IntWithAggregatesFilter<"Objective"> | number
+    createdAt?: DateTimeWithAggregatesFilter<"Objective"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"Objective"> | Date | string
   }
 
   export type MessageWhereInput = {
@@ -14866,9 +13056,8 @@ export namespace Prisma {
     color?: StringNullableFilter<"Tag"> | string | null
     createdAt?: DateTimeFilter<"Tag"> | Date | string
     updatedAt?: DateTimeFilter<"Tag"> | Date | string
-    goals?: GoalListRelationFilter
+    objectives?: ObjectiveListRelationFilter
     messages?: MessageListRelationFilter
-    tasks?: TaskListRelationFilter
   }
 
   export type TagOrderByWithRelationInput = {
@@ -14877,9 +13066,8 @@ export namespace Prisma {
     color?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    goals?: GoalOrderByRelationAggregateInput
+    objectives?: ObjectiveOrderByRelationAggregateInput
     messages?: MessageOrderByRelationAggregateInput
-    tasks?: TaskOrderByRelationAggregateInput
   }
 
   export type TagWhereUniqueInput = Prisma.AtLeast<{
@@ -14891,9 +13079,8 @@ export namespace Prisma {
     color?: StringNullableFilter<"Tag"> | string | null
     createdAt?: DateTimeFilter<"Tag"> | Date | string
     updatedAt?: DateTimeFilter<"Tag"> | Date | string
-    goals?: GoalListRelationFilter
+    objectives?: ObjectiveListRelationFilter
     messages?: MessageListRelationFilter
-    tasks?: TaskListRelationFilter
   }, "id">
 
   export type TagOrderByWithAggregationInput = {
@@ -14932,7 +13119,7 @@ export namespace Prisma {
     userId?: StringFilter<"TimeRecord"> | string
     taskId?: StringFilter<"TimeRecord"> | string
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
-    task?: XOR<TaskScalarRelationFilter, TaskWhereInput>
+    objective?: XOR<ObjectiveScalarRelationFilter, ObjectiveWhereInput>
   }
 
   export type TimeRecordOrderByWithRelationInput = {
@@ -14946,7 +13133,7 @@ export namespace Prisma {
     userId?: SortOrder
     taskId?: SortOrder
     user?: UserOrderByWithRelationInput
-    task?: TaskOrderByWithRelationInput
+    objective?: ObjectiveOrderByWithRelationInput
   }
 
   export type TimeRecordWhereUniqueInput = Prisma.AtLeast<{
@@ -14963,7 +13150,7 @@ export namespace Prisma {
     userId?: StringFilter<"TimeRecord"> | string
     taskId?: StringFilter<"TimeRecord"> | string
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
-    task?: XOR<TaskScalarRelationFilter, TaskWhereInput>
+    objective?: XOR<ObjectiveScalarRelationFilter, ObjectiveWhereInput>
   }, "id">
 
   export type TimeRecordOrderByWithAggregationInput = {
@@ -15011,8 +13198,7 @@ export namespace Prisma {
     taskId?: StringNullableFilter<"ProgressLog"> | string | null
     goalId?: StringNullableFilter<"ProgressLog"> | string | null
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
-    task?: XOR<TaskNullableScalarRelationFilter, TaskWhereInput> | null
-    goal?: XOR<GoalNullableScalarRelationFilter, GoalWhereInput> | null
+    objective?: XOR<ObjectiveNullableScalarRelationFilter, ObjectiveWhereInput> | null
   }
 
   export type ProgressLogOrderByWithRelationInput = {
@@ -15025,8 +13211,7 @@ export namespace Prisma {
     taskId?: SortOrderInput | SortOrder
     goalId?: SortOrderInput | SortOrder
     user?: UserOrderByWithRelationInput
-    task?: TaskOrderByWithRelationInput
-    goal?: GoalOrderByWithRelationInput
+    objective?: ObjectiveOrderByWithRelationInput
   }
 
   export type ProgressLogWhereUniqueInput = Prisma.AtLeast<{
@@ -15042,8 +13227,7 @@ export namespace Prisma {
     taskId?: StringNullableFilter<"ProgressLog"> | string | null
     goalId?: StringNullableFilter<"ProgressLog"> | string | null
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
-    task?: XOR<TaskNullableScalarRelationFilter, TaskWhereInput> | null
-    goal?: XOR<GoalNullableScalarRelationFilter, GoalWhereInput> | null
+    objective?: XOR<ObjectiveNullableScalarRelationFilter, ObjectiveWhereInput> | null
   }, "id">
 
   export type ProgressLogOrderByWithAggregationInput = {
@@ -15234,12 +13418,11 @@ export namespace Prisma {
     password: string
     createdAt?: Date | string
     updatedAt?: Date | string
-    goals?: GoalCreateNestedManyWithoutUserInput
     messages?: MessageCreateNestedManyWithoutUserInput
-    tasks?: TaskCreateNestedManyWithoutUserInput
     timeRecords?: TimeRecordCreateNestedManyWithoutUserInput
     progressLogs?: ProgressLogCreateNestedManyWithoutUserInput
     importedFiles?: ImportedFileCreateNestedManyWithoutUserInput
+    objectives?: ObjectiveCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateInput = {
@@ -15249,12 +13432,11 @@ export namespace Prisma {
     password: string
     createdAt?: Date | string
     updatedAt?: Date | string
-    goals?: GoalUncheckedCreateNestedManyWithoutUserInput
     messages?: MessageUncheckedCreateNestedManyWithoutUserInput
-    tasks?: TaskUncheckedCreateNestedManyWithoutUserInput
     timeRecords?: TimeRecordUncheckedCreateNestedManyWithoutUserInput
     progressLogs?: ProgressLogUncheckedCreateNestedManyWithoutUserInput
     importedFiles?: ImportedFileUncheckedCreateNestedManyWithoutUserInput
+    objectives?: ObjectiveUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserUpdateInput = {
@@ -15264,12 +13446,11 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    goals?: GoalUpdateManyWithoutUserNestedInput
     messages?: MessageUpdateManyWithoutUserNestedInput
-    tasks?: TaskUpdateManyWithoutUserNestedInput
     timeRecords?: TimeRecordUpdateManyWithoutUserNestedInput
     progressLogs?: ProgressLogUpdateManyWithoutUserNestedInput
     importedFiles?: ImportedFileUpdateManyWithoutUserNestedInput
+    objectives?: ObjectiveUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
@@ -15279,12 +13460,11 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    goals?: GoalUncheckedUpdateManyWithoutUserNestedInput
     messages?: MessageUncheckedUpdateManyWithoutUserNestedInput
-    tasks?: TaskUncheckedUpdateManyWithoutUserNestedInput
     timeRecords?: TimeRecordUncheckedUpdateManyWithoutUserNestedInput
     progressLogs?: ProgressLogUncheckedUpdateManyWithoutUserNestedInput
     importedFiles?: ImportedFileUncheckedUpdateManyWithoutUserNestedInput
+    objectives?: ObjectiveUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateManyInput = {
@@ -15314,283 +13494,151 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type TaskCreateInput = {
+  export type ObjectiveCreateInput = {
     id?: string
     title: string
     description?: string | null
-    status?: $Enums.TaskStatus
-    priority?: $Enums.TaskPriority
-    dueDate?: Date | string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    metadata?: NullableJsonNullValueInput | InputJsonValue
-    totalTime?: number
-    goal?: GoalCreateNestedOneWithoutTasksInput
-    parent?: TaskCreateNestedOneWithoutSubTasksInput
-    subTasks?: TaskCreateNestedManyWithoutParentInput
-    user: UserCreateNestedOneWithoutTasksInput
-    tags?: TagCreateNestedManyWithoutTasksInput
-    timeRecords?: TimeRecordCreateNestedManyWithoutTaskInput
-    progressLogs?: ProgressLogCreateNestedManyWithoutTaskInput
-  }
-
-  export type TaskUncheckedCreateInput = {
-    id?: string
-    title: string
-    description?: string | null
-    status?: $Enums.TaskStatus
-    priority?: $Enums.TaskPriority
-    dueDate?: Date | string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    userId: string
-    parentId?: string | null
-    goalId?: string | null
-    metadata?: NullableJsonNullValueInput | InputJsonValue
-    totalTime?: number
-    subTasks?: TaskUncheckedCreateNestedManyWithoutParentInput
-    tags?: TagUncheckedCreateNestedManyWithoutTasksInput
-    timeRecords?: TimeRecordUncheckedCreateNestedManyWithoutTaskInput
-    progressLogs?: ProgressLogUncheckedCreateNestedManyWithoutTaskInput
-  }
-
-  export type TaskUpdateInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    title?: StringFieldUpdateOperationsInput | string
-    description?: NullableStringFieldUpdateOperationsInput | string | null
-    status?: EnumTaskStatusFieldUpdateOperationsInput | $Enums.TaskStatus
-    priority?: EnumTaskPriorityFieldUpdateOperationsInput | $Enums.TaskPriority
-    dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    metadata?: NullableJsonNullValueInput | InputJsonValue
-    totalTime?: IntFieldUpdateOperationsInput | number
-    goal?: GoalUpdateOneWithoutTasksNestedInput
-    parent?: TaskUpdateOneWithoutSubTasksNestedInput
-    subTasks?: TaskUpdateManyWithoutParentNestedInput
-    user?: UserUpdateOneRequiredWithoutTasksNestedInput
-    tags?: TagUpdateManyWithoutTasksNestedInput
-    timeRecords?: TimeRecordUpdateManyWithoutTaskNestedInput
-    progressLogs?: ProgressLogUpdateManyWithoutTaskNestedInput
-  }
-
-  export type TaskUncheckedUpdateInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    title?: StringFieldUpdateOperationsInput | string
-    description?: NullableStringFieldUpdateOperationsInput | string | null
-    status?: EnumTaskStatusFieldUpdateOperationsInput | $Enums.TaskStatus
-    priority?: EnumTaskPriorityFieldUpdateOperationsInput | $Enums.TaskPriority
-    dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    userId?: StringFieldUpdateOperationsInput | string
-    parentId?: NullableStringFieldUpdateOperationsInput | string | null
-    goalId?: NullableStringFieldUpdateOperationsInput | string | null
-    metadata?: NullableJsonNullValueInput | InputJsonValue
-    totalTime?: IntFieldUpdateOperationsInput | number
-    subTasks?: TaskUncheckedUpdateManyWithoutParentNestedInput
-    tags?: TagUncheckedUpdateManyWithoutTasksNestedInput
-    timeRecords?: TimeRecordUncheckedUpdateManyWithoutTaskNestedInput
-    progressLogs?: ProgressLogUncheckedUpdateManyWithoutTaskNestedInput
-  }
-
-  export type TaskCreateManyInput = {
-    id?: string
-    title: string
-    description?: string | null
-    status?: $Enums.TaskStatus
-    priority?: $Enums.TaskPriority
-    dueDate?: Date | string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    userId: string
-    parentId?: string | null
-    goalId?: string | null
-    metadata?: NullableJsonNullValueInput | InputJsonValue
-    totalTime?: number
-  }
-
-  export type TaskUpdateManyMutationInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    title?: StringFieldUpdateOperationsInput | string
-    description?: NullableStringFieldUpdateOperationsInput | string | null
-    status?: EnumTaskStatusFieldUpdateOperationsInput | $Enums.TaskStatus
-    priority?: EnumTaskPriorityFieldUpdateOperationsInput | $Enums.TaskPriority
-    dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    metadata?: NullableJsonNullValueInput | InputJsonValue
-    totalTime?: IntFieldUpdateOperationsInput | number
-  }
-
-  export type TaskUncheckedUpdateManyInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    title?: StringFieldUpdateOperationsInput | string
-    description?: NullableStringFieldUpdateOperationsInput | string | null
-    status?: EnumTaskStatusFieldUpdateOperationsInput | $Enums.TaskStatus
-    priority?: EnumTaskPriorityFieldUpdateOperationsInput | $Enums.TaskPriority
-    dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    userId?: StringFieldUpdateOperationsInput | string
-    parentId?: NullableStringFieldUpdateOperationsInput | string | null
-    goalId?: NullableStringFieldUpdateOperationsInput | string | null
-    metadata?: NullableJsonNullValueInput | InputJsonValue
-    totalTime?: IntFieldUpdateOperationsInput | number
-  }
-
-  export type GoalCreateInput = {
-    id?: string
-    title: string
-    description?: string | null
-    level?: $Enums.GoalLevel
-    status?: $Enums.GoalStatus
-    startDate: Date | string
-    endDate: Date | string
-    progress?: number
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    metrics?: NullableJsonNullValueInput | InputJsonValue
-    resources?: NullableJsonNullValueInput | InputJsonValue
+    type?: $Enums.ObjectiveType
+    status?: $Enums.ObjectiveStatus
     priority?: number
-    weight?: number
+    startDate?: Date | string | null
+    endDate?: Date | string | null
+    progress?: number
     metadata?: NullableJsonNullValueInput | InputJsonValue
-    parent?: GoalCreateNestedOneWithoutSubGoalsInput
-    subGoals?: GoalCreateNestedManyWithoutParentInput
-    user: UserCreateNestedOneWithoutGoalsInput
-    tasks?: TaskCreateNestedManyWithoutGoalInput
-    tags?: TagCreateNestedManyWithoutGoalsInput
-    progressLogs?: ProgressLogCreateNestedManyWithoutGoalInput
+    weight?: number
+    totalTime?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    parent?: ObjectiveCreateNestedOneWithoutSubObjectivesInput
+    subObjectives?: ObjectiveCreateNestedManyWithoutParentInput
+    user: UserCreateNestedOneWithoutObjectivesInput
+    tags?: TagCreateNestedManyWithoutObjectivesInput
+    progressLogs?: ProgressLogCreateNestedManyWithoutObjectiveInput
+    timeRecords?: TimeRecordCreateNestedManyWithoutObjectiveInput
   }
 
-  export type GoalUncheckedCreateInput = {
+  export type ObjectiveUncheckedCreateInput = {
     id?: string
     title: string
     description?: string | null
-    level?: $Enums.GoalLevel
-    status?: $Enums.GoalStatus
-    startDate: Date | string
-    endDate: Date | string
+    type?: $Enums.ObjectiveType
+    status?: $Enums.ObjectiveStatus
+    priority?: number
+    startDate?: Date | string | null
+    endDate?: Date | string | null
     progress?: number
+    parentId?: string | null
+    userId: string
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    weight?: number
+    totalTime?: number
     createdAt?: Date | string
     updatedAt?: Date | string
-    userId: string
-    parentId?: string | null
-    metrics?: NullableJsonNullValueInput | InputJsonValue
-    resources?: NullableJsonNullValueInput | InputJsonValue
-    priority?: number
-    weight?: number
-    metadata?: NullableJsonNullValueInput | InputJsonValue
-    subGoals?: GoalUncheckedCreateNestedManyWithoutParentInput
-    tasks?: TaskUncheckedCreateNestedManyWithoutGoalInput
-    tags?: TagUncheckedCreateNestedManyWithoutGoalsInput
-    progressLogs?: ProgressLogUncheckedCreateNestedManyWithoutGoalInput
+    subObjectives?: ObjectiveUncheckedCreateNestedManyWithoutParentInput
+    tags?: TagUncheckedCreateNestedManyWithoutObjectivesInput
+    progressLogs?: ProgressLogUncheckedCreateNestedManyWithoutObjectiveInput
+    timeRecords?: TimeRecordUncheckedCreateNestedManyWithoutObjectiveInput
   }
 
-  export type GoalUpdateInput = {
+  export type ObjectiveUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
-    level?: EnumGoalLevelFieldUpdateOperationsInput | $Enums.GoalLevel
-    status?: EnumGoalStatusFieldUpdateOperationsInput | $Enums.GoalStatus
-    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    endDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    progress?: FloatFieldUpdateOperationsInput | number
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    metrics?: NullableJsonNullValueInput | InputJsonValue
-    resources?: NullableJsonNullValueInput | InputJsonValue
+    type?: EnumObjectiveTypeFieldUpdateOperationsInput | $Enums.ObjectiveType
+    status?: EnumObjectiveStatusFieldUpdateOperationsInput | $Enums.ObjectiveStatus
     priority?: IntFieldUpdateOperationsInput | number
-    weight?: FloatFieldUpdateOperationsInput | number
+    startDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    endDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    progress?: FloatFieldUpdateOperationsInput | number
     metadata?: NullableJsonNullValueInput | InputJsonValue
-    parent?: GoalUpdateOneWithoutSubGoalsNestedInput
-    subGoals?: GoalUpdateManyWithoutParentNestedInput
-    user?: UserUpdateOneRequiredWithoutGoalsNestedInput
-    tasks?: TaskUpdateManyWithoutGoalNestedInput
-    tags?: TagUpdateManyWithoutGoalsNestedInput
-    progressLogs?: ProgressLogUpdateManyWithoutGoalNestedInput
+    weight?: FloatFieldUpdateOperationsInput | number
+    totalTime?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    parent?: ObjectiveUpdateOneWithoutSubObjectivesNestedInput
+    subObjectives?: ObjectiveUpdateManyWithoutParentNestedInput
+    user?: UserUpdateOneRequiredWithoutObjectivesNestedInput
+    tags?: TagUpdateManyWithoutObjectivesNestedInput
+    progressLogs?: ProgressLogUpdateManyWithoutObjectiveNestedInput
+    timeRecords?: TimeRecordUpdateManyWithoutObjectiveNestedInput
   }
 
-  export type GoalUncheckedUpdateInput = {
+  export type ObjectiveUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
-    level?: EnumGoalLevelFieldUpdateOperationsInput | $Enums.GoalLevel
-    status?: EnumGoalStatusFieldUpdateOperationsInput | $Enums.GoalStatus
-    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    endDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    type?: EnumObjectiveTypeFieldUpdateOperationsInput | $Enums.ObjectiveType
+    status?: EnumObjectiveStatusFieldUpdateOperationsInput | $Enums.ObjectiveStatus
+    priority?: IntFieldUpdateOperationsInput | number
+    startDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    endDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     progress?: FloatFieldUpdateOperationsInput | number
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    userId?: StringFieldUpdateOperationsInput | string
     parentId?: NullableStringFieldUpdateOperationsInput | string | null
-    metrics?: NullableJsonNullValueInput | InputJsonValue
-    resources?: NullableJsonNullValueInput | InputJsonValue
-    priority?: IntFieldUpdateOperationsInput | number
-    weight?: FloatFieldUpdateOperationsInput | number
+    userId?: StringFieldUpdateOperationsInput | string
     metadata?: NullableJsonNullValueInput | InputJsonValue
-    subGoals?: GoalUncheckedUpdateManyWithoutParentNestedInput
-    tasks?: TaskUncheckedUpdateManyWithoutGoalNestedInput
-    tags?: TagUncheckedUpdateManyWithoutGoalsNestedInput
-    progressLogs?: ProgressLogUncheckedUpdateManyWithoutGoalNestedInput
+    weight?: FloatFieldUpdateOperationsInput | number
+    totalTime?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    subObjectives?: ObjectiveUncheckedUpdateManyWithoutParentNestedInput
+    tags?: TagUncheckedUpdateManyWithoutObjectivesNestedInput
+    progressLogs?: ProgressLogUncheckedUpdateManyWithoutObjectiveNestedInput
+    timeRecords?: TimeRecordUncheckedUpdateManyWithoutObjectiveNestedInput
   }
 
-  export type GoalCreateManyInput = {
+  export type ObjectiveCreateManyInput = {
     id?: string
     title: string
     description?: string | null
-    level?: $Enums.GoalLevel
-    status?: $Enums.GoalStatus
-    startDate: Date | string
-    endDate: Date | string
+    type?: $Enums.ObjectiveType
+    status?: $Enums.ObjectiveStatus
+    priority?: number
+    startDate?: Date | string | null
+    endDate?: Date | string | null
     progress?: number
+    parentId?: string | null
+    userId: string
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    weight?: number
+    totalTime?: number
     createdAt?: Date | string
     updatedAt?: Date | string
-    userId: string
-    parentId?: string | null
-    metrics?: NullableJsonNullValueInput | InputJsonValue
-    resources?: NullableJsonNullValueInput | InputJsonValue
-    priority?: number
-    weight?: number
-    metadata?: NullableJsonNullValueInput | InputJsonValue
   }
 
-  export type GoalUpdateManyMutationInput = {
+  export type ObjectiveUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
-    level?: EnumGoalLevelFieldUpdateOperationsInput | $Enums.GoalLevel
-    status?: EnumGoalStatusFieldUpdateOperationsInput | $Enums.GoalStatus
-    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    endDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    progress?: FloatFieldUpdateOperationsInput | number
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    metrics?: NullableJsonNullValueInput | InputJsonValue
-    resources?: NullableJsonNullValueInput | InputJsonValue
+    type?: EnumObjectiveTypeFieldUpdateOperationsInput | $Enums.ObjectiveType
+    status?: EnumObjectiveStatusFieldUpdateOperationsInput | $Enums.ObjectiveStatus
     priority?: IntFieldUpdateOperationsInput | number
-    weight?: FloatFieldUpdateOperationsInput | number
+    startDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    endDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    progress?: FloatFieldUpdateOperationsInput | number
     metadata?: NullableJsonNullValueInput | InputJsonValue
+    weight?: FloatFieldUpdateOperationsInput | number
+    totalTime?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type GoalUncheckedUpdateManyInput = {
+  export type ObjectiveUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
-    level?: EnumGoalLevelFieldUpdateOperationsInput | $Enums.GoalLevel
-    status?: EnumGoalStatusFieldUpdateOperationsInput | $Enums.GoalStatus
-    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    endDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    type?: EnumObjectiveTypeFieldUpdateOperationsInput | $Enums.ObjectiveType
+    status?: EnumObjectiveStatusFieldUpdateOperationsInput | $Enums.ObjectiveStatus
+    priority?: IntFieldUpdateOperationsInput | number
+    startDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    endDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     progress?: FloatFieldUpdateOperationsInput | number
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    userId?: StringFieldUpdateOperationsInput | string
     parentId?: NullableStringFieldUpdateOperationsInput | string | null
-    metrics?: NullableJsonNullValueInput | InputJsonValue
-    resources?: NullableJsonNullValueInput | InputJsonValue
-    priority?: IntFieldUpdateOperationsInput | number
-    weight?: FloatFieldUpdateOperationsInput | number
+    userId?: StringFieldUpdateOperationsInput | string
     metadata?: NullableJsonNullValueInput | InputJsonValue
+    weight?: FloatFieldUpdateOperationsInput | number
+    totalTime?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type MessageCreateInput = {
@@ -15762,9 +13810,8 @@ export namespace Prisma {
     color?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    goals?: GoalCreateNestedManyWithoutTagsInput
+    objectives?: ObjectiveCreateNestedManyWithoutTagsInput
     messages?: MessageCreateNestedManyWithoutTagsInput
-    tasks?: TaskCreateNestedManyWithoutTagsInput
   }
 
   export type TagUncheckedCreateInput = {
@@ -15773,9 +13820,8 @@ export namespace Prisma {
     color?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    goals?: GoalUncheckedCreateNestedManyWithoutTagsInput
+    objectives?: ObjectiveUncheckedCreateNestedManyWithoutTagsInput
     messages?: MessageUncheckedCreateNestedManyWithoutTagsInput
-    tasks?: TaskUncheckedCreateNestedManyWithoutTagsInput
   }
 
   export type TagUpdateInput = {
@@ -15784,9 +13830,8 @@ export namespace Prisma {
     color?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    goals?: GoalUpdateManyWithoutTagsNestedInput
+    objectives?: ObjectiveUpdateManyWithoutTagsNestedInput
     messages?: MessageUpdateManyWithoutTagsNestedInput
-    tasks?: TaskUpdateManyWithoutTagsNestedInput
   }
 
   export type TagUncheckedUpdateInput = {
@@ -15795,9 +13840,8 @@ export namespace Prisma {
     color?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    goals?: GoalUncheckedUpdateManyWithoutTagsNestedInput
+    objectives?: ObjectiveUncheckedUpdateManyWithoutTagsNestedInput
     messages?: MessageUncheckedUpdateManyWithoutTagsNestedInput
-    tasks?: TaskUncheckedUpdateManyWithoutTagsNestedInput
   }
 
   export type TagCreateManyInput = {
@@ -15833,7 +13877,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     user: UserCreateNestedOneWithoutTimeRecordsInput
-    task: TaskCreateNestedOneWithoutTimeRecordsInput
+    objective: ObjectiveCreateNestedOneWithoutTimeRecordsInput
   }
 
   export type TimeRecordUncheckedCreateInput = {
@@ -15857,7 +13901,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     user?: UserUpdateOneRequiredWithoutTimeRecordsNestedInput
-    task?: TaskUpdateOneRequiredWithoutTimeRecordsNestedInput
+    objective?: ObjectiveUpdateOneRequiredWithoutTimeRecordsNestedInput
   }
 
   export type TimeRecordUncheckedUpdateInput = {
@@ -15912,9 +13956,9 @@ export namespace Prisma {
     note?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    goalId?: string | null
     user: UserCreateNestedOneWithoutProgressLogsInput
-    task?: TaskCreateNestedOneWithoutProgressLogsInput
-    goal?: GoalCreateNestedOneWithoutProgressLogsInput
+    objective?: ObjectiveCreateNestedOneWithoutProgressLogsInput
   }
 
   export type ProgressLogUncheckedCreateInput = {
@@ -15934,9 +13978,9 @@ export namespace Prisma {
     note?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    goalId?: NullableStringFieldUpdateOperationsInput | string | null
     user?: UserUpdateOneRequiredWithoutProgressLogsNestedInput
-    task?: TaskUpdateOneWithoutProgressLogsNestedInput
-    goal?: GoalUpdateOneWithoutProgressLogsNestedInput
+    objective?: ObjectiveUpdateOneWithoutProgressLogsNestedInput
   }
 
   export type ProgressLogUncheckedUpdateInput = {
@@ -15967,6 +14011,7 @@ export namespace Prisma {
     note?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    goalId?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type ProgressLogUncheckedUpdateManyInput = {
@@ -16188,22 +14233,10 @@ export namespace Prisma {
     not?: NestedDateTimeFilter<$PrismaModel> | Date | string
   }
 
-  export type GoalListRelationFilter = {
-    every?: GoalWhereInput
-    some?: GoalWhereInput
-    none?: GoalWhereInput
-  }
-
   export type MessageListRelationFilter = {
     every?: MessageWhereInput
     some?: MessageWhereInput
     none?: MessageWhereInput
-  }
-
-  export type TaskListRelationFilter = {
-    every?: TaskWhereInput
-    some?: TaskWhereInput
-    none?: TaskWhereInput
   }
 
   export type TimeRecordListRelationFilter = {
@@ -16224,20 +14257,18 @@ export namespace Prisma {
     none?: ImportedFileWhereInput
   }
 
+  export type ObjectiveListRelationFilter = {
+    every?: ObjectiveWhereInput
+    some?: ObjectiveWhereInput
+    none?: ObjectiveWhereInput
+  }
+
   export type SortOrderInput = {
     sort: SortOrder
     nulls?: NullsOrder
   }
 
-  export type GoalOrderByRelationAggregateInput = {
-    _count?: SortOrder
-  }
-
   export type MessageOrderByRelationAggregateInput = {
-    _count?: SortOrder
-  }
-
-  export type TaskOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -16250,6 +14281,10 @@ export namespace Prisma {
   }
 
   export type ImportedFileOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type ObjectiveOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -16330,18 +14365,29 @@ export namespace Prisma {
     _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
-  export type EnumTaskStatusFilter<$PrismaModel = never> = {
-    equals?: $Enums.TaskStatus | EnumTaskStatusFieldRefInput<$PrismaModel>
-    in?: $Enums.TaskStatus[] | ListEnumTaskStatusFieldRefInput<$PrismaModel>
-    notIn?: $Enums.TaskStatus[] | ListEnumTaskStatusFieldRefInput<$PrismaModel>
-    not?: NestedEnumTaskStatusFilter<$PrismaModel> | $Enums.TaskStatus
+  export type EnumObjectiveTypeFilter<$PrismaModel = never> = {
+    equals?: $Enums.ObjectiveType | EnumObjectiveTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.ObjectiveType[] | ListEnumObjectiveTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.ObjectiveType[] | ListEnumObjectiveTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumObjectiveTypeFilter<$PrismaModel> | $Enums.ObjectiveType
   }
 
-  export type EnumTaskPriorityFilter<$PrismaModel = never> = {
-    equals?: $Enums.TaskPriority | EnumTaskPriorityFieldRefInput<$PrismaModel>
-    in?: $Enums.TaskPriority[] | ListEnumTaskPriorityFieldRefInput<$PrismaModel>
-    notIn?: $Enums.TaskPriority[] | ListEnumTaskPriorityFieldRefInput<$PrismaModel>
-    not?: NestedEnumTaskPriorityFilter<$PrismaModel> | $Enums.TaskPriority
+  export type EnumObjectiveStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.ObjectiveStatus | EnumObjectiveStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.ObjectiveStatus[] | ListEnumObjectiveStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.ObjectiveStatus[] | ListEnumObjectiveStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumObjectiveStatusFilter<$PrismaModel> | $Enums.ObjectiveStatus
+  }
+
+  export type IntFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntFilter<$PrismaModel> | number
   }
 
   export type DateTimeNullableFilter<$PrismaModel = never> = {
@@ -16353,6 +14399,17 @@ export namespace Prisma {
     gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
+  }
+
+  export type FloatFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel>
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatFilter<$PrismaModel> | number
   }
   export type JsonNullableFilter<$PrismaModel = never> =
     | PatchUndefined<
@@ -16378,25 +14435,9 @@ export namespace Prisma {
     not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
   }
 
-  export type IntFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel>
-    in?: number[] | ListIntFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntFilter<$PrismaModel> | number
-  }
-
-  export type GoalNullableScalarRelationFilter = {
-    is?: GoalWhereInput | null
-    isNot?: GoalWhereInput | null
-  }
-
-  export type TaskNullableScalarRelationFilter = {
-    is?: TaskWhereInput | null
-    isNot?: TaskWhereInput | null
+  export type ObjectiveNullableScalarRelationFilter = {
+    is?: ObjectiveWhereInput | null
+    isNot?: ObjectiveWhereInput | null
   }
 
   export type UserScalarRelationFilter = {
@@ -16414,78 +14455,109 @@ export namespace Prisma {
     _count?: SortOrder
   }
 
-  export type TaskCountOrderByAggregateInput = {
+  export type ObjectiveCountOrderByAggregateInput = {
     id?: SortOrder
     title?: SortOrder
     description?: SortOrder
+    type?: SortOrder
     status?: SortOrder
     priority?: SortOrder
-    dueDate?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-    userId?: SortOrder
+    startDate?: SortOrder
+    endDate?: SortOrder
+    progress?: SortOrder
     parentId?: SortOrder
-    goalId?: SortOrder
+    userId?: SortOrder
     metadata?: SortOrder
+    weight?: SortOrder
+    totalTime?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type ObjectiveAvgOrderByAggregateInput = {
+    priority?: SortOrder
+    progress?: SortOrder
+    weight?: SortOrder
     totalTime?: SortOrder
   }
 
-  export type TaskAvgOrderByAggregateInput = {
-    totalTime?: SortOrder
-  }
-
-  export type TaskMaxOrderByAggregateInput = {
+  export type ObjectiveMaxOrderByAggregateInput = {
     id?: SortOrder
     title?: SortOrder
     description?: SortOrder
+    type?: SortOrder
     status?: SortOrder
     priority?: SortOrder
-    dueDate?: SortOrder
+    startDate?: SortOrder
+    endDate?: SortOrder
+    progress?: SortOrder
+    parentId?: SortOrder
+    userId?: SortOrder
+    weight?: SortOrder
+    totalTime?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    userId?: SortOrder
-    parentId?: SortOrder
-    goalId?: SortOrder
-    totalTime?: SortOrder
   }
 
-  export type TaskMinOrderByAggregateInput = {
+  export type ObjectiveMinOrderByAggregateInput = {
     id?: SortOrder
     title?: SortOrder
     description?: SortOrder
+    type?: SortOrder
     status?: SortOrder
     priority?: SortOrder
-    dueDate?: SortOrder
+    startDate?: SortOrder
+    endDate?: SortOrder
+    progress?: SortOrder
+    parentId?: SortOrder
+    userId?: SortOrder
+    weight?: SortOrder
+    totalTime?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    userId?: SortOrder
-    parentId?: SortOrder
-    goalId?: SortOrder
+  }
+
+  export type ObjectiveSumOrderByAggregateInput = {
+    priority?: SortOrder
+    progress?: SortOrder
+    weight?: SortOrder
     totalTime?: SortOrder
   }
 
-  export type TaskSumOrderByAggregateInput = {
-    totalTime?: SortOrder
+  export type EnumObjectiveTypeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.ObjectiveType | EnumObjectiveTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.ObjectiveType[] | ListEnumObjectiveTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.ObjectiveType[] | ListEnumObjectiveTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumObjectiveTypeWithAggregatesFilter<$PrismaModel> | $Enums.ObjectiveType
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumObjectiveTypeFilter<$PrismaModel>
+    _max?: NestedEnumObjectiveTypeFilter<$PrismaModel>
   }
 
-  export type EnumTaskStatusWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: $Enums.TaskStatus | EnumTaskStatusFieldRefInput<$PrismaModel>
-    in?: $Enums.TaskStatus[] | ListEnumTaskStatusFieldRefInput<$PrismaModel>
-    notIn?: $Enums.TaskStatus[] | ListEnumTaskStatusFieldRefInput<$PrismaModel>
-    not?: NestedEnumTaskStatusWithAggregatesFilter<$PrismaModel> | $Enums.TaskStatus
+  export type EnumObjectiveStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.ObjectiveStatus | EnumObjectiveStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.ObjectiveStatus[] | ListEnumObjectiveStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.ObjectiveStatus[] | ListEnumObjectiveStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumObjectiveStatusWithAggregatesFilter<$PrismaModel> | $Enums.ObjectiveStatus
     _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedEnumTaskStatusFilter<$PrismaModel>
-    _max?: NestedEnumTaskStatusFilter<$PrismaModel>
+    _min?: NestedEnumObjectiveStatusFilter<$PrismaModel>
+    _max?: NestedEnumObjectiveStatusFilter<$PrismaModel>
   }
 
-  export type EnumTaskPriorityWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: $Enums.TaskPriority | EnumTaskPriorityFieldRefInput<$PrismaModel>
-    in?: $Enums.TaskPriority[] | ListEnumTaskPriorityFieldRefInput<$PrismaModel>
-    notIn?: $Enums.TaskPriority[] | ListEnumTaskPriorityFieldRefInput<$PrismaModel>
-    not?: NestedEnumTaskPriorityWithAggregatesFilter<$PrismaModel> | $Enums.TaskPriority
+  export type IntWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
     _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedEnumTaskPriorityFilter<$PrismaModel>
-    _max?: NestedEnumTaskPriorityFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedIntFilter<$PrismaModel>
+    _min?: NestedIntFilter<$PrismaModel>
+    _max?: NestedIntFilter<$PrismaModel>
   }
 
   export type DateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -16500,6 +14572,22 @@ export namespace Prisma {
     _count?: NestedIntNullableFilter<$PrismaModel>
     _min?: NestedDateTimeNullableFilter<$PrismaModel>
     _max?: NestedDateTimeNullableFilter<$PrismaModel>
+  }
+
+  export type FloatWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel>
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatWithAggregatesFilter<$PrismaModel> | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedFloatFilter<$PrismaModel>
+    _min?: NestedFloatFilter<$PrismaModel>
+    _max?: NestedFloatFilter<$PrismaModel>
   }
   export type JsonNullableWithAggregatesFilter<$PrismaModel = never> =
     | PatchUndefined<
@@ -16526,149 +14614,6 @@ export namespace Prisma {
     _count?: NestedIntNullableFilter<$PrismaModel>
     _min?: NestedJsonNullableFilter<$PrismaModel>
     _max?: NestedJsonNullableFilter<$PrismaModel>
-  }
-
-  export type IntWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel>
-    in?: number[] | ListIntFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
-    _count?: NestedIntFilter<$PrismaModel>
-    _avg?: NestedFloatFilter<$PrismaModel>
-    _sum?: NestedIntFilter<$PrismaModel>
-    _min?: NestedIntFilter<$PrismaModel>
-    _max?: NestedIntFilter<$PrismaModel>
-  }
-
-  export type EnumGoalLevelFilter<$PrismaModel = never> = {
-    equals?: $Enums.GoalLevel | EnumGoalLevelFieldRefInput<$PrismaModel>
-    in?: $Enums.GoalLevel[] | ListEnumGoalLevelFieldRefInput<$PrismaModel>
-    notIn?: $Enums.GoalLevel[] | ListEnumGoalLevelFieldRefInput<$PrismaModel>
-    not?: NestedEnumGoalLevelFilter<$PrismaModel> | $Enums.GoalLevel
-  }
-
-  export type EnumGoalStatusFilter<$PrismaModel = never> = {
-    equals?: $Enums.GoalStatus | EnumGoalStatusFieldRefInput<$PrismaModel>
-    in?: $Enums.GoalStatus[] | ListEnumGoalStatusFieldRefInput<$PrismaModel>
-    notIn?: $Enums.GoalStatus[] | ListEnumGoalStatusFieldRefInput<$PrismaModel>
-    not?: NestedEnumGoalStatusFilter<$PrismaModel> | $Enums.GoalStatus
-  }
-
-  export type FloatFilter<$PrismaModel = never> = {
-    equals?: number | FloatFieldRefInput<$PrismaModel>
-    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
-    lt?: number | FloatFieldRefInput<$PrismaModel>
-    lte?: number | FloatFieldRefInput<$PrismaModel>
-    gt?: number | FloatFieldRefInput<$PrismaModel>
-    gte?: number | FloatFieldRefInput<$PrismaModel>
-    not?: NestedFloatFilter<$PrismaModel> | number
-  }
-
-  export type GoalCountOrderByAggregateInput = {
-    id?: SortOrder
-    title?: SortOrder
-    description?: SortOrder
-    level?: SortOrder
-    status?: SortOrder
-    startDate?: SortOrder
-    endDate?: SortOrder
-    progress?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-    userId?: SortOrder
-    parentId?: SortOrder
-    metrics?: SortOrder
-    resources?: SortOrder
-    priority?: SortOrder
-    weight?: SortOrder
-    metadata?: SortOrder
-  }
-
-  export type GoalAvgOrderByAggregateInput = {
-    progress?: SortOrder
-    priority?: SortOrder
-    weight?: SortOrder
-  }
-
-  export type GoalMaxOrderByAggregateInput = {
-    id?: SortOrder
-    title?: SortOrder
-    description?: SortOrder
-    level?: SortOrder
-    status?: SortOrder
-    startDate?: SortOrder
-    endDate?: SortOrder
-    progress?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-    userId?: SortOrder
-    parentId?: SortOrder
-    priority?: SortOrder
-    weight?: SortOrder
-  }
-
-  export type GoalMinOrderByAggregateInput = {
-    id?: SortOrder
-    title?: SortOrder
-    description?: SortOrder
-    level?: SortOrder
-    status?: SortOrder
-    startDate?: SortOrder
-    endDate?: SortOrder
-    progress?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-    userId?: SortOrder
-    parentId?: SortOrder
-    priority?: SortOrder
-    weight?: SortOrder
-  }
-
-  export type GoalSumOrderByAggregateInput = {
-    progress?: SortOrder
-    priority?: SortOrder
-    weight?: SortOrder
-  }
-
-  export type EnumGoalLevelWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: $Enums.GoalLevel | EnumGoalLevelFieldRefInput<$PrismaModel>
-    in?: $Enums.GoalLevel[] | ListEnumGoalLevelFieldRefInput<$PrismaModel>
-    notIn?: $Enums.GoalLevel[] | ListEnumGoalLevelFieldRefInput<$PrismaModel>
-    not?: NestedEnumGoalLevelWithAggregatesFilter<$PrismaModel> | $Enums.GoalLevel
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedEnumGoalLevelFilter<$PrismaModel>
-    _max?: NestedEnumGoalLevelFilter<$PrismaModel>
-  }
-
-  export type EnumGoalStatusWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: $Enums.GoalStatus | EnumGoalStatusFieldRefInput<$PrismaModel>
-    in?: $Enums.GoalStatus[] | ListEnumGoalStatusFieldRefInput<$PrismaModel>
-    notIn?: $Enums.GoalStatus[] | ListEnumGoalStatusFieldRefInput<$PrismaModel>
-    not?: NestedEnumGoalStatusWithAggregatesFilter<$PrismaModel> | $Enums.GoalStatus
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedEnumGoalStatusFilter<$PrismaModel>
-    _max?: NestedEnumGoalStatusFilter<$PrismaModel>
-  }
-
-  export type FloatWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: number | FloatFieldRefInput<$PrismaModel>
-    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
-    lt?: number | FloatFieldRefInput<$PrismaModel>
-    lte?: number | FloatFieldRefInput<$PrismaModel>
-    gt?: number | FloatFieldRefInput<$PrismaModel>
-    gte?: number | FloatFieldRefInput<$PrismaModel>
-    not?: NestedFloatWithAggregatesFilter<$PrismaModel> | number
-    _count?: NestedIntFilter<$PrismaModel>
-    _avg?: NestedFloatFilter<$PrismaModel>
-    _sum?: NestedFloatFilter<$PrismaModel>
-    _min?: NestedFloatFilter<$PrismaModel>
-    _max?: NestedFloatFilter<$PrismaModel>
   }
 
   export type CategoryNullableScalarRelationFilter = {
@@ -16785,9 +14730,9 @@ export namespace Prisma {
     not?: NestedIntNullableFilter<$PrismaModel> | number | null
   }
 
-  export type TaskScalarRelationFilter = {
-    is?: TaskWhereInput
-    isNot?: TaskWhereInput
+  export type ObjectiveScalarRelationFilter = {
+    is?: ObjectiveWhereInput
+    isNot?: ObjectiveWhereInput
   }
 
   export type TimeRecordCountOrderByAggregateInput = {
@@ -16987,25 +14932,11 @@ export namespace Prisma {
     day?: SortOrder
   }
 
-  export type GoalCreateNestedManyWithoutUserInput = {
-    create?: XOR<GoalCreateWithoutUserInput, GoalUncheckedCreateWithoutUserInput> | GoalCreateWithoutUserInput[] | GoalUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: GoalCreateOrConnectWithoutUserInput | GoalCreateOrConnectWithoutUserInput[]
-    createMany?: GoalCreateManyUserInputEnvelope
-    connect?: GoalWhereUniqueInput | GoalWhereUniqueInput[]
-  }
-
   export type MessageCreateNestedManyWithoutUserInput = {
     create?: XOR<MessageCreateWithoutUserInput, MessageUncheckedCreateWithoutUserInput> | MessageCreateWithoutUserInput[] | MessageUncheckedCreateWithoutUserInput[]
     connectOrCreate?: MessageCreateOrConnectWithoutUserInput | MessageCreateOrConnectWithoutUserInput[]
     createMany?: MessageCreateManyUserInputEnvelope
     connect?: MessageWhereUniqueInput | MessageWhereUniqueInput[]
-  }
-
-  export type TaskCreateNestedManyWithoutUserInput = {
-    create?: XOR<TaskCreateWithoutUserInput, TaskUncheckedCreateWithoutUserInput> | TaskCreateWithoutUserInput[] | TaskUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: TaskCreateOrConnectWithoutUserInput | TaskCreateOrConnectWithoutUserInput[]
-    createMany?: TaskCreateManyUserInputEnvelope
-    connect?: TaskWhereUniqueInput | TaskWhereUniqueInput[]
   }
 
   export type TimeRecordCreateNestedManyWithoutUserInput = {
@@ -17029,11 +14960,11 @@ export namespace Prisma {
     connect?: ImportedFileWhereUniqueInput | ImportedFileWhereUniqueInput[]
   }
 
-  export type GoalUncheckedCreateNestedManyWithoutUserInput = {
-    create?: XOR<GoalCreateWithoutUserInput, GoalUncheckedCreateWithoutUserInput> | GoalCreateWithoutUserInput[] | GoalUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: GoalCreateOrConnectWithoutUserInput | GoalCreateOrConnectWithoutUserInput[]
-    createMany?: GoalCreateManyUserInputEnvelope
-    connect?: GoalWhereUniqueInput | GoalWhereUniqueInput[]
+  export type ObjectiveCreateNestedManyWithoutUserInput = {
+    create?: XOR<ObjectiveCreateWithoutUserInput, ObjectiveUncheckedCreateWithoutUserInput> | ObjectiveCreateWithoutUserInput[] | ObjectiveUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: ObjectiveCreateOrConnectWithoutUserInput | ObjectiveCreateOrConnectWithoutUserInput[]
+    createMany?: ObjectiveCreateManyUserInputEnvelope
+    connect?: ObjectiveWhereUniqueInput | ObjectiveWhereUniqueInput[]
   }
 
   export type MessageUncheckedCreateNestedManyWithoutUserInput = {
@@ -17041,13 +14972,6 @@ export namespace Prisma {
     connectOrCreate?: MessageCreateOrConnectWithoutUserInput | MessageCreateOrConnectWithoutUserInput[]
     createMany?: MessageCreateManyUserInputEnvelope
     connect?: MessageWhereUniqueInput | MessageWhereUniqueInput[]
-  }
-
-  export type TaskUncheckedCreateNestedManyWithoutUserInput = {
-    create?: XOR<TaskCreateWithoutUserInput, TaskUncheckedCreateWithoutUserInput> | TaskCreateWithoutUserInput[] | TaskUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: TaskCreateOrConnectWithoutUserInput | TaskCreateOrConnectWithoutUserInput[]
-    createMany?: TaskCreateManyUserInputEnvelope
-    connect?: TaskWhereUniqueInput | TaskWhereUniqueInput[]
   }
 
   export type TimeRecordUncheckedCreateNestedManyWithoutUserInput = {
@@ -17071,6 +14995,13 @@ export namespace Prisma {
     connect?: ImportedFileWhereUniqueInput | ImportedFileWhereUniqueInput[]
   }
 
+  export type ObjectiveUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<ObjectiveCreateWithoutUserInput, ObjectiveUncheckedCreateWithoutUserInput> | ObjectiveCreateWithoutUserInput[] | ObjectiveUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: ObjectiveCreateOrConnectWithoutUserInput | ObjectiveCreateOrConnectWithoutUserInput[]
+    createMany?: ObjectiveCreateManyUserInputEnvelope
+    connect?: ObjectiveWhereUniqueInput | ObjectiveWhereUniqueInput[]
+  }
+
   export type StringFieldUpdateOperationsInput = {
     set?: string
   }
@@ -17081,20 +15012,6 @@ export namespace Prisma {
 
   export type DateTimeFieldUpdateOperationsInput = {
     set?: Date | string
-  }
-
-  export type GoalUpdateManyWithoutUserNestedInput = {
-    create?: XOR<GoalCreateWithoutUserInput, GoalUncheckedCreateWithoutUserInput> | GoalCreateWithoutUserInput[] | GoalUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: GoalCreateOrConnectWithoutUserInput | GoalCreateOrConnectWithoutUserInput[]
-    upsert?: GoalUpsertWithWhereUniqueWithoutUserInput | GoalUpsertWithWhereUniqueWithoutUserInput[]
-    createMany?: GoalCreateManyUserInputEnvelope
-    set?: GoalWhereUniqueInput | GoalWhereUniqueInput[]
-    disconnect?: GoalWhereUniqueInput | GoalWhereUniqueInput[]
-    delete?: GoalWhereUniqueInput | GoalWhereUniqueInput[]
-    connect?: GoalWhereUniqueInput | GoalWhereUniqueInput[]
-    update?: GoalUpdateWithWhereUniqueWithoutUserInput | GoalUpdateWithWhereUniqueWithoutUserInput[]
-    updateMany?: GoalUpdateManyWithWhereWithoutUserInput | GoalUpdateManyWithWhereWithoutUserInput[]
-    deleteMany?: GoalScalarWhereInput | GoalScalarWhereInput[]
   }
 
   export type MessageUpdateManyWithoutUserNestedInput = {
@@ -17109,20 +15026,6 @@ export namespace Prisma {
     update?: MessageUpdateWithWhereUniqueWithoutUserInput | MessageUpdateWithWhereUniqueWithoutUserInput[]
     updateMany?: MessageUpdateManyWithWhereWithoutUserInput | MessageUpdateManyWithWhereWithoutUserInput[]
     deleteMany?: MessageScalarWhereInput | MessageScalarWhereInput[]
-  }
-
-  export type TaskUpdateManyWithoutUserNestedInput = {
-    create?: XOR<TaskCreateWithoutUserInput, TaskUncheckedCreateWithoutUserInput> | TaskCreateWithoutUserInput[] | TaskUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: TaskCreateOrConnectWithoutUserInput | TaskCreateOrConnectWithoutUserInput[]
-    upsert?: TaskUpsertWithWhereUniqueWithoutUserInput | TaskUpsertWithWhereUniqueWithoutUserInput[]
-    createMany?: TaskCreateManyUserInputEnvelope
-    set?: TaskWhereUniqueInput | TaskWhereUniqueInput[]
-    disconnect?: TaskWhereUniqueInput | TaskWhereUniqueInput[]
-    delete?: TaskWhereUniqueInput | TaskWhereUniqueInput[]
-    connect?: TaskWhereUniqueInput | TaskWhereUniqueInput[]
-    update?: TaskUpdateWithWhereUniqueWithoutUserInput | TaskUpdateWithWhereUniqueWithoutUserInput[]
-    updateMany?: TaskUpdateManyWithWhereWithoutUserInput | TaskUpdateManyWithWhereWithoutUserInput[]
-    deleteMany?: TaskScalarWhereInput | TaskScalarWhereInput[]
   }
 
   export type TimeRecordUpdateManyWithoutUserNestedInput = {
@@ -17167,18 +15070,18 @@ export namespace Prisma {
     deleteMany?: ImportedFileScalarWhereInput | ImportedFileScalarWhereInput[]
   }
 
-  export type GoalUncheckedUpdateManyWithoutUserNestedInput = {
-    create?: XOR<GoalCreateWithoutUserInput, GoalUncheckedCreateWithoutUserInput> | GoalCreateWithoutUserInput[] | GoalUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: GoalCreateOrConnectWithoutUserInput | GoalCreateOrConnectWithoutUserInput[]
-    upsert?: GoalUpsertWithWhereUniqueWithoutUserInput | GoalUpsertWithWhereUniqueWithoutUserInput[]
-    createMany?: GoalCreateManyUserInputEnvelope
-    set?: GoalWhereUniqueInput | GoalWhereUniqueInput[]
-    disconnect?: GoalWhereUniqueInput | GoalWhereUniqueInput[]
-    delete?: GoalWhereUniqueInput | GoalWhereUniqueInput[]
-    connect?: GoalWhereUniqueInput | GoalWhereUniqueInput[]
-    update?: GoalUpdateWithWhereUniqueWithoutUserInput | GoalUpdateWithWhereUniqueWithoutUserInput[]
-    updateMany?: GoalUpdateManyWithWhereWithoutUserInput | GoalUpdateManyWithWhereWithoutUserInput[]
-    deleteMany?: GoalScalarWhereInput | GoalScalarWhereInput[]
+  export type ObjectiveUpdateManyWithoutUserNestedInput = {
+    create?: XOR<ObjectiveCreateWithoutUserInput, ObjectiveUncheckedCreateWithoutUserInput> | ObjectiveCreateWithoutUserInput[] | ObjectiveUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: ObjectiveCreateOrConnectWithoutUserInput | ObjectiveCreateOrConnectWithoutUserInput[]
+    upsert?: ObjectiveUpsertWithWhereUniqueWithoutUserInput | ObjectiveUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: ObjectiveCreateManyUserInputEnvelope
+    set?: ObjectiveWhereUniqueInput | ObjectiveWhereUniqueInput[]
+    disconnect?: ObjectiveWhereUniqueInput | ObjectiveWhereUniqueInput[]
+    delete?: ObjectiveWhereUniqueInput | ObjectiveWhereUniqueInput[]
+    connect?: ObjectiveWhereUniqueInput | ObjectiveWhereUniqueInput[]
+    update?: ObjectiveUpdateWithWhereUniqueWithoutUserInput | ObjectiveUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: ObjectiveUpdateManyWithWhereWithoutUserInput | ObjectiveUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: ObjectiveScalarWhereInput | ObjectiveScalarWhereInput[]
   }
 
   export type MessageUncheckedUpdateManyWithoutUserNestedInput = {
@@ -17193,20 +15096,6 @@ export namespace Prisma {
     update?: MessageUpdateWithWhereUniqueWithoutUserInput | MessageUpdateWithWhereUniqueWithoutUserInput[]
     updateMany?: MessageUpdateManyWithWhereWithoutUserInput | MessageUpdateManyWithWhereWithoutUserInput[]
     deleteMany?: MessageScalarWhereInput | MessageScalarWhereInput[]
-  }
-
-  export type TaskUncheckedUpdateManyWithoutUserNestedInput = {
-    create?: XOR<TaskCreateWithoutUserInput, TaskUncheckedCreateWithoutUserInput> | TaskCreateWithoutUserInput[] | TaskUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: TaskCreateOrConnectWithoutUserInput | TaskCreateOrConnectWithoutUserInput[]
-    upsert?: TaskUpsertWithWhereUniqueWithoutUserInput | TaskUpsertWithWhereUniqueWithoutUserInput[]
-    createMany?: TaskCreateManyUserInputEnvelope
-    set?: TaskWhereUniqueInput | TaskWhereUniqueInput[]
-    disconnect?: TaskWhereUniqueInput | TaskWhereUniqueInput[]
-    delete?: TaskWhereUniqueInput | TaskWhereUniqueInput[]
-    connect?: TaskWhereUniqueInput | TaskWhereUniqueInput[]
-    update?: TaskUpdateWithWhereUniqueWithoutUserInput | TaskUpdateWithWhereUniqueWithoutUserInput[]
-    updateMany?: TaskUpdateManyWithWhereWithoutUserInput | TaskUpdateManyWithWhereWithoutUserInput[]
-    deleteMany?: TaskScalarWhereInput | TaskScalarWhereInput[]
   }
 
   export type TimeRecordUncheckedUpdateManyWithoutUserNestedInput = {
@@ -17251,88 +15140,92 @@ export namespace Prisma {
     deleteMany?: ImportedFileScalarWhereInput | ImportedFileScalarWhereInput[]
   }
 
-  export type GoalCreateNestedOneWithoutTasksInput = {
-    create?: XOR<GoalCreateWithoutTasksInput, GoalUncheckedCreateWithoutTasksInput>
-    connectOrCreate?: GoalCreateOrConnectWithoutTasksInput
-    connect?: GoalWhereUniqueInput
+  export type ObjectiveUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<ObjectiveCreateWithoutUserInput, ObjectiveUncheckedCreateWithoutUserInput> | ObjectiveCreateWithoutUserInput[] | ObjectiveUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: ObjectiveCreateOrConnectWithoutUserInput | ObjectiveCreateOrConnectWithoutUserInput[]
+    upsert?: ObjectiveUpsertWithWhereUniqueWithoutUserInput | ObjectiveUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: ObjectiveCreateManyUserInputEnvelope
+    set?: ObjectiveWhereUniqueInput | ObjectiveWhereUniqueInput[]
+    disconnect?: ObjectiveWhereUniqueInput | ObjectiveWhereUniqueInput[]
+    delete?: ObjectiveWhereUniqueInput | ObjectiveWhereUniqueInput[]
+    connect?: ObjectiveWhereUniqueInput | ObjectiveWhereUniqueInput[]
+    update?: ObjectiveUpdateWithWhereUniqueWithoutUserInput | ObjectiveUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: ObjectiveUpdateManyWithWhereWithoutUserInput | ObjectiveUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: ObjectiveScalarWhereInput | ObjectiveScalarWhereInput[]
   }
 
-  export type TaskCreateNestedOneWithoutSubTasksInput = {
-    create?: XOR<TaskCreateWithoutSubTasksInput, TaskUncheckedCreateWithoutSubTasksInput>
-    connectOrCreate?: TaskCreateOrConnectWithoutSubTasksInput
-    connect?: TaskWhereUniqueInput
+  export type ObjectiveCreateNestedOneWithoutSubObjectivesInput = {
+    create?: XOR<ObjectiveCreateWithoutSubObjectivesInput, ObjectiveUncheckedCreateWithoutSubObjectivesInput>
+    connectOrCreate?: ObjectiveCreateOrConnectWithoutSubObjectivesInput
+    connect?: ObjectiveWhereUniqueInput
   }
 
-  export type TaskCreateNestedManyWithoutParentInput = {
-    create?: XOR<TaskCreateWithoutParentInput, TaskUncheckedCreateWithoutParentInput> | TaskCreateWithoutParentInput[] | TaskUncheckedCreateWithoutParentInput[]
-    connectOrCreate?: TaskCreateOrConnectWithoutParentInput | TaskCreateOrConnectWithoutParentInput[]
-    createMany?: TaskCreateManyParentInputEnvelope
-    connect?: TaskWhereUniqueInput | TaskWhereUniqueInput[]
+  export type ObjectiveCreateNestedManyWithoutParentInput = {
+    create?: XOR<ObjectiveCreateWithoutParentInput, ObjectiveUncheckedCreateWithoutParentInput> | ObjectiveCreateWithoutParentInput[] | ObjectiveUncheckedCreateWithoutParentInput[]
+    connectOrCreate?: ObjectiveCreateOrConnectWithoutParentInput | ObjectiveCreateOrConnectWithoutParentInput[]
+    createMany?: ObjectiveCreateManyParentInputEnvelope
+    connect?: ObjectiveWhereUniqueInput | ObjectiveWhereUniqueInput[]
   }
 
-  export type UserCreateNestedOneWithoutTasksInput = {
-    create?: XOR<UserCreateWithoutTasksInput, UserUncheckedCreateWithoutTasksInput>
-    connectOrCreate?: UserCreateOrConnectWithoutTasksInput
+  export type UserCreateNestedOneWithoutObjectivesInput = {
+    create?: XOR<UserCreateWithoutObjectivesInput, UserUncheckedCreateWithoutObjectivesInput>
+    connectOrCreate?: UserCreateOrConnectWithoutObjectivesInput
     connect?: UserWhereUniqueInput
   }
 
-  export type TagCreateNestedManyWithoutTasksInput = {
-    create?: XOR<TagCreateWithoutTasksInput, TagUncheckedCreateWithoutTasksInput> | TagCreateWithoutTasksInput[] | TagUncheckedCreateWithoutTasksInput[]
-    connectOrCreate?: TagCreateOrConnectWithoutTasksInput | TagCreateOrConnectWithoutTasksInput[]
+  export type TagCreateNestedManyWithoutObjectivesInput = {
+    create?: XOR<TagCreateWithoutObjectivesInput, TagUncheckedCreateWithoutObjectivesInput> | TagCreateWithoutObjectivesInput[] | TagUncheckedCreateWithoutObjectivesInput[]
+    connectOrCreate?: TagCreateOrConnectWithoutObjectivesInput | TagCreateOrConnectWithoutObjectivesInput[]
     connect?: TagWhereUniqueInput | TagWhereUniqueInput[]
   }
 
-  export type TimeRecordCreateNestedManyWithoutTaskInput = {
-    create?: XOR<TimeRecordCreateWithoutTaskInput, TimeRecordUncheckedCreateWithoutTaskInput> | TimeRecordCreateWithoutTaskInput[] | TimeRecordUncheckedCreateWithoutTaskInput[]
-    connectOrCreate?: TimeRecordCreateOrConnectWithoutTaskInput | TimeRecordCreateOrConnectWithoutTaskInput[]
-    createMany?: TimeRecordCreateManyTaskInputEnvelope
-    connect?: TimeRecordWhereUniqueInput | TimeRecordWhereUniqueInput[]
-  }
-
-  export type ProgressLogCreateNestedManyWithoutTaskInput = {
-    create?: XOR<ProgressLogCreateWithoutTaskInput, ProgressLogUncheckedCreateWithoutTaskInput> | ProgressLogCreateWithoutTaskInput[] | ProgressLogUncheckedCreateWithoutTaskInput[]
-    connectOrCreate?: ProgressLogCreateOrConnectWithoutTaskInput | ProgressLogCreateOrConnectWithoutTaskInput[]
-    createMany?: ProgressLogCreateManyTaskInputEnvelope
+  export type ProgressLogCreateNestedManyWithoutObjectiveInput = {
+    create?: XOR<ProgressLogCreateWithoutObjectiveInput, ProgressLogUncheckedCreateWithoutObjectiveInput> | ProgressLogCreateWithoutObjectiveInput[] | ProgressLogUncheckedCreateWithoutObjectiveInput[]
+    connectOrCreate?: ProgressLogCreateOrConnectWithoutObjectiveInput | ProgressLogCreateOrConnectWithoutObjectiveInput[]
+    createMany?: ProgressLogCreateManyObjectiveInputEnvelope
     connect?: ProgressLogWhereUniqueInput | ProgressLogWhereUniqueInput[]
   }
 
-  export type TaskUncheckedCreateNestedManyWithoutParentInput = {
-    create?: XOR<TaskCreateWithoutParentInput, TaskUncheckedCreateWithoutParentInput> | TaskCreateWithoutParentInput[] | TaskUncheckedCreateWithoutParentInput[]
-    connectOrCreate?: TaskCreateOrConnectWithoutParentInput | TaskCreateOrConnectWithoutParentInput[]
-    createMany?: TaskCreateManyParentInputEnvelope
-    connect?: TaskWhereUniqueInput | TaskWhereUniqueInput[]
+  export type TimeRecordCreateNestedManyWithoutObjectiveInput = {
+    create?: XOR<TimeRecordCreateWithoutObjectiveInput, TimeRecordUncheckedCreateWithoutObjectiveInput> | TimeRecordCreateWithoutObjectiveInput[] | TimeRecordUncheckedCreateWithoutObjectiveInput[]
+    connectOrCreate?: TimeRecordCreateOrConnectWithoutObjectiveInput | TimeRecordCreateOrConnectWithoutObjectiveInput[]
+    createMany?: TimeRecordCreateManyObjectiveInputEnvelope
+    connect?: TimeRecordWhereUniqueInput | TimeRecordWhereUniqueInput[]
   }
 
-  export type TagUncheckedCreateNestedManyWithoutTasksInput = {
-    create?: XOR<TagCreateWithoutTasksInput, TagUncheckedCreateWithoutTasksInput> | TagCreateWithoutTasksInput[] | TagUncheckedCreateWithoutTasksInput[]
-    connectOrCreate?: TagCreateOrConnectWithoutTasksInput | TagCreateOrConnectWithoutTasksInput[]
+  export type ObjectiveUncheckedCreateNestedManyWithoutParentInput = {
+    create?: XOR<ObjectiveCreateWithoutParentInput, ObjectiveUncheckedCreateWithoutParentInput> | ObjectiveCreateWithoutParentInput[] | ObjectiveUncheckedCreateWithoutParentInput[]
+    connectOrCreate?: ObjectiveCreateOrConnectWithoutParentInput | ObjectiveCreateOrConnectWithoutParentInput[]
+    createMany?: ObjectiveCreateManyParentInputEnvelope
+    connect?: ObjectiveWhereUniqueInput | ObjectiveWhereUniqueInput[]
+  }
+
+  export type TagUncheckedCreateNestedManyWithoutObjectivesInput = {
+    create?: XOR<TagCreateWithoutObjectivesInput, TagUncheckedCreateWithoutObjectivesInput> | TagCreateWithoutObjectivesInput[] | TagUncheckedCreateWithoutObjectivesInput[]
+    connectOrCreate?: TagCreateOrConnectWithoutObjectivesInput | TagCreateOrConnectWithoutObjectivesInput[]
     connect?: TagWhereUniqueInput | TagWhereUniqueInput[]
   }
 
-  export type TimeRecordUncheckedCreateNestedManyWithoutTaskInput = {
-    create?: XOR<TimeRecordCreateWithoutTaskInput, TimeRecordUncheckedCreateWithoutTaskInput> | TimeRecordCreateWithoutTaskInput[] | TimeRecordUncheckedCreateWithoutTaskInput[]
-    connectOrCreate?: TimeRecordCreateOrConnectWithoutTaskInput | TimeRecordCreateOrConnectWithoutTaskInput[]
-    createMany?: TimeRecordCreateManyTaskInputEnvelope
-    connect?: TimeRecordWhereUniqueInput | TimeRecordWhereUniqueInput[]
-  }
-
-  export type ProgressLogUncheckedCreateNestedManyWithoutTaskInput = {
-    create?: XOR<ProgressLogCreateWithoutTaskInput, ProgressLogUncheckedCreateWithoutTaskInput> | ProgressLogCreateWithoutTaskInput[] | ProgressLogUncheckedCreateWithoutTaskInput[]
-    connectOrCreate?: ProgressLogCreateOrConnectWithoutTaskInput | ProgressLogCreateOrConnectWithoutTaskInput[]
-    createMany?: ProgressLogCreateManyTaskInputEnvelope
+  export type ProgressLogUncheckedCreateNestedManyWithoutObjectiveInput = {
+    create?: XOR<ProgressLogCreateWithoutObjectiveInput, ProgressLogUncheckedCreateWithoutObjectiveInput> | ProgressLogCreateWithoutObjectiveInput[] | ProgressLogUncheckedCreateWithoutObjectiveInput[]
+    connectOrCreate?: ProgressLogCreateOrConnectWithoutObjectiveInput | ProgressLogCreateOrConnectWithoutObjectiveInput[]
+    createMany?: ProgressLogCreateManyObjectiveInputEnvelope
     connect?: ProgressLogWhereUniqueInput | ProgressLogWhereUniqueInput[]
   }
 
-  export type EnumTaskStatusFieldUpdateOperationsInput = {
-    set?: $Enums.TaskStatus
+  export type TimeRecordUncheckedCreateNestedManyWithoutObjectiveInput = {
+    create?: XOR<TimeRecordCreateWithoutObjectiveInput, TimeRecordUncheckedCreateWithoutObjectiveInput> | TimeRecordCreateWithoutObjectiveInput[] | TimeRecordUncheckedCreateWithoutObjectiveInput[]
+    connectOrCreate?: TimeRecordCreateOrConnectWithoutObjectiveInput | TimeRecordCreateOrConnectWithoutObjectiveInput[]
+    createMany?: TimeRecordCreateManyObjectiveInputEnvelope
+    connect?: TimeRecordWhereUniqueInput | TimeRecordWhereUniqueInput[]
   }
 
-  export type EnumTaskPriorityFieldUpdateOperationsInput = {
-    set?: $Enums.TaskPriority
+  export type EnumObjectiveTypeFieldUpdateOperationsInput = {
+    set?: $Enums.ObjectiveType
   }
 
-  export type NullableDateTimeFieldUpdateOperationsInput = {
-    set?: Date | string | null
+  export type EnumObjectiveStatusFieldUpdateOperationsInput = {
+    set?: $Enums.ObjectiveStatus
   }
 
   export type IntFieldUpdateOperationsInput = {
@@ -17343,216 +15236,8 @@ export namespace Prisma {
     divide?: number
   }
 
-  export type GoalUpdateOneWithoutTasksNestedInput = {
-    create?: XOR<GoalCreateWithoutTasksInput, GoalUncheckedCreateWithoutTasksInput>
-    connectOrCreate?: GoalCreateOrConnectWithoutTasksInput
-    upsert?: GoalUpsertWithoutTasksInput
-    disconnect?: GoalWhereInput | boolean
-    delete?: GoalWhereInput | boolean
-    connect?: GoalWhereUniqueInput
-    update?: XOR<XOR<GoalUpdateToOneWithWhereWithoutTasksInput, GoalUpdateWithoutTasksInput>, GoalUncheckedUpdateWithoutTasksInput>
-  }
-
-  export type TaskUpdateOneWithoutSubTasksNestedInput = {
-    create?: XOR<TaskCreateWithoutSubTasksInput, TaskUncheckedCreateWithoutSubTasksInput>
-    connectOrCreate?: TaskCreateOrConnectWithoutSubTasksInput
-    upsert?: TaskUpsertWithoutSubTasksInput
-    disconnect?: TaskWhereInput | boolean
-    delete?: TaskWhereInput | boolean
-    connect?: TaskWhereUniqueInput
-    update?: XOR<XOR<TaskUpdateToOneWithWhereWithoutSubTasksInput, TaskUpdateWithoutSubTasksInput>, TaskUncheckedUpdateWithoutSubTasksInput>
-  }
-
-  export type TaskUpdateManyWithoutParentNestedInput = {
-    create?: XOR<TaskCreateWithoutParentInput, TaskUncheckedCreateWithoutParentInput> | TaskCreateWithoutParentInput[] | TaskUncheckedCreateWithoutParentInput[]
-    connectOrCreate?: TaskCreateOrConnectWithoutParentInput | TaskCreateOrConnectWithoutParentInput[]
-    upsert?: TaskUpsertWithWhereUniqueWithoutParentInput | TaskUpsertWithWhereUniqueWithoutParentInput[]
-    createMany?: TaskCreateManyParentInputEnvelope
-    set?: TaskWhereUniqueInput | TaskWhereUniqueInput[]
-    disconnect?: TaskWhereUniqueInput | TaskWhereUniqueInput[]
-    delete?: TaskWhereUniqueInput | TaskWhereUniqueInput[]
-    connect?: TaskWhereUniqueInput | TaskWhereUniqueInput[]
-    update?: TaskUpdateWithWhereUniqueWithoutParentInput | TaskUpdateWithWhereUniqueWithoutParentInput[]
-    updateMany?: TaskUpdateManyWithWhereWithoutParentInput | TaskUpdateManyWithWhereWithoutParentInput[]
-    deleteMany?: TaskScalarWhereInput | TaskScalarWhereInput[]
-  }
-
-  export type UserUpdateOneRequiredWithoutTasksNestedInput = {
-    create?: XOR<UserCreateWithoutTasksInput, UserUncheckedCreateWithoutTasksInput>
-    connectOrCreate?: UserCreateOrConnectWithoutTasksInput
-    upsert?: UserUpsertWithoutTasksInput
-    connect?: UserWhereUniqueInput
-    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutTasksInput, UserUpdateWithoutTasksInput>, UserUncheckedUpdateWithoutTasksInput>
-  }
-
-  export type TagUpdateManyWithoutTasksNestedInput = {
-    create?: XOR<TagCreateWithoutTasksInput, TagUncheckedCreateWithoutTasksInput> | TagCreateWithoutTasksInput[] | TagUncheckedCreateWithoutTasksInput[]
-    connectOrCreate?: TagCreateOrConnectWithoutTasksInput | TagCreateOrConnectWithoutTasksInput[]
-    upsert?: TagUpsertWithWhereUniqueWithoutTasksInput | TagUpsertWithWhereUniqueWithoutTasksInput[]
-    set?: TagWhereUniqueInput | TagWhereUniqueInput[]
-    disconnect?: TagWhereUniqueInput | TagWhereUniqueInput[]
-    delete?: TagWhereUniqueInput | TagWhereUniqueInput[]
-    connect?: TagWhereUniqueInput | TagWhereUniqueInput[]
-    update?: TagUpdateWithWhereUniqueWithoutTasksInput | TagUpdateWithWhereUniqueWithoutTasksInput[]
-    updateMany?: TagUpdateManyWithWhereWithoutTasksInput | TagUpdateManyWithWhereWithoutTasksInput[]
-    deleteMany?: TagScalarWhereInput | TagScalarWhereInput[]
-  }
-
-  export type TimeRecordUpdateManyWithoutTaskNestedInput = {
-    create?: XOR<TimeRecordCreateWithoutTaskInput, TimeRecordUncheckedCreateWithoutTaskInput> | TimeRecordCreateWithoutTaskInput[] | TimeRecordUncheckedCreateWithoutTaskInput[]
-    connectOrCreate?: TimeRecordCreateOrConnectWithoutTaskInput | TimeRecordCreateOrConnectWithoutTaskInput[]
-    upsert?: TimeRecordUpsertWithWhereUniqueWithoutTaskInput | TimeRecordUpsertWithWhereUniqueWithoutTaskInput[]
-    createMany?: TimeRecordCreateManyTaskInputEnvelope
-    set?: TimeRecordWhereUniqueInput | TimeRecordWhereUniqueInput[]
-    disconnect?: TimeRecordWhereUniqueInput | TimeRecordWhereUniqueInput[]
-    delete?: TimeRecordWhereUniqueInput | TimeRecordWhereUniqueInput[]
-    connect?: TimeRecordWhereUniqueInput | TimeRecordWhereUniqueInput[]
-    update?: TimeRecordUpdateWithWhereUniqueWithoutTaskInput | TimeRecordUpdateWithWhereUniqueWithoutTaskInput[]
-    updateMany?: TimeRecordUpdateManyWithWhereWithoutTaskInput | TimeRecordUpdateManyWithWhereWithoutTaskInput[]
-    deleteMany?: TimeRecordScalarWhereInput | TimeRecordScalarWhereInput[]
-  }
-
-  export type ProgressLogUpdateManyWithoutTaskNestedInput = {
-    create?: XOR<ProgressLogCreateWithoutTaskInput, ProgressLogUncheckedCreateWithoutTaskInput> | ProgressLogCreateWithoutTaskInput[] | ProgressLogUncheckedCreateWithoutTaskInput[]
-    connectOrCreate?: ProgressLogCreateOrConnectWithoutTaskInput | ProgressLogCreateOrConnectWithoutTaskInput[]
-    upsert?: ProgressLogUpsertWithWhereUniqueWithoutTaskInput | ProgressLogUpsertWithWhereUniqueWithoutTaskInput[]
-    createMany?: ProgressLogCreateManyTaskInputEnvelope
-    set?: ProgressLogWhereUniqueInput | ProgressLogWhereUniqueInput[]
-    disconnect?: ProgressLogWhereUniqueInput | ProgressLogWhereUniqueInput[]
-    delete?: ProgressLogWhereUniqueInput | ProgressLogWhereUniqueInput[]
-    connect?: ProgressLogWhereUniqueInput | ProgressLogWhereUniqueInput[]
-    update?: ProgressLogUpdateWithWhereUniqueWithoutTaskInput | ProgressLogUpdateWithWhereUniqueWithoutTaskInput[]
-    updateMany?: ProgressLogUpdateManyWithWhereWithoutTaskInput | ProgressLogUpdateManyWithWhereWithoutTaskInput[]
-    deleteMany?: ProgressLogScalarWhereInput | ProgressLogScalarWhereInput[]
-  }
-
-  export type TaskUncheckedUpdateManyWithoutParentNestedInput = {
-    create?: XOR<TaskCreateWithoutParentInput, TaskUncheckedCreateWithoutParentInput> | TaskCreateWithoutParentInput[] | TaskUncheckedCreateWithoutParentInput[]
-    connectOrCreate?: TaskCreateOrConnectWithoutParentInput | TaskCreateOrConnectWithoutParentInput[]
-    upsert?: TaskUpsertWithWhereUniqueWithoutParentInput | TaskUpsertWithWhereUniqueWithoutParentInput[]
-    createMany?: TaskCreateManyParentInputEnvelope
-    set?: TaskWhereUniqueInput | TaskWhereUniqueInput[]
-    disconnect?: TaskWhereUniqueInput | TaskWhereUniqueInput[]
-    delete?: TaskWhereUniqueInput | TaskWhereUniqueInput[]
-    connect?: TaskWhereUniqueInput | TaskWhereUniqueInput[]
-    update?: TaskUpdateWithWhereUniqueWithoutParentInput | TaskUpdateWithWhereUniqueWithoutParentInput[]
-    updateMany?: TaskUpdateManyWithWhereWithoutParentInput | TaskUpdateManyWithWhereWithoutParentInput[]
-    deleteMany?: TaskScalarWhereInput | TaskScalarWhereInput[]
-  }
-
-  export type TagUncheckedUpdateManyWithoutTasksNestedInput = {
-    create?: XOR<TagCreateWithoutTasksInput, TagUncheckedCreateWithoutTasksInput> | TagCreateWithoutTasksInput[] | TagUncheckedCreateWithoutTasksInput[]
-    connectOrCreate?: TagCreateOrConnectWithoutTasksInput | TagCreateOrConnectWithoutTasksInput[]
-    upsert?: TagUpsertWithWhereUniqueWithoutTasksInput | TagUpsertWithWhereUniqueWithoutTasksInput[]
-    set?: TagWhereUniqueInput | TagWhereUniqueInput[]
-    disconnect?: TagWhereUniqueInput | TagWhereUniqueInput[]
-    delete?: TagWhereUniqueInput | TagWhereUniqueInput[]
-    connect?: TagWhereUniqueInput | TagWhereUniqueInput[]
-    update?: TagUpdateWithWhereUniqueWithoutTasksInput | TagUpdateWithWhereUniqueWithoutTasksInput[]
-    updateMany?: TagUpdateManyWithWhereWithoutTasksInput | TagUpdateManyWithWhereWithoutTasksInput[]
-    deleteMany?: TagScalarWhereInput | TagScalarWhereInput[]
-  }
-
-  export type TimeRecordUncheckedUpdateManyWithoutTaskNestedInput = {
-    create?: XOR<TimeRecordCreateWithoutTaskInput, TimeRecordUncheckedCreateWithoutTaskInput> | TimeRecordCreateWithoutTaskInput[] | TimeRecordUncheckedCreateWithoutTaskInput[]
-    connectOrCreate?: TimeRecordCreateOrConnectWithoutTaskInput | TimeRecordCreateOrConnectWithoutTaskInput[]
-    upsert?: TimeRecordUpsertWithWhereUniqueWithoutTaskInput | TimeRecordUpsertWithWhereUniqueWithoutTaskInput[]
-    createMany?: TimeRecordCreateManyTaskInputEnvelope
-    set?: TimeRecordWhereUniqueInput | TimeRecordWhereUniqueInput[]
-    disconnect?: TimeRecordWhereUniqueInput | TimeRecordWhereUniqueInput[]
-    delete?: TimeRecordWhereUniqueInput | TimeRecordWhereUniqueInput[]
-    connect?: TimeRecordWhereUniqueInput | TimeRecordWhereUniqueInput[]
-    update?: TimeRecordUpdateWithWhereUniqueWithoutTaskInput | TimeRecordUpdateWithWhereUniqueWithoutTaskInput[]
-    updateMany?: TimeRecordUpdateManyWithWhereWithoutTaskInput | TimeRecordUpdateManyWithWhereWithoutTaskInput[]
-    deleteMany?: TimeRecordScalarWhereInput | TimeRecordScalarWhereInput[]
-  }
-
-  export type ProgressLogUncheckedUpdateManyWithoutTaskNestedInput = {
-    create?: XOR<ProgressLogCreateWithoutTaskInput, ProgressLogUncheckedCreateWithoutTaskInput> | ProgressLogCreateWithoutTaskInput[] | ProgressLogUncheckedCreateWithoutTaskInput[]
-    connectOrCreate?: ProgressLogCreateOrConnectWithoutTaskInput | ProgressLogCreateOrConnectWithoutTaskInput[]
-    upsert?: ProgressLogUpsertWithWhereUniqueWithoutTaskInput | ProgressLogUpsertWithWhereUniqueWithoutTaskInput[]
-    createMany?: ProgressLogCreateManyTaskInputEnvelope
-    set?: ProgressLogWhereUniqueInput | ProgressLogWhereUniqueInput[]
-    disconnect?: ProgressLogWhereUniqueInput | ProgressLogWhereUniqueInput[]
-    delete?: ProgressLogWhereUniqueInput | ProgressLogWhereUniqueInput[]
-    connect?: ProgressLogWhereUniqueInput | ProgressLogWhereUniqueInput[]
-    update?: ProgressLogUpdateWithWhereUniqueWithoutTaskInput | ProgressLogUpdateWithWhereUniqueWithoutTaskInput[]
-    updateMany?: ProgressLogUpdateManyWithWhereWithoutTaskInput | ProgressLogUpdateManyWithWhereWithoutTaskInput[]
-    deleteMany?: ProgressLogScalarWhereInput | ProgressLogScalarWhereInput[]
-  }
-
-  export type GoalCreateNestedOneWithoutSubGoalsInput = {
-    create?: XOR<GoalCreateWithoutSubGoalsInput, GoalUncheckedCreateWithoutSubGoalsInput>
-    connectOrCreate?: GoalCreateOrConnectWithoutSubGoalsInput
-    connect?: GoalWhereUniqueInput
-  }
-
-  export type GoalCreateNestedManyWithoutParentInput = {
-    create?: XOR<GoalCreateWithoutParentInput, GoalUncheckedCreateWithoutParentInput> | GoalCreateWithoutParentInput[] | GoalUncheckedCreateWithoutParentInput[]
-    connectOrCreate?: GoalCreateOrConnectWithoutParentInput | GoalCreateOrConnectWithoutParentInput[]
-    createMany?: GoalCreateManyParentInputEnvelope
-    connect?: GoalWhereUniqueInput | GoalWhereUniqueInput[]
-  }
-
-  export type UserCreateNestedOneWithoutGoalsInput = {
-    create?: XOR<UserCreateWithoutGoalsInput, UserUncheckedCreateWithoutGoalsInput>
-    connectOrCreate?: UserCreateOrConnectWithoutGoalsInput
-    connect?: UserWhereUniqueInput
-  }
-
-  export type TaskCreateNestedManyWithoutGoalInput = {
-    create?: XOR<TaskCreateWithoutGoalInput, TaskUncheckedCreateWithoutGoalInput> | TaskCreateWithoutGoalInput[] | TaskUncheckedCreateWithoutGoalInput[]
-    connectOrCreate?: TaskCreateOrConnectWithoutGoalInput | TaskCreateOrConnectWithoutGoalInput[]
-    createMany?: TaskCreateManyGoalInputEnvelope
-    connect?: TaskWhereUniqueInput | TaskWhereUniqueInput[]
-  }
-
-  export type TagCreateNestedManyWithoutGoalsInput = {
-    create?: XOR<TagCreateWithoutGoalsInput, TagUncheckedCreateWithoutGoalsInput> | TagCreateWithoutGoalsInput[] | TagUncheckedCreateWithoutGoalsInput[]
-    connectOrCreate?: TagCreateOrConnectWithoutGoalsInput | TagCreateOrConnectWithoutGoalsInput[]
-    connect?: TagWhereUniqueInput | TagWhereUniqueInput[]
-  }
-
-  export type ProgressLogCreateNestedManyWithoutGoalInput = {
-    create?: XOR<ProgressLogCreateWithoutGoalInput, ProgressLogUncheckedCreateWithoutGoalInput> | ProgressLogCreateWithoutGoalInput[] | ProgressLogUncheckedCreateWithoutGoalInput[]
-    connectOrCreate?: ProgressLogCreateOrConnectWithoutGoalInput | ProgressLogCreateOrConnectWithoutGoalInput[]
-    createMany?: ProgressLogCreateManyGoalInputEnvelope
-    connect?: ProgressLogWhereUniqueInput | ProgressLogWhereUniqueInput[]
-  }
-
-  export type GoalUncheckedCreateNestedManyWithoutParentInput = {
-    create?: XOR<GoalCreateWithoutParentInput, GoalUncheckedCreateWithoutParentInput> | GoalCreateWithoutParentInput[] | GoalUncheckedCreateWithoutParentInput[]
-    connectOrCreate?: GoalCreateOrConnectWithoutParentInput | GoalCreateOrConnectWithoutParentInput[]
-    createMany?: GoalCreateManyParentInputEnvelope
-    connect?: GoalWhereUniqueInput | GoalWhereUniqueInput[]
-  }
-
-  export type TaskUncheckedCreateNestedManyWithoutGoalInput = {
-    create?: XOR<TaskCreateWithoutGoalInput, TaskUncheckedCreateWithoutGoalInput> | TaskCreateWithoutGoalInput[] | TaskUncheckedCreateWithoutGoalInput[]
-    connectOrCreate?: TaskCreateOrConnectWithoutGoalInput | TaskCreateOrConnectWithoutGoalInput[]
-    createMany?: TaskCreateManyGoalInputEnvelope
-    connect?: TaskWhereUniqueInput | TaskWhereUniqueInput[]
-  }
-
-  export type TagUncheckedCreateNestedManyWithoutGoalsInput = {
-    create?: XOR<TagCreateWithoutGoalsInput, TagUncheckedCreateWithoutGoalsInput> | TagCreateWithoutGoalsInput[] | TagUncheckedCreateWithoutGoalsInput[]
-    connectOrCreate?: TagCreateOrConnectWithoutGoalsInput | TagCreateOrConnectWithoutGoalsInput[]
-    connect?: TagWhereUniqueInput | TagWhereUniqueInput[]
-  }
-
-  export type ProgressLogUncheckedCreateNestedManyWithoutGoalInput = {
-    create?: XOR<ProgressLogCreateWithoutGoalInput, ProgressLogUncheckedCreateWithoutGoalInput> | ProgressLogCreateWithoutGoalInput[] | ProgressLogUncheckedCreateWithoutGoalInput[]
-    connectOrCreate?: ProgressLogCreateOrConnectWithoutGoalInput | ProgressLogCreateOrConnectWithoutGoalInput[]
-    createMany?: ProgressLogCreateManyGoalInputEnvelope
-    connect?: ProgressLogWhereUniqueInput | ProgressLogWhereUniqueInput[]
-  }
-
-  export type EnumGoalLevelFieldUpdateOperationsInput = {
-    set?: $Enums.GoalLevel
-  }
-
-  export type EnumGoalStatusFieldUpdateOperationsInput = {
-    set?: $Enums.GoalStatus
+  export type NullableDateTimeFieldUpdateOperationsInput = {
+    set?: Date | string | null
   }
 
   export type FloatFieldUpdateOperationsInput = {
@@ -17563,132 +15248,132 @@ export namespace Prisma {
     divide?: number
   }
 
-  export type GoalUpdateOneWithoutSubGoalsNestedInput = {
-    create?: XOR<GoalCreateWithoutSubGoalsInput, GoalUncheckedCreateWithoutSubGoalsInput>
-    connectOrCreate?: GoalCreateOrConnectWithoutSubGoalsInput
-    upsert?: GoalUpsertWithoutSubGoalsInput
-    disconnect?: GoalWhereInput | boolean
-    delete?: GoalWhereInput | boolean
-    connect?: GoalWhereUniqueInput
-    update?: XOR<XOR<GoalUpdateToOneWithWhereWithoutSubGoalsInput, GoalUpdateWithoutSubGoalsInput>, GoalUncheckedUpdateWithoutSubGoalsInput>
+  export type ObjectiveUpdateOneWithoutSubObjectivesNestedInput = {
+    create?: XOR<ObjectiveCreateWithoutSubObjectivesInput, ObjectiveUncheckedCreateWithoutSubObjectivesInput>
+    connectOrCreate?: ObjectiveCreateOrConnectWithoutSubObjectivesInput
+    upsert?: ObjectiveUpsertWithoutSubObjectivesInput
+    disconnect?: ObjectiveWhereInput | boolean
+    delete?: ObjectiveWhereInput | boolean
+    connect?: ObjectiveWhereUniqueInput
+    update?: XOR<XOR<ObjectiveUpdateToOneWithWhereWithoutSubObjectivesInput, ObjectiveUpdateWithoutSubObjectivesInput>, ObjectiveUncheckedUpdateWithoutSubObjectivesInput>
   }
 
-  export type GoalUpdateManyWithoutParentNestedInput = {
-    create?: XOR<GoalCreateWithoutParentInput, GoalUncheckedCreateWithoutParentInput> | GoalCreateWithoutParentInput[] | GoalUncheckedCreateWithoutParentInput[]
-    connectOrCreate?: GoalCreateOrConnectWithoutParentInput | GoalCreateOrConnectWithoutParentInput[]
-    upsert?: GoalUpsertWithWhereUniqueWithoutParentInput | GoalUpsertWithWhereUniqueWithoutParentInput[]
-    createMany?: GoalCreateManyParentInputEnvelope
-    set?: GoalWhereUniqueInput | GoalWhereUniqueInput[]
-    disconnect?: GoalWhereUniqueInput | GoalWhereUniqueInput[]
-    delete?: GoalWhereUniqueInput | GoalWhereUniqueInput[]
-    connect?: GoalWhereUniqueInput | GoalWhereUniqueInput[]
-    update?: GoalUpdateWithWhereUniqueWithoutParentInput | GoalUpdateWithWhereUniqueWithoutParentInput[]
-    updateMany?: GoalUpdateManyWithWhereWithoutParentInput | GoalUpdateManyWithWhereWithoutParentInput[]
-    deleteMany?: GoalScalarWhereInput | GoalScalarWhereInput[]
+  export type ObjectiveUpdateManyWithoutParentNestedInput = {
+    create?: XOR<ObjectiveCreateWithoutParentInput, ObjectiveUncheckedCreateWithoutParentInput> | ObjectiveCreateWithoutParentInput[] | ObjectiveUncheckedCreateWithoutParentInput[]
+    connectOrCreate?: ObjectiveCreateOrConnectWithoutParentInput | ObjectiveCreateOrConnectWithoutParentInput[]
+    upsert?: ObjectiveUpsertWithWhereUniqueWithoutParentInput | ObjectiveUpsertWithWhereUniqueWithoutParentInput[]
+    createMany?: ObjectiveCreateManyParentInputEnvelope
+    set?: ObjectiveWhereUniqueInput | ObjectiveWhereUniqueInput[]
+    disconnect?: ObjectiveWhereUniqueInput | ObjectiveWhereUniqueInput[]
+    delete?: ObjectiveWhereUniqueInput | ObjectiveWhereUniqueInput[]
+    connect?: ObjectiveWhereUniqueInput | ObjectiveWhereUniqueInput[]
+    update?: ObjectiveUpdateWithWhereUniqueWithoutParentInput | ObjectiveUpdateWithWhereUniqueWithoutParentInput[]
+    updateMany?: ObjectiveUpdateManyWithWhereWithoutParentInput | ObjectiveUpdateManyWithWhereWithoutParentInput[]
+    deleteMany?: ObjectiveScalarWhereInput | ObjectiveScalarWhereInput[]
   }
 
-  export type UserUpdateOneRequiredWithoutGoalsNestedInput = {
-    create?: XOR<UserCreateWithoutGoalsInput, UserUncheckedCreateWithoutGoalsInput>
-    connectOrCreate?: UserCreateOrConnectWithoutGoalsInput
-    upsert?: UserUpsertWithoutGoalsInput
+  export type UserUpdateOneRequiredWithoutObjectivesNestedInput = {
+    create?: XOR<UserCreateWithoutObjectivesInput, UserUncheckedCreateWithoutObjectivesInput>
+    connectOrCreate?: UserCreateOrConnectWithoutObjectivesInput
+    upsert?: UserUpsertWithoutObjectivesInput
     connect?: UserWhereUniqueInput
-    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutGoalsInput, UserUpdateWithoutGoalsInput>, UserUncheckedUpdateWithoutGoalsInput>
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutObjectivesInput, UserUpdateWithoutObjectivesInput>, UserUncheckedUpdateWithoutObjectivesInput>
   }
 
-  export type TaskUpdateManyWithoutGoalNestedInput = {
-    create?: XOR<TaskCreateWithoutGoalInput, TaskUncheckedCreateWithoutGoalInput> | TaskCreateWithoutGoalInput[] | TaskUncheckedCreateWithoutGoalInput[]
-    connectOrCreate?: TaskCreateOrConnectWithoutGoalInput | TaskCreateOrConnectWithoutGoalInput[]
-    upsert?: TaskUpsertWithWhereUniqueWithoutGoalInput | TaskUpsertWithWhereUniqueWithoutGoalInput[]
-    createMany?: TaskCreateManyGoalInputEnvelope
-    set?: TaskWhereUniqueInput | TaskWhereUniqueInput[]
-    disconnect?: TaskWhereUniqueInput | TaskWhereUniqueInput[]
-    delete?: TaskWhereUniqueInput | TaskWhereUniqueInput[]
-    connect?: TaskWhereUniqueInput | TaskWhereUniqueInput[]
-    update?: TaskUpdateWithWhereUniqueWithoutGoalInput | TaskUpdateWithWhereUniqueWithoutGoalInput[]
-    updateMany?: TaskUpdateManyWithWhereWithoutGoalInput | TaskUpdateManyWithWhereWithoutGoalInput[]
-    deleteMany?: TaskScalarWhereInput | TaskScalarWhereInput[]
-  }
-
-  export type TagUpdateManyWithoutGoalsNestedInput = {
-    create?: XOR<TagCreateWithoutGoalsInput, TagUncheckedCreateWithoutGoalsInput> | TagCreateWithoutGoalsInput[] | TagUncheckedCreateWithoutGoalsInput[]
-    connectOrCreate?: TagCreateOrConnectWithoutGoalsInput | TagCreateOrConnectWithoutGoalsInput[]
-    upsert?: TagUpsertWithWhereUniqueWithoutGoalsInput | TagUpsertWithWhereUniqueWithoutGoalsInput[]
+  export type TagUpdateManyWithoutObjectivesNestedInput = {
+    create?: XOR<TagCreateWithoutObjectivesInput, TagUncheckedCreateWithoutObjectivesInput> | TagCreateWithoutObjectivesInput[] | TagUncheckedCreateWithoutObjectivesInput[]
+    connectOrCreate?: TagCreateOrConnectWithoutObjectivesInput | TagCreateOrConnectWithoutObjectivesInput[]
+    upsert?: TagUpsertWithWhereUniqueWithoutObjectivesInput | TagUpsertWithWhereUniqueWithoutObjectivesInput[]
     set?: TagWhereUniqueInput | TagWhereUniqueInput[]
     disconnect?: TagWhereUniqueInput | TagWhereUniqueInput[]
     delete?: TagWhereUniqueInput | TagWhereUniqueInput[]
     connect?: TagWhereUniqueInput | TagWhereUniqueInput[]
-    update?: TagUpdateWithWhereUniqueWithoutGoalsInput | TagUpdateWithWhereUniqueWithoutGoalsInput[]
-    updateMany?: TagUpdateManyWithWhereWithoutGoalsInput | TagUpdateManyWithWhereWithoutGoalsInput[]
+    update?: TagUpdateWithWhereUniqueWithoutObjectivesInput | TagUpdateWithWhereUniqueWithoutObjectivesInput[]
+    updateMany?: TagUpdateManyWithWhereWithoutObjectivesInput | TagUpdateManyWithWhereWithoutObjectivesInput[]
     deleteMany?: TagScalarWhereInput | TagScalarWhereInput[]
   }
 
-  export type ProgressLogUpdateManyWithoutGoalNestedInput = {
-    create?: XOR<ProgressLogCreateWithoutGoalInput, ProgressLogUncheckedCreateWithoutGoalInput> | ProgressLogCreateWithoutGoalInput[] | ProgressLogUncheckedCreateWithoutGoalInput[]
-    connectOrCreate?: ProgressLogCreateOrConnectWithoutGoalInput | ProgressLogCreateOrConnectWithoutGoalInput[]
-    upsert?: ProgressLogUpsertWithWhereUniqueWithoutGoalInput | ProgressLogUpsertWithWhereUniqueWithoutGoalInput[]
-    createMany?: ProgressLogCreateManyGoalInputEnvelope
+  export type ProgressLogUpdateManyWithoutObjectiveNestedInput = {
+    create?: XOR<ProgressLogCreateWithoutObjectiveInput, ProgressLogUncheckedCreateWithoutObjectiveInput> | ProgressLogCreateWithoutObjectiveInput[] | ProgressLogUncheckedCreateWithoutObjectiveInput[]
+    connectOrCreate?: ProgressLogCreateOrConnectWithoutObjectiveInput | ProgressLogCreateOrConnectWithoutObjectiveInput[]
+    upsert?: ProgressLogUpsertWithWhereUniqueWithoutObjectiveInput | ProgressLogUpsertWithWhereUniqueWithoutObjectiveInput[]
+    createMany?: ProgressLogCreateManyObjectiveInputEnvelope
     set?: ProgressLogWhereUniqueInput | ProgressLogWhereUniqueInput[]
     disconnect?: ProgressLogWhereUniqueInput | ProgressLogWhereUniqueInput[]
     delete?: ProgressLogWhereUniqueInput | ProgressLogWhereUniqueInput[]
     connect?: ProgressLogWhereUniqueInput | ProgressLogWhereUniqueInput[]
-    update?: ProgressLogUpdateWithWhereUniqueWithoutGoalInput | ProgressLogUpdateWithWhereUniqueWithoutGoalInput[]
-    updateMany?: ProgressLogUpdateManyWithWhereWithoutGoalInput | ProgressLogUpdateManyWithWhereWithoutGoalInput[]
+    update?: ProgressLogUpdateWithWhereUniqueWithoutObjectiveInput | ProgressLogUpdateWithWhereUniqueWithoutObjectiveInput[]
+    updateMany?: ProgressLogUpdateManyWithWhereWithoutObjectiveInput | ProgressLogUpdateManyWithWhereWithoutObjectiveInput[]
     deleteMany?: ProgressLogScalarWhereInput | ProgressLogScalarWhereInput[]
   }
 
-  export type GoalUncheckedUpdateManyWithoutParentNestedInput = {
-    create?: XOR<GoalCreateWithoutParentInput, GoalUncheckedCreateWithoutParentInput> | GoalCreateWithoutParentInput[] | GoalUncheckedCreateWithoutParentInput[]
-    connectOrCreate?: GoalCreateOrConnectWithoutParentInput | GoalCreateOrConnectWithoutParentInput[]
-    upsert?: GoalUpsertWithWhereUniqueWithoutParentInput | GoalUpsertWithWhereUniqueWithoutParentInput[]
-    createMany?: GoalCreateManyParentInputEnvelope
-    set?: GoalWhereUniqueInput | GoalWhereUniqueInput[]
-    disconnect?: GoalWhereUniqueInput | GoalWhereUniqueInput[]
-    delete?: GoalWhereUniqueInput | GoalWhereUniqueInput[]
-    connect?: GoalWhereUniqueInput | GoalWhereUniqueInput[]
-    update?: GoalUpdateWithWhereUniqueWithoutParentInput | GoalUpdateWithWhereUniqueWithoutParentInput[]
-    updateMany?: GoalUpdateManyWithWhereWithoutParentInput | GoalUpdateManyWithWhereWithoutParentInput[]
-    deleteMany?: GoalScalarWhereInput | GoalScalarWhereInput[]
+  export type TimeRecordUpdateManyWithoutObjectiveNestedInput = {
+    create?: XOR<TimeRecordCreateWithoutObjectiveInput, TimeRecordUncheckedCreateWithoutObjectiveInput> | TimeRecordCreateWithoutObjectiveInput[] | TimeRecordUncheckedCreateWithoutObjectiveInput[]
+    connectOrCreate?: TimeRecordCreateOrConnectWithoutObjectiveInput | TimeRecordCreateOrConnectWithoutObjectiveInput[]
+    upsert?: TimeRecordUpsertWithWhereUniqueWithoutObjectiveInput | TimeRecordUpsertWithWhereUniqueWithoutObjectiveInput[]
+    createMany?: TimeRecordCreateManyObjectiveInputEnvelope
+    set?: TimeRecordWhereUniqueInput | TimeRecordWhereUniqueInput[]
+    disconnect?: TimeRecordWhereUniqueInput | TimeRecordWhereUniqueInput[]
+    delete?: TimeRecordWhereUniqueInput | TimeRecordWhereUniqueInput[]
+    connect?: TimeRecordWhereUniqueInput | TimeRecordWhereUniqueInput[]
+    update?: TimeRecordUpdateWithWhereUniqueWithoutObjectiveInput | TimeRecordUpdateWithWhereUniqueWithoutObjectiveInput[]
+    updateMany?: TimeRecordUpdateManyWithWhereWithoutObjectiveInput | TimeRecordUpdateManyWithWhereWithoutObjectiveInput[]
+    deleteMany?: TimeRecordScalarWhereInput | TimeRecordScalarWhereInput[]
   }
 
-  export type TaskUncheckedUpdateManyWithoutGoalNestedInput = {
-    create?: XOR<TaskCreateWithoutGoalInput, TaskUncheckedCreateWithoutGoalInput> | TaskCreateWithoutGoalInput[] | TaskUncheckedCreateWithoutGoalInput[]
-    connectOrCreate?: TaskCreateOrConnectWithoutGoalInput | TaskCreateOrConnectWithoutGoalInput[]
-    upsert?: TaskUpsertWithWhereUniqueWithoutGoalInput | TaskUpsertWithWhereUniqueWithoutGoalInput[]
-    createMany?: TaskCreateManyGoalInputEnvelope
-    set?: TaskWhereUniqueInput | TaskWhereUniqueInput[]
-    disconnect?: TaskWhereUniqueInput | TaskWhereUniqueInput[]
-    delete?: TaskWhereUniqueInput | TaskWhereUniqueInput[]
-    connect?: TaskWhereUniqueInput | TaskWhereUniqueInput[]
-    update?: TaskUpdateWithWhereUniqueWithoutGoalInput | TaskUpdateWithWhereUniqueWithoutGoalInput[]
-    updateMany?: TaskUpdateManyWithWhereWithoutGoalInput | TaskUpdateManyWithWhereWithoutGoalInput[]
-    deleteMany?: TaskScalarWhereInput | TaskScalarWhereInput[]
+  export type ObjectiveUncheckedUpdateManyWithoutParentNestedInput = {
+    create?: XOR<ObjectiveCreateWithoutParentInput, ObjectiveUncheckedCreateWithoutParentInput> | ObjectiveCreateWithoutParentInput[] | ObjectiveUncheckedCreateWithoutParentInput[]
+    connectOrCreate?: ObjectiveCreateOrConnectWithoutParentInput | ObjectiveCreateOrConnectWithoutParentInput[]
+    upsert?: ObjectiveUpsertWithWhereUniqueWithoutParentInput | ObjectiveUpsertWithWhereUniqueWithoutParentInput[]
+    createMany?: ObjectiveCreateManyParentInputEnvelope
+    set?: ObjectiveWhereUniqueInput | ObjectiveWhereUniqueInput[]
+    disconnect?: ObjectiveWhereUniqueInput | ObjectiveWhereUniqueInput[]
+    delete?: ObjectiveWhereUniqueInput | ObjectiveWhereUniqueInput[]
+    connect?: ObjectiveWhereUniqueInput | ObjectiveWhereUniqueInput[]
+    update?: ObjectiveUpdateWithWhereUniqueWithoutParentInput | ObjectiveUpdateWithWhereUniqueWithoutParentInput[]
+    updateMany?: ObjectiveUpdateManyWithWhereWithoutParentInput | ObjectiveUpdateManyWithWhereWithoutParentInput[]
+    deleteMany?: ObjectiveScalarWhereInput | ObjectiveScalarWhereInput[]
   }
 
-  export type TagUncheckedUpdateManyWithoutGoalsNestedInput = {
-    create?: XOR<TagCreateWithoutGoalsInput, TagUncheckedCreateWithoutGoalsInput> | TagCreateWithoutGoalsInput[] | TagUncheckedCreateWithoutGoalsInput[]
-    connectOrCreate?: TagCreateOrConnectWithoutGoalsInput | TagCreateOrConnectWithoutGoalsInput[]
-    upsert?: TagUpsertWithWhereUniqueWithoutGoalsInput | TagUpsertWithWhereUniqueWithoutGoalsInput[]
+  export type TagUncheckedUpdateManyWithoutObjectivesNestedInput = {
+    create?: XOR<TagCreateWithoutObjectivesInput, TagUncheckedCreateWithoutObjectivesInput> | TagCreateWithoutObjectivesInput[] | TagUncheckedCreateWithoutObjectivesInput[]
+    connectOrCreate?: TagCreateOrConnectWithoutObjectivesInput | TagCreateOrConnectWithoutObjectivesInput[]
+    upsert?: TagUpsertWithWhereUniqueWithoutObjectivesInput | TagUpsertWithWhereUniqueWithoutObjectivesInput[]
     set?: TagWhereUniqueInput | TagWhereUniqueInput[]
     disconnect?: TagWhereUniqueInput | TagWhereUniqueInput[]
     delete?: TagWhereUniqueInput | TagWhereUniqueInput[]
     connect?: TagWhereUniqueInput | TagWhereUniqueInput[]
-    update?: TagUpdateWithWhereUniqueWithoutGoalsInput | TagUpdateWithWhereUniqueWithoutGoalsInput[]
-    updateMany?: TagUpdateManyWithWhereWithoutGoalsInput | TagUpdateManyWithWhereWithoutGoalsInput[]
+    update?: TagUpdateWithWhereUniqueWithoutObjectivesInput | TagUpdateWithWhereUniqueWithoutObjectivesInput[]
+    updateMany?: TagUpdateManyWithWhereWithoutObjectivesInput | TagUpdateManyWithWhereWithoutObjectivesInput[]
     deleteMany?: TagScalarWhereInput | TagScalarWhereInput[]
   }
 
-  export type ProgressLogUncheckedUpdateManyWithoutGoalNestedInput = {
-    create?: XOR<ProgressLogCreateWithoutGoalInput, ProgressLogUncheckedCreateWithoutGoalInput> | ProgressLogCreateWithoutGoalInput[] | ProgressLogUncheckedCreateWithoutGoalInput[]
-    connectOrCreate?: ProgressLogCreateOrConnectWithoutGoalInput | ProgressLogCreateOrConnectWithoutGoalInput[]
-    upsert?: ProgressLogUpsertWithWhereUniqueWithoutGoalInput | ProgressLogUpsertWithWhereUniqueWithoutGoalInput[]
-    createMany?: ProgressLogCreateManyGoalInputEnvelope
+  export type ProgressLogUncheckedUpdateManyWithoutObjectiveNestedInput = {
+    create?: XOR<ProgressLogCreateWithoutObjectiveInput, ProgressLogUncheckedCreateWithoutObjectiveInput> | ProgressLogCreateWithoutObjectiveInput[] | ProgressLogUncheckedCreateWithoutObjectiveInput[]
+    connectOrCreate?: ProgressLogCreateOrConnectWithoutObjectiveInput | ProgressLogCreateOrConnectWithoutObjectiveInput[]
+    upsert?: ProgressLogUpsertWithWhereUniqueWithoutObjectiveInput | ProgressLogUpsertWithWhereUniqueWithoutObjectiveInput[]
+    createMany?: ProgressLogCreateManyObjectiveInputEnvelope
     set?: ProgressLogWhereUniqueInput | ProgressLogWhereUniqueInput[]
     disconnect?: ProgressLogWhereUniqueInput | ProgressLogWhereUniqueInput[]
     delete?: ProgressLogWhereUniqueInput | ProgressLogWhereUniqueInput[]
     connect?: ProgressLogWhereUniqueInput | ProgressLogWhereUniqueInput[]
-    update?: ProgressLogUpdateWithWhereUniqueWithoutGoalInput | ProgressLogUpdateWithWhereUniqueWithoutGoalInput[]
-    updateMany?: ProgressLogUpdateManyWithWhereWithoutGoalInput | ProgressLogUpdateManyWithWhereWithoutGoalInput[]
+    update?: ProgressLogUpdateWithWhereUniqueWithoutObjectiveInput | ProgressLogUpdateWithWhereUniqueWithoutObjectiveInput[]
+    updateMany?: ProgressLogUpdateManyWithWhereWithoutObjectiveInput | ProgressLogUpdateManyWithWhereWithoutObjectiveInput[]
     deleteMany?: ProgressLogScalarWhereInput | ProgressLogScalarWhereInput[]
+  }
+
+  export type TimeRecordUncheckedUpdateManyWithoutObjectiveNestedInput = {
+    create?: XOR<TimeRecordCreateWithoutObjectiveInput, TimeRecordUncheckedCreateWithoutObjectiveInput> | TimeRecordCreateWithoutObjectiveInput[] | TimeRecordUncheckedCreateWithoutObjectiveInput[]
+    connectOrCreate?: TimeRecordCreateOrConnectWithoutObjectiveInput | TimeRecordCreateOrConnectWithoutObjectiveInput[]
+    upsert?: TimeRecordUpsertWithWhereUniqueWithoutObjectiveInput | TimeRecordUpsertWithWhereUniqueWithoutObjectiveInput[]
+    createMany?: TimeRecordCreateManyObjectiveInputEnvelope
+    set?: TimeRecordWhereUniqueInput | TimeRecordWhereUniqueInput[]
+    disconnect?: TimeRecordWhereUniqueInput | TimeRecordWhereUniqueInput[]
+    delete?: TimeRecordWhereUniqueInput | TimeRecordWhereUniqueInput[]
+    connect?: TimeRecordWhereUniqueInput | TimeRecordWhereUniqueInput[]
+    update?: TimeRecordUpdateWithWhereUniqueWithoutObjectiveInput | TimeRecordUpdateWithWhereUniqueWithoutObjectiveInput[]
+    updateMany?: TimeRecordUpdateManyWithWhereWithoutObjectiveInput | TimeRecordUpdateManyWithWhereWithoutObjectiveInput[]
+    deleteMany?: TimeRecordScalarWhereInput | TimeRecordScalarWhereInput[]
   }
 
   export type CategoryCreateNestedOneWithoutMessagesInput = {
@@ -17859,10 +15544,10 @@ export namespace Prisma {
     deleteMany?: MessageScalarWhereInput | MessageScalarWhereInput[]
   }
 
-  export type GoalCreateNestedManyWithoutTagsInput = {
-    create?: XOR<GoalCreateWithoutTagsInput, GoalUncheckedCreateWithoutTagsInput> | GoalCreateWithoutTagsInput[] | GoalUncheckedCreateWithoutTagsInput[]
-    connectOrCreate?: GoalCreateOrConnectWithoutTagsInput | GoalCreateOrConnectWithoutTagsInput[]
-    connect?: GoalWhereUniqueInput | GoalWhereUniqueInput[]
+  export type ObjectiveCreateNestedManyWithoutTagsInput = {
+    create?: XOR<ObjectiveCreateWithoutTagsInput, ObjectiveUncheckedCreateWithoutTagsInput> | ObjectiveCreateWithoutTagsInput[] | ObjectiveUncheckedCreateWithoutTagsInput[]
+    connectOrCreate?: ObjectiveCreateOrConnectWithoutTagsInput | ObjectiveCreateOrConnectWithoutTagsInput[]
+    connect?: ObjectiveWhereUniqueInput | ObjectiveWhereUniqueInput[]
   }
 
   export type MessageCreateNestedManyWithoutTagsInput = {
@@ -17871,16 +15556,10 @@ export namespace Prisma {
     connect?: MessageWhereUniqueInput | MessageWhereUniqueInput[]
   }
 
-  export type TaskCreateNestedManyWithoutTagsInput = {
-    create?: XOR<TaskCreateWithoutTagsInput, TaskUncheckedCreateWithoutTagsInput> | TaskCreateWithoutTagsInput[] | TaskUncheckedCreateWithoutTagsInput[]
-    connectOrCreate?: TaskCreateOrConnectWithoutTagsInput | TaskCreateOrConnectWithoutTagsInput[]
-    connect?: TaskWhereUniqueInput | TaskWhereUniqueInput[]
-  }
-
-  export type GoalUncheckedCreateNestedManyWithoutTagsInput = {
-    create?: XOR<GoalCreateWithoutTagsInput, GoalUncheckedCreateWithoutTagsInput> | GoalCreateWithoutTagsInput[] | GoalUncheckedCreateWithoutTagsInput[]
-    connectOrCreate?: GoalCreateOrConnectWithoutTagsInput | GoalCreateOrConnectWithoutTagsInput[]
-    connect?: GoalWhereUniqueInput | GoalWhereUniqueInput[]
+  export type ObjectiveUncheckedCreateNestedManyWithoutTagsInput = {
+    create?: XOR<ObjectiveCreateWithoutTagsInput, ObjectiveUncheckedCreateWithoutTagsInput> | ObjectiveCreateWithoutTagsInput[] | ObjectiveUncheckedCreateWithoutTagsInput[]
+    connectOrCreate?: ObjectiveCreateOrConnectWithoutTagsInput | ObjectiveCreateOrConnectWithoutTagsInput[]
+    connect?: ObjectiveWhereUniqueInput | ObjectiveWhereUniqueInput[]
   }
 
   export type MessageUncheckedCreateNestedManyWithoutTagsInput = {
@@ -17889,23 +15568,17 @@ export namespace Prisma {
     connect?: MessageWhereUniqueInput | MessageWhereUniqueInput[]
   }
 
-  export type TaskUncheckedCreateNestedManyWithoutTagsInput = {
-    create?: XOR<TaskCreateWithoutTagsInput, TaskUncheckedCreateWithoutTagsInput> | TaskCreateWithoutTagsInput[] | TaskUncheckedCreateWithoutTagsInput[]
-    connectOrCreate?: TaskCreateOrConnectWithoutTagsInput | TaskCreateOrConnectWithoutTagsInput[]
-    connect?: TaskWhereUniqueInput | TaskWhereUniqueInput[]
-  }
-
-  export type GoalUpdateManyWithoutTagsNestedInput = {
-    create?: XOR<GoalCreateWithoutTagsInput, GoalUncheckedCreateWithoutTagsInput> | GoalCreateWithoutTagsInput[] | GoalUncheckedCreateWithoutTagsInput[]
-    connectOrCreate?: GoalCreateOrConnectWithoutTagsInput | GoalCreateOrConnectWithoutTagsInput[]
-    upsert?: GoalUpsertWithWhereUniqueWithoutTagsInput | GoalUpsertWithWhereUniqueWithoutTagsInput[]
-    set?: GoalWhereUniqueInput | GoalWhereUniqueInput[]
-    disconnect?: GoalWhereUniqueInput | GoalWhereUniqueInput[]
-    delete?: GoalWhereUniqueInput | GoalWhereUniqueInput[]
-    connect?: GoalWhereUniqueInput | GoalWhereUniqueInput[]
-    update?: GoalUpdateWithWhereUniqueWithoutTagsInput | GoalUpdateWithWhereUniqueWithoutTagsInput[]
-    updateMany?: GoalUpdateManyWithWhereWithoutTagsInput | GoalUpdateManyWithWhereWithoutTagsInput[]
-    deleteMany?: GoalScalarWhereInput | GoalScalarWhereInput[]
+  export type ObjectiveUpdateManyWithoutTagsNestedInput = {
+    create?: XOR<ObjectiveCreateWithoutTagsInput, ObjectiveUncheckedCreateWithoutTagsInput> | ObjectiveCreateWithoutTagsInput[] | ObjectiveUncheckedCreateWithoutTagsInput[]
+    connectOrCreate?: ObjectiveCreateOrConnectWithoutTagsInput | ObjectiveCreateOrConnectWithoutTagsInput[]
+    upsert?: ObjectiveUpsertWithWhereUniqueWithoutTagsInput | ObjectiveUpsertWithWhereUniqueWithoutTagsInput[]
+    set?: ObjectiveWhereUniqueInput | ObjectiveWhereUniqueInput[]
+    disconnect?: ObjectiveWhereUniqueInput | ObjectiveWhereUniqueInput[]
+    delete?: ObjectiveWhereUniqueInput | ObjectiveWhereUniqueInput[]
+    connect?: ObjectiveWhereUniqueInput | ObjectiveWhereUniqueInput[]
+    update?: ObjectiveUpdateWithWhereUniqueWithoutTagsInput | ObjectiveUpdateWithWhereUniqueWithoutTagsInput[]
+    updateMany?: ObjectiveUpdateManyWithWhereWithoutTagsInput | ObjectiveUpdateManyWithWhereWithoutTagsInput[]
+    deleteMany?: ObjectiveScalarWhereInput | ObjectiveScalarWhereInput[]
   }
 
   export type MessageUpdateManyWithoutTagsNestedInput = {
@@ -17921,30 +15594,17 @@ export namespace Prisma {
     deleteMany?: MessageScalarWhereInput | MessageScalarWhereInput[]
   }
 
-  export type TaskUpdateManyWithoutTagsNestedInput = {
-    create?: XOR<TaskCreateWithoutTagsInput, TaskUncheckedCreateWithoutTagsInput> | TaskCreateWithoutTagsInput[] | TaskUncheckedCreateWithoutTagsInput[]
-    connectOrCreate?: TaskCreateOrConnectWithoutTagsInput | TaskCreateOrConnectWithoutTagsInput[]
-    upsert?: TaskUpsertWithWhereUniqueWithoutTagsInput | TaskUpsertWithWhereUniqueWithoutTagsInput[]
-    set?: TaskWhereUniqueInput | TaskWhereUniqueInput[]
-    disconnect?: TaskWhereUniqueInput | TaskWhereUniqueInput[]
-    delete?: TaskWhereUniqueInput | TaskWhereUniqueInput[]
-    connect?: TaskWhereUniqueInput | TaskWhereUniqueInput[]
-    update?: TaskUpdateWithWhereUniqueWithoutTagsInput | TaskUpdateWithWhereUniqueWithoutTagsInput[]
-    updateMany?: TaskUpdateManyWithWhereWithoutTagsInput | TaskUpdateManyWithWhereWithoutTagsInput[]
-    deleteMany?: TaskScalarWhereInput | TaskScalarWhereInput[]
-  }
-
-  export type GoalUncheckedUpdateManyWithoutTagsNestedInput = {
-    create?: XOR<GoalCreateWithoutTagsInput, GoalUncheckedCreateWithoutTagsInput> | GoalCreateWithoutTagsInput[] | GoalUncheckedCreateWithoutTagsInput[]
-    connectOrCreate?: GoalCreateOrConnectWithoutTagsInput | GoalCreateOrConnectWithoutTagsInput[]
-    upsert?: GoalUpsertWithWhereUniqueWithoutTagsInput | GoalUpsertWithWhereUniqueWithoutTagsInput[]
-    set?: GoalWhereUniqueInput | GoalWhereUniqueInput[]
-    disconnect?: GoalWhereUniqueInput | GoalWhereUniqueInput[]
-    delete?: GoalWhereUniqueInput | GoalWhereUniqueInput[]
-    connect?: GoalWhereUniqueInput | GoalWhereUniqueInput[]
-    update?: GoalUpdateWithWhereUniqueWithoutTagsInput | GoalUpdateWithWhereUniqueWithoutTagsInput[]
-    updateMany?: GoalUpdateManyWithWhereWithoutTagsInput | GoalUpdateManyWithWhereWithoutTagsInput[]
-    deleteMany?: GoalScalarWhereInput | GoalScalarWhereInput[]
+  export type ObjectiveUncheckedUpdateManyWithoutTagsNestedInput = {
+    create?: XOR<ObjectiveCreateWithoutTagsInput, ObjectiveUncheckedCreateWithoutTagsInput> | ObjectiveCreateWithoutTagsInput[] | ObjectiveUncheckedCreateWithoutTagsInput[]
+    connectOrCreate?: ObjectiveCreateOrConnectWithoutTagsInput | ObjectiveCreateOrConnectWithoutTagsInput[]
+    upsert?: ObjectiveUpsertWithWhereUniqueWithoutTagsInput | ObjectiveUpsertWithWhereUniqueWithoutTagsInput[]
+    set?: ObjectiveWhereUniqueInput | ObjectiveWhereUniqueInput[]
+    disconnect?: ObjectiveWhereUniqueInput | ObjectiveWhereUniqueInput[]
+    delete?: ObjectiveWhereUniqueInput | ObjectiveWhereUniqueInput[]
+    connect?: ObjectiveWhereUniqueInput | ObjectiveWhereUniqueInput[]
+    update?: ObjectiveUpdateWithWhereUniqueWithoutTagsInput | ObjectiveUpdateWithWhereUniqueWithoutTagsInput[]
+    updateMany?: ObjectiveUpdateManyWithWhereWithoutTagsInput | ObjectiveUpdateManyWithWhereWithoutTagsInput[]
+    deleteMany?: ObjectiveScalarWhereInput | ObjectiveScalarWhereInput[]
   }
 
   export type MessageUncheckedUpdateManyWithoutTagsNestedInput = {
@@ -17960,29 +15620,16 @@ export namespace Prisma {
     deleteMany?: MessageScalarWhereInput | MessageScalarWhereInput[]
   }
 
-  export type TaskUncheckedUpdateManyWithoutTagsNestedInput = {
-    create?: XOR<TaskCreateWithoutTagsInput, TaskUncheckedCreateWithoutTagsInput> | TaskCreateWithoutTagsInput[] | TaskUncheckedCreateWithoutTagsInput[]
-    connectOrCreate?: TaskCreateOrConnectWithoutTagsInput | TaskCreateOrConnectWithoutTagsInput[]
-    upsert?: TaskUpsertWithWhereUniqueWithoutTagsInput | TaskUpsertWithWhereUniqueWithoutTagsInput[]
-    set?: TaskWhereUniqueInput | TaskWhereUniqueInput[]
-    disconnect?: TaskWhereUniqueInput | TaskWhereUniqueInput[]
-    delete?: TaskWhereUniqueInput | TaskWhereUniqueInput[]
-    connect?: TaskWhereUniqueInput | TaskWhereUniqueInput[]
-    update?: TaskUpdateWithWhereUniqueWithoutTagsInput | TaskUpdateWithWhereUniqueWithoutTagsInput[]
-    updateMany?: TaskUpdateManyWithWhereWithoutTagsInput | TaskUpdateManyWithWhereWithoutTagsInput[]
-    deleteMany?: TaskScalarWhereInput | TaskScalarWhereInput[]
-  }
-
   export type UserCreateNestedOneWithoutTimeRecordsInput = {
     create?: XOR<UserCreateWithoutTimeRecordsInput, UserUncheckedCreateWithoutTimeRecordsInput>
     connectOrCreate?: UserCreateOrConnectWithoutTimeRecordsInput
     connect?: UserWhereUniqueInput
   }
 
-  export type TaskCreateNestedOneWithoutTimeRecordsInput = {
-    create?: XOR<TaskCreateWithoutTimeRecordsInput, TaskUncheckedCreateWithoutTimeRecordsInput>
-    connectOrCreate?: TaskCreateOrConnectWithoutTimeRecordsInput
-    connect?: TaskWhereUniqueInput
+  export type ObjectiveCreateNestedOneWithoutTimeRecordsInput = {
+    create?: XOR<ObjectiveCreateWithoutTimeRecordsInput, ObjectiveUncheckedCreateWithoutTimeRecordsInput>
+    connectOrCreate?: ObjectiveCreateOrConnectWithoutTimeRecordsInput
+    connect?: ObjectiveWhereUniqueInput
   }
 
   export type NullableIntFieldUpdateOperationsInput = {
@@ -18001,12 +15648,12 @@ export namespace Prisma {
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutTimeRecordsInput, UserUpdateWithoutTimeRecordsInput>, UserUncheckedUpdateWithoutTimeRecordsInput>
   }
 
-  export type TaskUpdateOneRequiredWithoutTimeRecordsNestedInput = {
-    create?: XOR<TaskCreateWithoutTimeRecordsInput, TaskUncheckedCreateWithoutTimeRecordsInput>
-    connectOrCreate?: TaskCreateOrConnectWithoutTimeRecordsInput
-    upsert?: TaskUpsertWithoutTimeRecordsInput
-    connect?: TaskWhereUniqueInput
-    update?: XOR<XOR<TaskUpdateToOneWithWhereWithoutTimeRecordsInput, TaskUpdateWithoutTimeRecordsInput>, TaskUncheckedUpdateWithoutTimeRecordsInput>
+  export type ObjectiveUpdateOneRequiredWithoutTimeRecordsNestedInput = {
+    create?: XOR<ObjectiveCreateWithoutTimeRecordsInput, ObjectiveUncheckedCreateWithoutTimeRecordsInput>
+    connectOrCreate?: ObjectiveCreateOrConnectWithoutTimeRecordsInput
+    upsert?: ObjectiveUpsertWithoutTimeRecordsInput
+    connect?: ObjectiveWhereUniqueInput
+    update?: XOR<XOR<ObjectiveUpdateToOneWithWhereWithoutTimeRecordsInput, ObjectiveUpdateWithoutTimeRecordsInput>, ObjectiveUncheckedUpdateWithoutTimeRecordsInput>
   }
 
   export type UserCreateNestedOneWithoutProgressLogsInput = {
@@ -18015,16 +15662,10 @@ export namespace Prisma {
     connect?: UserWhereUniqueInput
   }
 
-  export type TaskCreateNestedOneWithoutProgressLogsInput = {
-    create?: XOR<TaskCreateWithoutProgressLogsInput, TaskUncheckedCreateWithoutProgressLogsInput>
-    connectOrCreate?: TaskCreateOrConnectWithoutProgressLogsInput
-    connect?: TaskWhereUniqueInput
-  }
-
-  export type GoalCreateNestedOneWithoutProgressLogsInput = {
-    create?: XOR<GoalCreateWithoutProgressLogsInput, GoalUncheckedCreateWithoutProgressLogsInput>
-    connectOrCreate?: GoalCreateOrConnectWithoutProgressLogsInput
-    connect?: GoalWhereUniqueInput
+  export type ObjectiveCreateNestedOneWithoutProgressLogsInput = {
+    create?: XOR<ObjectiveCreateWithoutProgressLogsInput, ObjectiveUncheckedCreateWithoutProgressLogsInput>
+    connectOrCreate?: ObjectiveCreateOrConnectWithoutProgressLogsInput
+    connect?: ObjectiveWhereUniqueInput
   }
 
   export type UserUpdateOneRequiredWithoutProgressLogsNestedInput = {
@@ -18035,24 +15676,14 @@ export namespace Prisma {
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutProgressLogsInput, UserUpdateWithoutProgressLogsInput>, UserUncheckedUpdateWithoutProgressLogsInput>
   }
 
-  export type TaskUpdateOneWithoutProgressLogsNestedInput = {
-    create?: XOR<TaskCreateWithoutProgressLogsInput, TaskUncheckedCreateWithoutProgressLogsInput>
-    connectOrCreate?: TaskCreateOrConnectWithoutProgressLogsInput
-    upsert?: TaskUpsertWithoutProgressLogsInput
-    disconnect?: TaskWhereInput | boolean
-    delete?: TaskWhereInput | boolean
-    connect?: TaskWhereUniqueInput
-    update?: XOR<XOR<TaskUpdateToOneWithWhereWithoutProgressLogsInput, TaskUpdateWithoutProgressLogsInput>, TaskUncheckedUpdateWithoutProgressLogsInput>
-  }
-
-  export type GoalUpdateOneWithoutProgressLogsNestedInput = {
-    create?: XOR<GoalCreateWithoutProgressLogsInput, GoalUncheckedCreateWithoutProgressLogsInput>
-    connectOrCreate?: GoalCreateOrConnectWithoutProgressLogsInput
-    upsert?: GoalUpsertWithoutProgressLogsInput
-    disconnect?: GoalWhereInput | boolean
-    delete?: GoalWhereInput | boolean
-    connect?: GoalWhereUniqueInput
-    update?: XOR<XOR<GoalUpdateToOneWithWhereWithoutProgressLogsInput, GoalUpdateWithoutProgressLogsInput>, GoalUncheckedUpdateWithoutProgressLogsInput>
+  export type ObjectiveUpdateOneWithoutProgressLogsNestedInput = {
+    create?: XOR<ObjectiveCreateWithoutProgressLogsInput, ObjectiveUncheckedCreateWithoutProgressLogsInput>
+    connectOrCreate?: ObjectiveCreateOrConnectWithoutProgressLogsInput
+    upsert?: ObjectiveUpsertWithoutProgressLogsInput
+    disconnect?: ObjectiveWhereInput | boolean
+    delete?: ObjectiveWhereInput | boolean
+    connect?: ObjectiveWhereUniqueInput
+    update?: XOR<XOR<ObjectiveUpdateToOneWithWhereWithoutProgressLogsInput, ObjectiveUpdateWithoutProgressLogsInput>, ObjectiveUncheckedUpdateWithoutProgressLogsInput>
   }
 
   export type ImportedFileCreatetagsInput = {
@@ -18196,18 +15827,18 @@ export namespace Prisma {
     _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
-  export type NestedEnumTaskStatusFilter<$PrismaModel = never> = {
-    equals?: $Enums.TaskStatus | EnumTaskStatusFieldRefInput<$PrismaModel>
-    in?: $Enums.TaskStatus[] | ListEnumTaskStatusFieldRefInput<$PrismaModel>
-    notIn?: $Enums.TaskStatus[] | ListEnumTaskStatusFieldRefInput<$PrismaModel>
-    not?: NestedEnumTaskStatusFilter<$PrismaModel> | $Enums.TaskStatus
+  export type NestedEnumObjectiveTypeFilter<$PrismaModel = never> = {
+    equals?: $Enums.ObjectiveType | EnumObjectiveTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.ObjectiveType[] | ListEnumObjectiveTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.ObjectiveType[] | ListEnumObjectiveTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumObjectiveTypeFilter<$PrismaModel> | $Enums.ObjectiveType
   }
 
-  export type NestedEnumTaskPriorityFilter<$PrismaModel = never> = {
-    equals?: $Enums.TaskPriority | EnumTaskPriorityFieldRefInput<$PrismaModel>
-    in?: $Enums.TaskPriority[] | ListEnumTaskPriorityFieldRefInput<$PrismaModel>
-    notIn?: $Enums.TaskPriority[] | ListEnumTaskPriorityFieldRefInput<$PrismaModel>
-    not?: NestedEnumTaskPriorityFilter<$PrismaModel> | $Enums.TaskPriority
+  export type NestedEnumObjectiveStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.ObjectiveStatus | EnumObjectiveStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.ObjectiveStatus[] | ListEnumObjectiveStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.ObjectiveStatus[] | ListEnumObjectiveStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumObjectiveStatusFilter<$PrismaModel> | $Enums.ObjectiveStatus
   }
 
   export type NestedDateTimeNullableFilter<$PrismaModel = never> = {
@@ -18221,24 +15852,51 @@ export namespace Prisma {
     not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
   }
 
-  export type NestedEnumTaskStatusWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: $Enums.TaskStatus | EnumTaskStatusFieldRefInput<$PrismaModel>
-    in?: $Enums.TaskStatus[] | ListEnumTaskStatusFieldRefInput<$PrismaModel>
-    notIn?: $Enums.TaskStatus[] | ListEnumTaskStatusFieldRefInput<$PrismaModel>
-    not?: NestedEnumTaskStatusWithAggregatesFilter<$PrismaModel> | $Enums.TaskStatus
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedEnumTaskStatusFilter<$PrismaModel>
-    _max?: NestedEnumTaskStatusFilter<$PrismaModel>
+  export type NestedFloatFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel>
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatFilter<$PrismaModel> | number
   }
 
-  export type NestedEnumTaskPriorityWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: $Enums.TaskPriority | EnumTaskPriorityFieldRefInput<$PrismaModel>
-    in?: $Enums.TaskPriority[] | ListEnumTaskPriorityFieldRefInput<$PrismaModel>
-    notIn?: $Enums.TaskPriority[] | ListEnumTaskPriorityFieldRefInput<$PrismaModel>
-    not?: NestedEnumTaskPriorityWithAggregatesFilter<$PrismaModel> | $Enums.TaskPriority
+  export type NestedEnumObjectiveTypeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.ObjectiveType | EnumObjectiveTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.ObjectiveType[] | ListEnumObjectiveTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.ObjectiveType[] | ListEnumObjectiveTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumObjectiveTypeWithAggregatesFilter<$PrismaModel> | $Enums.ObjectiveType
     _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedEnumTaskPriorityFilter<$PrismaModel>
-    _max?: NestedEnumTaskPriorityFilter<$PrismaModel>
+    _min?: NestedEnumObjectiveTypeFilter<$PrismaModel>
+    _max?: NestedEnumObjectiveTypeFilter<$PrismaModel>
+  }
+
+  export type NestedEnumObjectiveStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.ObjectiveStatus | EnumObjectiveStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.ObjectiveStatus[] | ListEnumObjectiveStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.ObjectiveStatus[] | ListEnumObjectiveStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumObjectiveStatusWithAggregatesFilter<$PrismaModel> | $Enums.ObjectiveStatus
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumObjectiveStatusFilter<$PrismaModel>
+    _max?: NestedEnumObjectiveStatusFilter<$PrismaModel>
+  }
+
+  export type NestedIntWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedIntFilter<$PrismaModel>
+    _min?: NestedIntFilter<$PrismaModel>
+    _max?: NestedIntFilter<$PrismaModel>
   }
 
   export type NestedDateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -18253,6 +15911,22 @@ export namespace Prisma {
     _count?: NestedIntNullableFilter<$PrismaModel>
     _min?: NestedDateTimeNullableFilter<$PrismaModel>
     _max?: NestedDateTimeNullableFilter<$PrismaModel>
+  }
+
+  export type NestedFloatWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel>
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatWithAggregatesFilter<$PrismaModel> | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedFloatFilter<$PrismaModel>
+    _min?: NestedFloatFilter<$PrismaModel>
+    _max?: NestedFloatFilter<$PrismaModel>
   }
   export type NestedJsonNullableFilter<$PrismaModel = never> =
     | PatchUndefined<
@@ -18276,83 +15950,6 @@ export namespace Prisma {
     gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
     gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
     not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
-  }
-
-  export type NestedIntWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel>
-    in?: number[] | ListIntFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
-    _count?: NestedIntFilter<$PrismaModel>
-    _avg?: NestedFloatFilter<$PrismaModel>
-    _sum?: NestedIntFilter<$PrismaModel>
-    _min?: NestedIntFilter<$PrismaModel>
-    _max?: NestedIntFilter<$PrismaModel>
-  }
-
-  export type NestedFloatFilter<$PrismaModel = never> = {
-    equals?: number | FloatFieldRefInput<$PrismaModel>
-    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
-    lt?: number | FloatFieldRefInput<$PrismaModel>
-    lte?: number | FloatFieldRefInput<$PrismaModel>
-    gt?: number | FloatFieldRefInput<$PrismaModel>
-    gte?: number | FloatFieldRefInput<$PrismaModel>
-    not?: NestedFloatFilter<$PrismaModel> | number
-  }
-
-  export type NestedEnumGoalLevelFilter<$PrismaModel = never> = {
-    equals?: $Enums.GoalLevel | EnumGoalLevelFieldRefInput<$PrismaModel>
-    in?: $Enums.GoalLevel[] | ListEnumGoalLevelFieldRefInput<$PrismaModel>
-    notIn?: $Enums.GoalLevel[] | ListEnumGoalLevelFieldRefInput<$PrismaModel>
-    not?: NestedEnumGoalLevelFilter<$PrismaModel> | $Enums.GoalLevel
-  }
-
-  export type NestedEnumGoalStatusFilter<$PrismaModel = never> = {
-    equals?: $Enums.GoalStatus | EnumGoalStatusFieldRefInput<$PrismaModel>
-    in?: $Enums.GoalStatus[] | ListEnumGoalStatusFieldRefInput<$PrismaModel>
-    notIn?: $Enums.GoalStatus[] | ListEnumGoalStatusFieldRefInput<$PrismaModel>
-    not?: NestedEnumGoalStatusFilter<$PrismaModel> | $Enums.GoalStatus
-  }
-
-  export type NestedEnumGoalLevelWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: $Enums.GoalLevel | EnumGoalLevelFieldRefInput<$PrismaModel>
-    in?: $Enums.GoalLevel[] | ListEnumGoalLevelFieldRefInput<$PrismaModel>
-    notIn?: $Enums.GoalLevel[] | ListEnumGoalLevelFieldRefInput<$PrismaModel>
-    not?: NestedEnumGoalLevelWithAggregatesFilter<$PrismaModel> | $Enums.GoalLevel
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedEnumGoalLevelFilter<$PrismaModel>
-    _max?: NestedEnumGoalLevelFilter<$PrismaModel>
-  }
-
-  export type NestedEnumGoalStatusWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: $Enums.GoalStatus | EnumGoalStatusFieldRefInput<$PrismaModel>
-    in?: $Enums.GoalStatus[] | ListEnumGoalStatusFieldRefInput<$PrismaModel>
-    notIn?: $Enums.GoalStatus[] | ListEnumGoalStatusFieldRefInput<$PrismaModel>
-    not?: NestedEnumGoalStatusWithAggregatesFilter<$PrismaModel> | $Enums.GoalStatus
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedEnumGoalStatusFilter<$PrismaModel>
-    _max?: NestedEnumGoalStatusFilter<$PrismaModel>
-  }
-
-  export type NestedFloatWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: number | FloatFieldRefInput<$PrismaModel>
-    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
-    lt?: number | FloatFieldRefInput<$PrismaModel>
-    lte?: number | FloatFieldRefInput<$PrismaModel>
-    gt?: number | FloatFieldRefInput<$PrismaModel>
-    gte?: number | FloatFieldRefInput<$PrismaModel>
-    not?: NestedFloatWithAggregatesFilter<$PrismaModel> | number
-    _count?: NestedIntFilter<$PrismaModel>
-    _avg?: NestedFloatFilter<$PrismaModel>
-    _sum?: NestedFloatFilter<$PrismaModel>
-    _min?: NestedFloatFilter<$PrismaModel>
-    _max?: NestedFloatFilter<$PrismaModel>
   }
 
   export type NestedIntNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -18380,62 +15977,6 @@ export namespace Prisma {
     gt?: number | FloatFieldRefInput<$PrismaModel>
     gte?: number | FloatFieldRefInput<$PrismaModel>
     not?: NestedFloatNullableFilter<$PrismaModel> | number | null
-  }
-
-  export type GoalCreateWithoutUserInput = {
-    id?: string
-    title: string
-    description?: string | null
-    level?: $Enums.GoalLevel
-    status?: $Enums.GoalStatus
-    startDate: Date | string
-    endDate: Date | string
-    progress?: number
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    metrics?: NullableJsonNullValueInput | InputJsonValue
-    resources?: NullableJsonNullValueInput | InputJsonValue
-    priority?: number
-    weight?: number
-    metadata?: NullableJsonNullValueInput | InputJsonValue
-    parent?: GoalCreateNestedOneWithoutSubGoalsInput
-    subGoals?: GoalCreateNestedManyWithoutParentInput
-    tasks?: TaskCreateNestedManyWithoutGoalInput
-    tags?: TagCreateNestedManyWithoutGoalsInput
-    progressLogs?: ProgressLogCreateNestedManyWithoutGoalInput
-  }
-
-  export type GoalUncheckedCreateWithoutUserInput = {
-    id?: string
-    title: string
-    description?: string | null
-    level?: $Enums.GoalLevel
-    status?: $Enums.GoalStatus
-    startDate: Date | string
-    endDate: Date | string
-    progress?: number
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    parentId?: string | null
-    metrics?: NullableJsonNullValueInput | InputJsonValue
-    resources?: NullableJsonNullValueInput | InputJsonValue
-    priority?: number
-    weight?: number
-    metadata?: NullableJsonNullValueInput | InputJsonValue
-    subGoals?: GoalUncheckedCreateNestedManyWithoutParentInput
-    tasks?: TaskUncheckedCreateNestedManyWithoutGoalInput
-    tags?: TagUncheckedCreateNestedManyWithoutGoalsInput
-    progressLogs?: ProgressLogUncheckedCreateNestedManyWithoutGoalInput
-  }
-
-  export type GoalCreateOrConnectWithoutUserInput = {
-    where: GoalWhereUniqueInput
-    create: XOR<GoalCreateWithoutUserInput, GoalUncheckedCreateWithoutUserInput>
-  }
-
-  export type GoalCreateManyUserInputEnvelope = {
-    data: GoalCreateManyUserInput | GoalCreateManyUserInput[]
-    skipDuplicates?: boolean
   }
 
   export type MessageCreateWithoutUserInput = {
@@ -18472,54 +16013,6 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
-  export type TaskCreateWithoutUserInput = {
-    id?: string
-    title: string
-    description?: string | null
-    status?: $Enums.TaskStatus
-    priority?: $Enums.TaskPriority
-    dueDate?: Date | string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    metadata?: NullableJsonNullValueInput | InputJsonValue
-    totalTime?: number
-    goal?: GoalCreateNestedOneWithoutTasksInput
-    parent?: TaskCreateNestedOneWithoutSubTasksInput
-    subTasks?: TaskCreateNestedManyWithoutParentInput
-    tags?: TagCreateNestedManyWithoutTasksInput
-    timeRecords?: TimeRecordCreateNestedManyWithoutTaskInput
-    progressLogs?: ProgressLogCreateNestedManyWithoutTaskInput
-  }
-
-  export type TaskUncheckedCreateWithoutUserInput = {
-    id?: string
-    title: string
-    description?: string | null
-    status?: $Enums.TaskStatus
-    priority?: $Enums.TaskPriority
-    dueDate?: Date | string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    parentId?: string | null
-    goalId?: string | null
-    metadata?: NullableJsonNullValueInput | InputJsonValue
-    totalTime?: number
-    subTasks?: TaskUncheckedCreateNestedManyWithoutParentInput
-    tags?: TagUncheckedCreateNestedManyWithoutTasksInput
-    timeRecords?: TimeRecordUncheckedCreateNestedManyWithoutTaskInput
-    progressLogs?: ProgressLogUncheckedCreateNestedManyWithoutTaskInput
-  }
-
-  export type TaskCreateOrConnectWithoutUserInput = {
-    where: TaskWhereUniqueInput
-    create: XOR<TaskCreateWithoutUserInput, TaskUncheckedCreateWithoutUserInput>
-  }
-
-  export type TaskCreateManyUserInputEnvelope = {
-    data: TaskCreateManyUserInput | TaskCreateManyUserInput[]
-    skipDuplicates?: boolean
-  }
-
   export type TimeRecordCreateWithoutUserInput = {
     id?: string
     startTime: Date | string
@@ -18528,7 +16021,7 @@ export namespace Prisma {
     note?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    task: TaskCreateNestedOneWithoutTimeRecordsInput
+    objective: ObjectiveCreateNestedOneWithoutTimeRecordsInput
   }
 
   export type TimeRecordUncheckedCreateWithoutUserInput = {
@@ -18558,8 +16051,8 @@ export namespace Prisma {
     note?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    task?: TaskCreateNestedOneWithoutProgressLogsInput
-    goal?: GoalCreateNestedOneWithoutProgressLogsInput
+    goalId?: string | null
+    objective?: ObjectiveCreateNestedOneWithoutProgressLogsInput
   }
 
   export type ProgressLogUncheckedCreateWithoutUserInput = {
@@ -18616,43 +16109,58 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
-  export type GoalUpsertWithWhereUniqueWithoutUserInput = {
-    where: GoalWhereUniqueInput
-    update: XOR<GoalUpdateWithoutUserInput, GoalUncheckedUpdateWithoutUserInput>
-    create: XOR<GoalCreateWithoutUserInput, GoalUncheckedCreateWithoutUserInput>
+  export type ObjectiveCreateWithoutUserInput = {
+    id?: string
+    title: string
+    description?: string | null
+    type?: $Enums.ObjectiveType
+    status?: $Enums.ObjectiveStatus
+    priority?: number
+    startDate?: Date | string | null
+    endDate?: Date | string | null
+    progress?: number
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    weight?: number
+    totalTime?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    parent?: ObjectiveCreateNestedOneWithoutSubObjectivesInput
+    subObjectives?: ObjectiveCreateNestedManyWithoutParentInput
+    tags?: TagCreateNestedManyWithoutObjectivesInput
+    progressLogs?: ProgressLogCreateNestedManyWithoutObjectiveInput
+    timeRecords?: TimeRecordCreateNestedManyWithoutObjectiveInput
   }
 
-  export type GoalUpdateWithWhereUniqueWithoutUserInput = {
-    where: GoalWhereUniqueInput
-    data: XOR<GoalUpdateWithoutUserInput, GoalUncheckedUpdateWithoutUserInput>
+  export type ObjectiveUncheckedCreateWithoutUserInput = {
+    id?: string
+    title: string
+    description?: string | null
+    type?: $Enums.ObjectiveType
+    status?: $Enums.ObjectiveStatus
+    priority?: number
+    startDate?: Date | string | null
+    endDate?: Date | string | null
+    progress?: number
+    parentId?: string | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    weight?: number
+    totalTime?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    subObjectives?: ObjectiveUncheckedCreateNestedManyWithoutParentInput
+    tags?: TagUncheckedCreateNestedManyWithoutObjectivesInput
+    progressLogs?: ProgressLogUncheckedCreateNestedManyWithoutObjectiveInput
+    timeRecords?: TimeRecordUncheckedCreateNestedManyWithoutObjectiveInput
   }
 
-  export type GoalUpdateManyWithWhereWithoutUserInput = {
-    where: GoalScalarWhereInput
-    data: XOR<GoalUpdateManyMutationInput, GoalUncheckedUpdateManyWithoutUserInput>
+  export type ObjectiveCreateOrConnectWithoutUserInput = {
+    where: ObjectiveWhereUniqueInput
+    create: XOR<ObjectiveCreateWithoutUserInput, ObjectiveUncheckedCreateWithoutUserInput>
   }
 
-  export type GoalScalarWhereInput = {
-    AND?: GoalScalarWhereInput | GoalScalarWhereInput[]
-    OR?: GoalScalarWhereInput[]
-    NOT?: GoalScalarWhereInput | GoalScalarWhereInput[]
-    id?: StringFilter<"Goal"> | string
-    title?: StringFilter<"Goal"> | string
-    description?: StringNullableFilter<"Goal"> | string | null
-    level?: EnumGoalLevelFilter<"Goal"> | $Enums.GoalLevel
-    status?: EnumGoalStatusFilter<"Goal"> | $Enums.GoalStatus
-    startDate?: DateTimeFilter<"Goal"> | Date | string
-    endDate?: DateTimeFilter<"Goal"> | Date | string
-    progress?: FloatFilter<"Goal"> | number
-    createdAt?: DateTimeFilter<"Goal"> | Date | string
-    updatedAt?: DateTimeFilter<"Goal"> | Date | string
-    userId?: StringFilter<"Goal"> | string
-    parentId?: StringNullableFilter<"Goal"> | string | null
-    metrics?: JsonNullableFilter<"Goal">
-    resources?: JsonNullableFilter<"Goal">
-    priority?: IntFilter<"Goal"> | number
-    weight?: FloatFilter<"Goal"> | number
-    metadata?: JsonNullableFilter<"Goal">
+  export type ObjectiveCreateManyUserInputEnvelope = {
+    data: ObjectiveCreateManyUserInput | ObjectiveCreateManyUserInput[]
+    skipDuplicates?: boolean
   }
 
   export type MessageUpsertWithWhereUniqueWithoutUserInput = {
@@ -18684,41 +16192,6 @@ export namespace Prisma {
     userId?: StringFilter<"Message"> | string
     categoryId?: StringNullableFilter<"Message"> | string | null
     metadata?: JsonNullableFilter<"Message">
-  }
-
-  export type TaskUpsertWithWhereUniqueWithoutUserInput = {
-    where: TaskWhereUniqueInput
-    update: XOR<TaskUpdateWithoutUserInput, TaskUncheckedUpdateWithoutUserInput>
-    create: XOR<TaskCreateWithoutUserInput, TaskUncheckedCreateWithoutUserInput>
-  }
-
-  export type TaskUpdateWithWhereUniqueWithoutUserInput = {
-    where: TaskWhereUniqueInput
-    data: XOR<TaskUpdateWithoutUserInput, TaskUncheckedUpdateWithoutUserInput>
-  }
-
-  export type TaskUpdateManyWithWhereWithoutUserInput = {
-    where: TaskScalarWhereInput
-    data: XOR<TaskUpdateManyMutationInput, TaskUncheckedUpdateManyWithoutUserInput>
-  }
-
-  export type TaskScalarWhereInput = {
-    AND?: TaskScalarWhereInput | TaskScalarWhereInput[]
-    OR?: TaskScalarWhereInput[]
-    NOT?: TaskScalarWhereInput | TaskScalarWhereInput[]
-    id?: StringFilter<"Task"> | string
-    title?: StringFilter<"Task"> | string
-    description?: StringNullableFilter<"Task"> | string | null
-    status?: EnumTaskStatusFilter<"Task"> | $Enums.TaskStatus
-    priority?: EnumTaskPriorityFilter<"Task"> | $Enums.TaskPriority
-    dueDate?: DateTimeNullableFilter<"Task"> | Date | string | null
-    createdAt?: DateTimeFilter<"Task"> | Date | string
-    updatedAt?: DateTimeFilter<"Task"> | Date | string
-    userId?: StringFilter<"Task"> | string
-    parentId?: StringNullableFilter<"Task"> | string | null
-    goalId?: StringNullableFilter<"Task"> | string | null
-    metadata?: JsonNullableFilter<"Task">
-    totalTime?: IntFilter<"Task"> | number
   }
 
   export type TimeRecordUpsertWithWhereUniqueWithoutUserInput = {
@@ -18814,207 +16287,232 @@ export namespace Prisma {
     userId?: StringFilter<"ImportedFile"> | string
   }
 
-  export type GoalCreateWithoutTasksInput = {
+  export type ObjectiveUpsertWithWhereUniqueWithoutUserInput = {
+    where: ObjectiveWhereUniqueInput
+    update: XOR<ObjectiveUpdateWithoutUserInput, ObjectiveUncheckedUpdateWithoutUserInput>
+    create: XOR<ObjectiveCreateWithoutUserInput, ObjectiveUncheckedCreateWithoutUserInput>
+  }
+
+  export type ObjectiveUpdateWithWhereUniqueWithoutUserInput = {
+    where: ObjectiveWhereUniqueInput
+    data: XOR<ObjectiveUpdateWithoutUserInput, ObjectiveUncheckedUpdateWithoutUserInput>
+  }
+
+  export type ObjectiveUpdateManyWithWhereWithoutUserInput = {
+    where: ObjectiveScalarWhereInput
+    data: XOR<ObjectiveUpdateManyMutationInput, ObjectiveUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type ObjectiveScalarWhereInput = {
+    AND?: ObjectiveScalarWhereInput | ObjectiveScalarWhereInput[]
+    OR?: ObjectiveScalarWhereInput[]
+    NOT?: ObjectiveScalarWhereInput | ObjectiveScalarWhereInput[]
+    id?: StringFilter<"Objective"> | string
+    title?: StringFilter<"Objective"> | string
+    description?: StringNullableFilter<"Objective"> | string | null
+    type?: EnumObjectiveTypeFilter<"Objective"> | $Enums.ObjectiveType
+    status?: EnumObjectiveStatusFilter<"Objective"> | $Enums.ObjectiveStatus
+    priority?: IntFilter<"Objective"> | number
+    startDate?: DateTimeNullableFilter<"Objective"> | Date | string | null
+    endDate?: DateTimeNullableFilter<"Objective"> | Date | string | null
+    progress?: FloatFilter<"Objective"> | number
+    parentId?: StringNullableFilter<"Objective"> | string | null
+    userId?: StringFilter<"Objective"> | string
+    metadata?: JsonNullableFilter<"Objective">
+    weight?: FloatFilter<"Objective"> | number
+    totalTime?: IntFilter<"Objective"> | number
+    createdAt?: DateTimeFilter<"Objective"> | Date | string
+    updatedAt?: DateTimeFilter<"Objective"> | Date | string
+  }
+
+  export type ObjectiveCreateWithoutSubObjectivesInput = {
     id?: string
     title: string
     description?: string | null
-    level?: $Enums.GoalLevel
-    status?: $Enums.GoalStatus
-    startDate: Date | string
-    endDate: Date | string
-    progress?: number
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    metrics?: NullableJsonNullValueInput | InputJsonValue
-    resources?: NullableJsonNullValueInput | InputJsonValue
+    type?: $Enums.ObjectiveType
+    status?: $Enums.ObjectiveStatus
     priority?: number
-    weight?: number
-    metadata?: NullableJsonNullValueInput | InputJsonValue
-    parent?: GoalCreateNestedOneWithoutSubGoalsInput
-    subGoals?: GoalCreateNestedManyWithoutParentInput
-    user: UserCreateNestedOneWithoutGoalsInput
-    tags?: TagCreateNestedManyWithoutGoalsInput
-    progressLogs?: ProgressLogCreateNestedManyWithoutGoalInput
-  }
-
-  export type GoalUncheckedCreateWithoutTasksInput = {
-    id?: string
-    title: string
-    description?: string | null
-    level?: $Enums.GoalLevel
-    status?: $Enums.GoalStatus
-    startDate: Date | string
-    endDate: Date | string
+    startDate?: Date | string | null
+    endDate?: Date | string | null
     progress?: number
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    userId: string
-    parentId?: string | null
-    metrics?: NullableJsonNullValueInput | InputJsonValue
-    resources?: NullableJsonNullValueInput | InputJsonValue
-    priority?: number
+    metadata?: NullableJsonNullValueInput | InputJsonValue
     weight?: number
-    metadata?: NullableJsonNullValueInput | InputJsonValue
-    subGoals?: GoalUncheckedCreateNestedManyWithoutParentInput
-    tags?: TagUncheckedCreateNestedManyWithoutGoalsInput
-    progressLogs?: ProgressLogUncheckedCreateNestedManyWithoutGoalInput
-  }
-
-  export type GoalCreateOrConnectWithoutTasksInput = {
-    where: GoalWhereUniqueInput
-    create: XOR<GoalCreateWithoutTasksInput, GoalUncheckedCreateWithoutTasksInput>
-  }
-
-  export type TaskCreateWithoutSubTasksInput = {
-    id?: string
-    title: string
-    description?: string | null
-    status?: $Enums.TaskStatus
-    priority?: $Enums.TaskPriority
-    dueDate?: Date | string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    metadata?: NullableJsonNullValueInput | InputJsonValue
     totalTime?: number
-    goal?: GoalCreateNestedOneWithoutTasksInput
-    parent?: TaskCreateNestedOneWithoutSubTasksInput
-    user: UserCreateNestedOneWithoutTasksInput
-    tags?: TagCreateNestedManyWithoutTasksInput
-    timeRecords?: TimeRecordCreateNestedManyWithoutTaskInput
-    progressLogs?: ProgressLogCreateNestedManyWithoutTaskInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    parent?: ObjectiveCreateNestedOneWithoutSubObjectivesInput
+    user: UserCreateNestedOneWithoutObjectivesInput
+    tags?: TagCreateNestedManyWithoutObjectivesInput
+    progressLogs?: ProgressLogCreateNestedManyWithoutObjectiveInput
+    timeRecords?: TimeRecordCreateNestedManyWithoutObjectiveInput
   }
 
-  export type TaskUncheckedCreateWithoutSubTasksInput = {
+  export type ObjectiveUncheckedCreateWithoutSubObjectivesInput = {
     id?: string
     title: string
     description?: string | null
-    status?: $Enums.TaskStatus
-    priority?: $Enums.TaskPriority
-    dueDate?: Date | string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    userId: string
+    type?: $Enums.ObjectiveType
+    status?: $Enums.ObjectiveStatus
+    priority?: number
+    startDate?: Date | string | null
+    endDate?: Date | string | null
+    progress?: number
     parentId?: string | null
-    goalId?: string | null
-    metadata?: NullableJsonNullValueInput | InputJsonValue
-    totalTime?: number
-    tags?: TagUncheckedCreateNestedManyWithoutTasksInput
-    timeRecords?: TimeRecordUncheckedCreateNestedManyWithoutTaskInput
-    progressLogs?: ProgressLogUncheckedCreateNestedManyWithoutTaskInput
-  }
-
-  export type TaskCreateOrConnectWithoutSubTasksInput = {
-    where: TaskWhereUniqueInput
-    create: XOR<TaskCreateWithoutSubTasksInput, TaskUncheckedCreateWithoutSubTasksInput>
-  }
-
-  export type TaskCreateWithoutParentInput = {
-    id?: string
-    title: string
-    description?: string | null
-    status?: $Enums.TaskStatus
-    priority?: $Enums.TaskPriority
-    dueDate?: Date | string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    metadata?: NullableJsonNullValueInput | InputJsonValue
-    totalTime?: number
-    goal?: GoalCreateNestedOneWithoutTasksInput
-    subTasks?: TaskCreateNestedManyWithoutParentInput
-    user: UserCreateNestedOneWithoutTasksInput
-    tags?: TagCreateNestedManyWithoutTasksInput
-    timeRecords?: TimeRecordCreateNestedManyWithoutTaskInput
-    progressLogs?: ProgressLogCreateNestedManyWithoutTaskInput
-  }
-
-  export type TaskUncheckedCreateWithoutParentInput = {
-    id?: string
-    title: string
-    description?: string | null
-    status?: $Enums.TaskStatus
-    priority?: $Enums.TaskPriority
-    dueDate?: Date | string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
     userId: string
-    goalId?: string | null
     metadata?: NullableJsonNullValueInput | InputJsonValue
+    weight?: number
     totalTime?: number
-    subTasks?: TaskUncheckedCreateNestedManyWithoutParentInput
-    tags?: TagUncheckedCreateNestedManyWithoutTasksInput
-    timeRecords?: TimeRecordUncheckedCreateNestedManyWithoutTaskInput
-    progressLogs?: ProgressLogUncheckedCreateNestedManyWithoutTaskInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    tags?: TagUncheckedCreateNestedManyWithoutObjectivesInput
+    progressLogs?: ProgressLogUncheckedCreateNestedManyWithoutObjectiveInput
+    timeRecords?: TimeRecordUncheckedCreateNestedManyWithoutObjectiveInput
   }
 
-  export type TaskCreateOrConnectWithoutParentInput = {
-    where: TaskWhereUniqueInput
-    create: XOR<TaskCreateWithoutParentInput, TaskUncheckedCreateWithoutParentInput>
+  export type ObjectiveCreateOrConnectWithoutSubObjectivesInput = {
+    where: ObjectiveWhereUniqueInput
+    create: XOR<ObjectiveCreateWithoutSubObjectivesInput, ObjectiveUncheckedCreateWithoutSubObjectivesInput>
   }
 
-  export type TaskCreateManyParentInputEnvelope = {
-    data: TaskCreateManyParentInput | TaskCreateManyParentInput[]
+  export type ObjectiveCreateWithoutParentInput = {
+    id?: string
+    title: string
+    description?: string | null
+    type?: $Enums.ObjectiveType
+    status?: $Enums.ObjectiveStatus
+    priority?: number
+    startDate?: Date | string | null
+    endDate?: Date | string | null
+    progress?: number
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    weight?: number
+    totalTime?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    subObjectives?: ObjectiveCreateNestedManyWithoutParentInput
+    user: UserCreateNestedOneWithoutObjectivesInput
+    tags?: TagCreateNestedManyWithoutObjectivesInput
+    progressLogs?: ProgressLogCreateNestedManyWithoutObjectiveInput
+    timeRecords?: TimeRecordCreateNestedManyWithoutObjectiveInput
+  }
+
+  export type ObjectiveUncheckedCreateWithoutParentInput = {
+    id?: string
+    title: string
+    description?: string | null
+    type?: $Enums.ObjectiveType
+    status?: $Enums.ObjectiveStatus
+    priority?: number
+    startDate?: Date | string | null
+    endDate?: Date | string | null
+    progress?: number
+    userId: string
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    weight?: number
+    totalTime?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    subObjectives?: ObjectiveUncheckedCreateNestedManyWithoutParentInput
+    tags?: TagUncheckedCreateNestedManyWithoutObjectivesInput
+    progressLogs?: ProgressLogUncheckedCreateNestedManyWithoutObjectiveInput
+    timeRecords?: TimeRecordUncheckedCreateNestedManyWithoutObjectiveInput
+  }
+
+  export type ObjectiveCreateOrConnectWithoutParentInput = {
+    where: ObjectiveWhereUniqueInput
+    create: XOR<ObjectiveCreateWithoutParentInput, ObjectiveUncheckedCreateWithoutParentInput>
+  }
+
+  export type ObjectiveCreateManyParentInputEnvelope = {
+    data: ObjectiveCreateManyParentInput | ObjectiveCreateManyParentInput[]
     skipDuplicates?: boolean
   }
 
-  export type UserCreateWithoutTasksInput = {
+  export type UserCreateWithoutObjectivesInput = {
     id?: string
     email: string
     name?: string | null
     password: string
     createdAt?: Date | string
     updatedAt?: Date | string
-    goals?: GoalCreateNestedManyWithoutUserInput
     messages?: MessageCreateNestedManyWithoutUserInput
     timeRecords?: TimeRecordCreateNestedManyWithoutUserInput
     progressLogs?: ProgressLogCreateNestedManyWithoutUserInput
     importedFiles?: ImportedFileCreateNestedManyWithoutUserInput
   }
 
-  export type UserUncheckedCreateWithoutTasksInput = {
+  export type UserUncheckedCreateWithoutObjectivesInput = {
     id?: string
     email: string
     name?: string | null
     password: string
     createdAt?: Date | string
     updatedAt?: Date | string
-    goals?: GoalUncheckedCreateNestedManyWithoutUserInput
     messages?: MessageUncheckedCreateNestedManyWithoutUserInput
     timeRecords?: TimeRecordUncheckedCreateNestedManyWithoutUserInput
     progressLogs?: ProgressLogUncheckedCreateNestedManyWithoutUserInput
     importedFiles?: ImportedFileUncheckedCreateNestedManyWithoutUserInput
   }
 
-  export type UserCreateOrConnectWithoutTasksInput = {
+  export type UserCreateOrConnectWithoutObjectivesInput = {
     where: UserWhereUniqueInput
-    create: XOR<UserCreateWithoutTasksInput, UserUncheckedCreateWithoutTasksInput>
+    create: XOR<UserCreateWithoutObjectivesInput, UserUncheckedCreateWithoutObjectivesInput>
   }
 
-  export type TagCreateWithoutTasksInput = {
+  export type TagCreateWithoutObjectivesInput = {
     id?: string
     name: string
     color?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    goals?: GoalCreateNestedManyWithoutTagsInput
     messages?: MessageCreateNestedManyWithoutTagsInput
   }
 
-  export type TagUncheckedCreateWithoutTasksInput = {
+  export type TagUncheckedCreateWithoutObjectivesInput = {
     id?: string
     name: string
     color?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    goals?: GoalUncheckedCreateNestedManyWithoutTagsInput
     messages?: MessageUncheckedCreateNestedManyWithoutTagsInput
   }
 
-  export type TagCreateOrConnectWithoutTasksInput = {
+  export type TagCreateOrConnectWithoutObjectivesInput = {
     where: TagWhereUniqueInput
-    create: XOR<TagCreateWithoutTasksInput, TagUncheckedCreateWithoutTasksInput>
+    create: XOR<TagCreateWithoutObjectivesInput, TagUncheckedCreateWithoutObjectivesInput>
   }
 
-  export type TimeRecordCreateWithoutTaskInput = {
+  export type ProgressLogCreateWithoutObjectiveInput = {
+    id?: string
+    progress: number
+    note?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    goalId?: string | null
+    user: UserCreateNestedOneWithoutProgressLogsInput
+  }
+
+  export type ProgressLogUncheckedCreateWithoutObjectiveInput = {
+    id?: string
+    progress: number
+    note?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    userId: string
+    goalId?: string | null
+  }
+
+  export type ProgressLogCreateOrConnectWithoutObjectiveInput = {
+    where: ProgressLogWhereUniqueInput
+    create: XOR<ProgressLogCreateWithoutObjectiveInput, ProgressLogUncheckedCreateWithoutObjectiveInput>
+  }
+
+  export type ProgressLogCreateManyObjectiveInputEnvelope = {
+    data: ProgressLogCreateManyObjectiveInput | ProgressLogCreateManyObjectiveInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type TimeRecordCreateWithoutObjectiveInput = {
     id?: string
     startTime: Date | string
     endTime?: Date | string | null
@@ -19025,7 +16523,7 @@ export namespace Prisma {
     user: UserCreateNestedOneWithoutTimeRecordsInput
   }
 
-  export type TimeRecordUncheckedCreateWithoutTaskInput = {
+  export type TimeRecordUncheckedCreateWithoutObjectiveInput = {
     id?: string
     startTime: Date | string
     endTime?: Date | string | null
@@ -19036,221 +16534,138 @@ export namespace Prisma {
     userId: string
   }
 
-  export type TimeRecordCreateOrConnectWithoutTaskInput = {
+  export type TimeRecordCreateOrConnectWithoutObjectiveInput = {
     where: TimeRecordWhereUniqueInput
-    create: XOR<TimeRecordCreateWithoutTaskInput, TimeRecordUncheckedCreateWithoutTaskInput>
+    create: XOR<TimeRecordCreateWithoutObjectiveInput, TimeRecordUncheckedCreateWithoutObjectiveInput>
   }
 
-  export type TimeRecordCreateManyTaskInputEnvelope = {
-    data: TimeRecordCreateManyTaskInput | TimeRecordCreateManyTaskInput[]
+  export type TimeRecordCreateManyObjectiveInputEnvelope = {
+    data: TimeRecordCreateManyObjectiveInput | TimeRecordCreateManyObjectiveInput[]
     skipDuplicates?: boolean
   }
 
-  export type ProgressLogCreateWithoutTaskInput = {
-    id?: string
-    progress: number
-    note?: string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    user: UserCreateNestedOneWithoutProgressLogsInput
-    goal?: GoalCreateNestedOneWithoutProgressLogsInput
+  export type ObjectiveUpsertWithoutSubObjectivesInput = {
+    update: XOR<ObjectiveUpdateWithoutSubObjectivesInput, ObjectiveUncheckedUpdateWithoutSubObjectivesInput>
+    create: XOR<ObjectiveCreateWithoutSubObjectivesInput, ObjectiveUncheckedCreateWithoutSubObjectivesInput>
+    where?: ObjectiveWhereInput
   }
 
-  export type ProgressLogUncheckedCreateWithoutTaskInput = {
-    id?: string
-    progress: number
-    note?: string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    userId: string
-    goalId?: string | null
+  export type ObjectiveUpdateToOneWithWhereWithoutSubObjectivesInput = {
+    where?: ObjectiveWhereInput
+    data: XOR<ObjectiveUpdateWithoutSubObjectivesInput, ObjectiveUncheckedUpdateWithoutSubObjectivesInput>
   }
 
-  export type ProgressLogCreateOrConnectWithoutTaskInput = {
-    where: ProgressLogWhereUniqueInput
-    create: XOR<ProgressLogCreateWithoutTaskInput, ProgressLogUncheckedCreateWithoutTaskInput>
-  }
-
-  export type ProgressLogCreateManyTaskInputEnvelope = {
-    data: ProgressLogCreateManyTaskInput | ProgressLogCreateManyTaskInput[]
-    skipDuplicates?: boolean
-  }
-
-  export type GoalUpsertWithoutTasksInput = {
-    update: XOR<GoalUpdateWithoutTasksInput, GoalUncheckedUpdateWithoutTasksInput>
-    create: XOR<GoalCreateWithoutTasksInput, GoalUncheckedCreateWithoutTasksInput>
-    where?: GoalWhereInput
-  }
-
-  export type GoalUpdateToOneWithWhereWithoutTasksInput = {
-    where?: GoalWhereInput
-    data: XOR<GoalUpdateWithoutTasksInput, GoalUncheckedUpdateWithoutTasksInput>
-  }
-
-  export type GoalUpdateWithoutTasksInput = {
+  export type ObjectiveUpdateWithoutSubObjectivesInput = {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
-    level?: EnumGoalLevelFieldUpdateOperationsInput | $Enums.GoalLevel
-    status?: EnumGoalStatusFieldUpdateOperationsInput | $Enums.GoalStatus
-    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    endDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    progress?: FloatFieldUpdateOperationsInput | number
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    metrics?: NullableJsonNullValueInput | InputJsonValue
-    resources?: NullableJsonNullValueInput | InputJsonValue
+    type?: EnumObjectiveTypeFieldUpdateOperationsInput | $Enums.ObjectiveType
+    status?: EnumObjectiveStatusFieldUpdateOperationsInput | $Enums.ObjectiveStatus
     priority?: IntFieldUpdateOperationsInput | number
-    weight?: FloatFieldUpdateOperationsInput | number
-    metadata?: NullableJsonNullValueInput | InputJsonValue
-    parent?: GoalUpdateOneWithoutSubGoalsNestedInput
-    subGoals?: GoalUpdateManyWithoutParentNestedInput
-    user?: UserUpdateOneRequiredWithoutGoalsNestedInput
-    tags?: TagUpdateManyWithoutGoalsNestedInput
-    progressLogs?: ProgressLogUpdateManyWithoutGoalNestedInput
-  }
-
-  export type GoalUncheckedUpdateWithoutTasksInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    title?: StringFieldUpdateOperationsInput | string
-    description?: NullableStringFieldUpdateOperationsInput | string | null
-    level?: EnumGoalLevelFieldUpdateOperationsInput | $Enums.GoalLevel
-    status?: EnumGoalStatusFieldUpdateOperationsInput | $Enums.GoalStatus
-    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    endDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    startDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    endDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     progress?: FloatFieldUpdateOperationsInput | number
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    userId?: StringFieldUpdateOperationsInput | string
-    parentId?: NullableStringFieldUpdateOperationsInput | string | null
-    metrics?: NullableJsonNullValueInput | InputJsonValue
-    resources?: NullableJsonNullValueInput | InputJsonValue
-    priority?: IntFieldUpdateOperationsInput | number
+    metadata?: NullableJsonNullValueInput | InputJsonValue
     weight?: FloatFieldUpdateOperationsInput | number
-    metadata?: NullableJsonNullValueInput | InputJsonValue
-    subGoals?: GoalUncheckedUpdateManyWithoutParentNestedInput
-    tags?: TagUncheckedUpdateManyWithoutGoalsNestedInput
-    progressLogs?: ProgressLogUncheckedUpdateManyWithoutGoalNestedInput
-  }
-
-  export type TaskUpsertWithoutSubTasksInput = {
-    update: XOR<TaskUpdateWithoutSubTasksInput, TaskUncheckedUpdateWithoutSubTasksInput>
-    create: XOR<TaskCreateWithoutSubTasksInput, TaskUncheckedCreateWithoutSubTasksInput>
-    where?: TaskWhereInput
-  }
-
-  export type TaskUpdateToOneWithWhereWithoutSubTasksInput = {
-    where?: TaskWhereInput
-    data: XOR<TaskUpdateWithoutSubTasksInput, TaskUncheckedUpdateWithoutSubTasksInput>
-  }
-
-  export type TaskUpdateWithoutSubTasksInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    title?: StringFieldUpdateOperationsInput | string
-    description?: NullableStringFieldUpdateOperationsInput | string | null
-    status?: EnumTaskStatusFieldUpdateOperationsInput | $Enums.TaskStatus
-    priority?: EnumTaskPriorityFieldUpdateOperationsInput | $Enums.TaskPriority
-    dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    metadata?: NullableJsonNullValueInput | InputJsonValue
     totalTime?: IntFieldUpdateOperationsInput | number
-    goal?: GoalUpdateOneWithoutTasksNestedInput
-    parent?: TaskUpdateOneWithoutSubTasksNestedInput
-    user?: UserUpdateOneRequiredWithoutTasksNestedInput
-    tags?: TagUpdateManyWithoutTasksNestedInput
-    timeRecords?: TimeRecordUpdateManyWithoutTaskNestedInput
-    progressLogs?: ProgressLogUpdateManyWithoutTaskNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    parent?: ObjectiveUpdateOneWithoutSubObjectivesNestedInput
+    user?: UserUpdateOneRequiredWithoutObjectivesNestedInput
+    tags?: TagUpdateManyWithoutObjectivesNestedInput
+    progressLogs?: ProgressLogUpdateManyWithoutObjectiveNestedInput
+    timeRecords?: TimeRecordUpdateManyWithoutObjectiveNestedInput
   }
 
-  export type TaskUncheckedUpdateWithoutSubTasksInput = {
+  export type ObjectiveUncheckedUpdateWithoutSubObjectivesInput = {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
-    status?: EnumTaskStatusFieldUpdateOperationsInput | $Enums.TaskStatus
-    priority?: EnumTaskPriorityFieldUpdateOperationsInput | $Enums.TaskPriority
-    dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    userId?: StringFieldUpdateOperationsInput | string
+    type?: EnumObjectiveTypeFieldUpdateOperationsInput | $Enums.ObjectiveType
+    status?: EnumObjectiveStatusFieldUpdateOperationsInput | $Enums.ObjectiveStatus
+    priority?: IntFieldUpdateOperationsInput | number
+    startDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    endDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    progress?: FloatFieldUpdateOperationsInput | number
     parentId?: NullableStringFieldUpdateOperationsInput | string | null
-    goalId?: NullableStringFieldUpdateOperationsInput | string | null
+    userId?: StringFieldUpdateOperationsInput | string
     metadata?: NullableJsonNullValueInput | InputJsonValue
+    weight?: FloatFieldUpdateOperationsInput | number
     totalTime?: IntFieldUpdateOperationsInput | number
-    tags?: TagUncheckedUpdateManyWithoutTasksNestedInput
-    timeRecords?: TimeRecordUncheckedUpdateManyWithoutTaskNestedInput
-    progressLogs?: ProgressLogUncheckedUpdateManyWithoutTaskNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    tags?: TagUncheckedUpdateManyWithoutObjectivesNestedInput
+    progressLogs?: ProgressLogUncheckedUpdateManyWithoutObjectiveNestedInput
+    timeRecords?: TimeRecordUncheckedUpdateManyWithoutObjectiveNestedInput
   }
 
-  export type TaskUpsertWithWhereUniqueWithoutParentInput = {
-    where: TaskWhereUniqueInput
-    update: XOR<TaskUpdateWithoutParentInput, TaskUncheckedUpdateWithoutParentInput>
-    create: XOR<TaskCreateWithoutParentInput, TaskUncheckedCreateWithoutParentInput>
+  export type ObjectiveUpsertWithWhereUniqueWithoutParentInput = {
+    where: ObjectiveWhereUniqueInput
+    update: XOR<ObjectiveUpdateWithoutParentInput, ObjectiveUncheckedUpdateWithoutParentInput>
+    create: XOR<ObjectiveCreateWithoutParentInput, ObjectiveUncheckedCreateWithoutParentInput>
   }
 
-  export type TaskUpdateWithWhereUniqueWithoutParentInput = {
-    where: TaskWhereUniqueInput
-    data: XOR<TaskUpdateWithoutParentInput, TaskUncheckedUpdateWithoutParentInput>
+  export type ObjectiveUpdateWithWhereUniqueWithoutParentInput = {
+    where: ObjectiveWhereUniqueInput
+    data: XOR<ObjectiveUpdateWithoutParentInput, ObjectiveUncheckedUpdateWithoutParentInput>
   }
 
-  export type TaskUpdateManyWithWhereWithoutParentInput = {
-    where: TaskScalarWhereInput
-    data: XOR<TaskUpdateManyMutationInput, TaskUncheckedUpdateManyWithoutParentInput>
+  export type ObjectiveUpdateManyWithWhereWithoutParentInput = {
+    where: ObjectiveScalarWhereInput
+    data: XOR<ObjectiveUpdateManyMutationInput, ObjectiveUncheckedUpdateManyWithoutParentInput>
   }
 
-  export type UserUpsertWithoutTasksInput = {
-    update: XOR<UserUpdateWithoutTasksInput, UserUncheckedUpdateWithoutTasksInput>
-    create: XOR<UserCreateWithoutTasksInput, UserUncheckedCreateWithoutTasksInput>
+  export type UserUpsertWithoutObjectivesInput = {
+    update: XOR<UserUpdateWithoutObjectivesInput, UserUncheckedUpdateWithoutObjectivesInput>
+    create: XOR<UserCreateWithoutObjectivesInput, UserUncheckedCreateWithoutObjectivesInput>
     where?: UserWhereInput
   }
 
-  export type UserUpdateToOneWithWhereWithoutTasksInput = {
+  export type UserUpdateToOneWithWhereWithoutObjectivesInput = {
     where?: UserWhereInput
-    data: XOR<UserUpdateWithoutTasksInput, UserUncheckedUpdateWithoutTasksInput>
+    data: XOR<UserUpdateWithoutObjectivesInput, UserUncheckedUpdateWithoutObjectivesInput>
   }
 
-  export type UserUpdateWithoutTasksInput = {
+  export type UserUpdateWithoutObjectivesInput = {
     id?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
     password?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    goals?: GoalUpdateManyWithoutUserNestedInput
     messages?: MessageUpdateManyWithoutUserNestedInput
     timeRecords?: TimeRecordUpdateManyWithoutUserNestedInput
     progressLogs?: ProgressLogUpdateManyWithoutUserNestedInput
     importedFiles?: ImportedFileUpdateManyWithoutUserNestedInput
   }
 
-  export type UserUncheckedUpdateWithoutTasksInput = {
+  export type UserUncheckedUpdateWithoutObjectivesInput = {
     id?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
     password?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    goals?: GoalUncheckedUpdateManyWithoutUserNestedInput
     messages?: MessageUncheckedUpdateManyWithoutUserNestedInput
     timeRecords?: TimeRecordUncheckedUpdateManyWithoutUserNestedInput
     progressLogs?: ProgressLogUncheckedUpdateManyWithoutUserNestedInput
     importedFiles?: ImportedFileUncheckedUpdateManyWithoutUserNestedInput
   }
 
-  export type TagUpsertWithWhereUniqueWithoutTasksInput = {
+  export type TagUpsertWithWhereUniqueWithoutObjectivesInput = {
     where: TagWhereUniqueInput
-    update: XOR<TagUpdateWithoutTasksInput, TagUncheckedUpdateWithoutTasksInput>
-    create: XOR<TagCreateWithoutTasksInput, TagUncheckedCreateWithoutTasksInput>
+    update: XOR<TagUpdateWithoutObjectivesInput, TagUncheckedUpdateWithoutObjectivesInput>
+    create: XOR<TagCreateWithoutObjectivesInput, TagUncheckedCreateWithoutObjectivesInput>
   }
 
-  export type TagUpdateWithWhereUniqueWithoutTasksInput = {
+  export type TagUpdateWithWhereUniqueWithoutObjectivesInput = {
     where: TagWhereUniqueInput
-    data: XOR<TagUpdateWithoutTasksInput, TagUncheckedUpdateWithoutTasksInput>
+    data: XOR<TagUpdateWithoutObjectivesInput, TagUncheckedUpdateWithoutObjectivesInput>
   }
 
-  export type TagUpdateManyWithWhereWithoutTasksInput = {
+  export type TagUpdateManyWithWhereWithoutObjectivesInput = {
     where: TagScalarWhereInput
-    data: XOR<TagUpdateManyMutationInput, TagUncheckedUpdateManyWithoutTasksInput>
+    data: XOR<TagUpdateManyMutationInput, TagUncheckedUpdateManyWithoutObjectivesInput>
   }
 
   export type TagScalarWhereInput = {
@@ -19264,439 +16679,36 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"Tag"> | Date | string
   }
 
-  export type TimeRecordUpsertWithWhereUniqueWithoutTaskInput = {
-    where: TimeRecordWhereUniqueInput
-    update: XOR<TimeRecordUpdateWithoutTaskInput, TimeRecordUncheckedUpdateWithoutTaskInput>
-    create: XOR<TimeRecordCreateWithoutTaskInput, TimeRecordUncheckedCreateWithoutTaskInput>
+  export type ProgressLogUpsertWithWhereUniqueWithoutObjectiveInput = {
+    where: ProgressLogWhereUniqueInput
+    update: XOR<ProgressLogUpdateWithoutObjectiveInput, ProgressLogUncheckedUpdateWithoutObjectiveInput>
+    create: XOR<ProgressLogCreateWithoutObjectiveInput, ProgressLogUncheckedCreateWithoutObjectiveInput>
   }
 
-  export type TimeRecordUpdateWithWhereUniqueWithoutTaskInput = {
-    where: TimeRecordWhereUniqueInput
-    data: XOR<TimeRecordUpdateWithoutTaskInput, TimeRecordUncheckedUpdateWithoutTaskInput>
+  export type ProgressLogUpdateWithWhereUniqueWithoutObjectiveInput = {
+    where: ProgressLogWhereUniqueInput
+    data: XOR<ProgressLogUpdateWithoutObjectiveInput, ProgressLogUncheckedUpdateWithoutObjectiveInput>
   }
 
-  export type TimeRecordUpdateManyWithWhereWithoutTaskInput = {
+  export type ProgressLogUpdateManyWithWhereWithoutObjectiveInput = {
+    where: ProgressLogScalarWhereInput
+    data: XOR<ProgressLogUpdateManyMutationInput, ProgressLogUncheckedUpdateManyWithoutObjectiveInput>
+  }
+
+  export type TimeRecordUpsertWithWhereUniqueWithoutObjectiveInput = {
+    where: TimeRecordWhereUniqueInput
+    update: XOR<TimeRecordUpdateWithoutObjectiveInput, TimeRecordUncheckedUpdateWithoutObjectiveInput>
+    create: XOR<TimeRecordCreateWithoutObjectiveInput, TimeRecordUncheckedCreateWithoutObjectiveInput>
+  }
+
+  export type TimeRecordUpdateWithWhereUniqueWithoutObjectiveInput = {
+    where: TimeRecordWhereUniqueInput
+    data: XOR<TimeRecordUpdateWithoutObjectiveInput, TimeRecordUncheckedUpdateWithoutObjectiveInput>
+  }
+
+  export type TimeRecordUpdateManyWithWhereWithoutObjectiveInput = {
     where: TimeRecordScalarWhereInput
-    data: XOR<TimeRecordUpdateManyMutationInput, TimeRecordUncheckedUpdateManyWithoutTaskInput>
-  }
-
-  export type ProgressLogUpsertWithWhereUniqueWithoutTaskInput = {
-    where: ProgressLogWhereUniqueInput
-    update: XOR<ProgressLogUpdateWithoutTaskInput, ProgressLogUncheckedUpdateWithoutTaskInput>
-    create: XOR<ProgressLogCreateWithoutTaskInput, ProgressLogUncheckedCreateWithoutTaskInput>
-  }
-
-  export type ProgressLogUpdateWithWhereUniqueWithoutTaskInput = {
-    where: ProgressLogWhereUniqueInput
-    data: XOR<ProgressLogUpdateWithoutTaskInput, ProgressLogUncheckedUpdateWithoutTaskInput>
-  }
-
-  export type ProgressLogUpdateManyWithWhereWithoutTaskInput = {
-    where: ProgressLogScalarWhereInput
-    data: XOR<ProgressLogUpdateManyMutationInput, ProgressLogUncheckedUpdateManyWithoutTaskInput>
-  }
-
-  export type GoalCreateWithoutSubGoalsInput = {
-    id?: string
-    title: string
-    description?: string | null
-    level?: $Enums.GoalLevel
-    status?: $Enums.GoalStatus
-    startDate: Date | string
-    endDate: Date | string
-    progress?: number
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    metrics?: NullableJsonNullValueInput | InputJsonValue
-    resources?: NullableJsonNullValueInput | InputJsonValue
-    priority?: number
-    weight?: number
-    metadata?: NullableJsonNullValueInput | InputJsonValue
-    parent?: GoalCreateNestedOneWithoutSubGoalsInput
-    user: UserCreateNestedOneWithoutGoalsInput
-    tasks?: TaskCreateNestedManyWithoutGoalInput
-    tags?: TagCreateNestedManyWithoutGoalsInput
-    progressLogs?: ProgressLogCreateNestedManyWithoutGoalInput
-  }
-
-  export type GoalUncheckedCreateWithoutSubGoalsInput = {
-    id?: string
-    title: string
-    description?: string | null
-    level?: $Enums.GoalLevel
-    status?: $Enums.GoalStatus
-    startDate: Date | string
-    endDate: Date | string
-    progress?: number
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    userId: string
-    parentId?: string | null
-    metrics?: NullableJsonNullValueInput | InputJsonValue
-    resources?: NullableJsonNullValueInput | InputJsonValue
-    priority?: number
-    weight?: number
-    metadata?: NullableJsonNullValueInput | InputJsonValue
-    tasks?: TaskUncheckedCreateNestedManyWithoutGoalInput
-    tags?: TagUncheckedCreateNestedManyWithoutGoalsInput
-    progressLogs?: ProgressLogUncheckedCreateNestedManyWithoutGoalInput
-  }
-
-  export type GoalCreateOrConnectWithoutSubGoalsInput = {
-    where: GoalWhereUniqueInput
-    create: XOR<GoalCreateWithoutSubGoalsInput, GoalUncheckedCreateWithoutSubGoalsInput>
-  }
-
-  export type GoalCreateWithoutParentInput = {
-    id?: string
-    title: string
-    description?: string | null
-    level?: $Enums.GoalLevel
-    status?: $Enums.GoalStatus
-    startDate: Date | string
-    endDate: Date | string
-    progress?: number
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    metrics?: NullableJsonNullValueInput | InputJsonValue
-    resources?: NullableJsonNullValueInput | InputJsonValue
-    priority?: number
-    weight?: number
-    metadata?: NullableJsonNullValueInput | InputJsonValue
-    subGoals?: GoalCreateNestedManyWithoutParentInput
-    user: UserCreateNestedOneWithoutGoalsInput
-    tasks?: TaskCreateNestedManyWithoutGoalInput
-    tags?: TagCreateNestedManyWithoutGoalsInput
-    progressLogs?: ProgressLogCreateNestedManyWithoutGoalInput
-  }
-
-  export type GoalUncheckedCreateWithoutParentInput = {
-    id?: string
-    title: string
-    description?: string | null
-    level?: $Enums.GoalLevel
-    status?: $Enums.GoalStatus
-    startDate: Date | string
-    endDate: Date | string
-    progress?: number
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    userId: string
-    metrics?: NullableJsonNullValueInput | InputJsonValue
-    resources?: NullableJsonNullValueInput | InputJsonValue
-    priority?: number
-    weight?: number
-    metadata?: NullableJsonNullValueInput | InputJsonValue
-    subGoals?: GoalUncheckedCreateNestedManyWithoutParentInput
-    tasks?: TaskUncheckedCreateNestedManyWithoutGoalInput
-    tags?: TagUncheckedCreateNestedManyWithoutGoalsInput
-    progressLogs?: ProgressLogUncheckedCreateNestedManyWithoutGoalInput
-  }
-
-  export type GoalCreateOrConnectWithoutParentInput = {
-    where: GoalWhereUniqueInput
-    create: XOR<GoalCreateWithoutParentInput, GoalUncheckedCreateWithoutParentInput>
-  }
-
-  export type GoalCreateManyParentInputEnvelope = {
-    data: GoalCreateManyParentInput | GoalCreateManyParentInput[]
-    skipDuplicates?: boolean
-  }
-
-  export type UserCreateWithoutGoalsInput = {
-    id?: string
-    email: string
-    name?: string | null
-    password: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    messages?: MessageCreateNestedManyWithoutUserInput
-    tasks?: TaskCreateNestedManyWithoutUserInput
-    timeRecords?: TimeRecordCreateNestedManyWithoutUserInput
-    progressLogs?: ProgressLogCreateNestedManyWithoutUserInput
-    importedFiles?: ImportedFileCreateNestedManyWithoutUserInput
-  }
-
-  export type UserUncheckedCreateWithoutGoalsInput = {
-    id?: string
-    email: string
-    name?: string | null
-    password: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    messages?: MessageUncheckedCreateNestedManyWithoutUserInput
-    tasks?: TaskUncheckedCreateNestedManyWithoutUserInput
-    timeRecords?: TimeRecordUncheckedCreateNestedManyWithoutUserInput
-    progressLogs?: ProgressLogUncheckedCreateNestedManyWithoutUserInput
-    importedFiles?: ImportedFileUncheckedCreateNestedManyWithoutUserInput
-  }
-
-  export type UserCreateOrConnectWithoutGoalsInput = {
-    where: UserWhereUniqueInput
-    create: XOR<UserCreateWithoutGoalsInput, UserUncheckedCreateWithoutGoalsInput>
-  }
-
-  export type TaskCreateWithoutGoalInput = {
-    id?: string
-    title: string
-    description?: string | null
-    status?: $Enums.TaskStatus
-    priority?: $Enums.TaskPriority
-    dueDate?: Date | string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    metadata?: NullableJsonNullValueInput | InputJsonValue
-    totalTime?: number
-    parent?: TaskCreateNestedOneWithoutSubTasksInput
-    subTasks?: TaskCreateNestedManyWithoutParentInput
-    user: UserCreateNestedOneWithoutTasksInput
-    tags?: TagCreateNestedManyWithoutTasksInput
-    timeRecords?: TimeRecordCreateNestedManyWithoutTaskInput
-    progressLogs?: ProgressLogCreateNestedManyWithoutTaskInput
-  }
-
-  export type TaskUncheckedCreateWithoutGoalInput = {
-    id?: string
-    title: string
-    description?: string | null
-    status?: $Enums.TaskStatus
-    priority?: $Enums.TaskPriority
-    dueDate?: Date | string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    userId: string
-    parentId?: string | null
-    metadata?: NullableJsonNullValueInput | InputJsonValue
-    totalTime?: number
-    subTasks?: TaskUncheckedCreateNestedManyWithoutParentInput
-    tags?: TagUncheckedCreateNestedManyWithoutTasksInput
-    timeRecords?: TimeRecordUncheckedCreateNestedManyWithoutTaskInput
-    progressLogs?: ProgressLogUncheckedCreateNestedManyWithoutTaskInput
-  }
-
-  export type TaskCreateOrConnectWithoutGoalInput = {
-    where: TaskWhereUniqueInput
-    create: XOR<TaskCreateWithoutGoalInput, TaskUncheckedCreateWithoutGoalInput>
-  }
-
-  export type TaskCreateManyGoalInputEnvelope = {
-    data: TaskCreateManyGoalInput | TaskCreateManyGoalInput[]
-    skipDuplicates?: boolean
-  }
-
-  export type TagCreateWithoutGoalsInput = {
-    id?: string
-    name: string
-    color?: string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    messages?: MessageCreateNestedManyWithoutTagsInput
-    tasks?: TaskCreateNestedManyWithoutTagsInput
-  }
-
-  export type TagUncheckedCreateWithoutGoalsInput = {
-    id?: string
-    name: string
-    color?: string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    messages?: MessageUncheckedCreateNestedManyWithoutTagsInput
-    tasks?: TaskUncheckedCreateNestedManyWithoutTagsInput
-  }
-
-  export type TagCreateOrConnectWithoutGoalsInput = {
-    where: TagWhereUniqueInput
-    create: XOR<TagCreateWithoutGoalsInput, TagUncheckedCreateWithoutGoalsInput>
-  }
-
-  export type ProgressLogCreateWithoutGoalInput = {
-    id?: string
-    progress: number
-    note?: string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    user: UserCreateNestedOneWithoutProgressLogsInput
-    task?: TaskCreateNestedOneWithoutProgressLogsInput
-  }
-
-  export type ProgressLogUncheckedCreateWithoutGoalInput = {
-    id?: string
-    progress: number
-    note?: string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    userId: string
-    taskId?: string | null
-  }
-
-  export type ProgressLogCreateOrConnectWithoutGoalInput = {
-    where: ProgressLogWhereUniqueInput
-    create: XOR<ProgressLogCreateWithoutGoalInput, ProgressLogUncheckedCreateWithoutGoalInput>
-  }
-
-  export type ProgressLogCreateManyGoalInputEnvelope = {
-    data: ProgressLogCreateManyGoalInput | ProgressLogCreateManyGoalInput[]
-    skipDuplicates?: boolean
-  }
-
-  export type GoalUpsertWithoutSubGoalsInput = {
-    update: XOR<GoalUpdateWithoutSubGoalsInput, GoalUncheckedUpdateWithoutSubGoalsInput>
-    create: XOR<GoalCreateWithoutSubGoalsInput, GoalUncheckedCreateWithoutSubGoalsInput>
-    where?: GoalWhereInput
-  }
-
-  export type GoalUpdateToOneWithWhereWithoutSubGoalsInput = {
-    where?: GoalWhereInput
-    data: XOR<GoalUpdateWithoutSubGoalsInput, GoalUncheckedUpdateWithoutSubGoalsInput>
-  }
-
-  export type GoalUpdateWithoutSubGoalsInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    title?: StringFieldUpdateOperationsInput | string
-    description?: NullableStringFieldUpdateOperationsInput | string | null
-    level?: EnumGoalLevelFieldUpdateOperationsInput | $Enums.GoalLevel
-    status?: EnumGoalStatusFieldUpdateOperationsInput | $Enums.GoalStatus
-    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    endDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    progress?: FloatFieldUpdateOperationsInput | number
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    metrics?: NullableJsonNullValueInput | InputJsonValue
-    resources?: NullableJsonNullValueInput | InputJsonValue
-    priority?: IntFieldUpdateOperationsInput | number
-    weight?: FloatFieldUpdateOperationsInput | number
-    metadata?: NullableJsonNullValueInput | InputJsonValue
-    parent?: GoalUpdateOneWithoutSubGoalsNestedInput
-    user?: UserUpdateOneRequiredWithoutGoalsNestedInput
-    tasks?: TaskUpdateManyWithoutGoalNestedInput
-    tags?: TagUpdateManyWithoutGoalsNestedInput
-    progressLogs?: ProgressLogUpdateManyWithoutGoalNestedInput
-  }
-
-  export type GoalUncheckedUpdateWithoutSubGoalsInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    title?: StringFieldUpdateOperationsInput | string
-    description?: NullableStringFieldUpdateOperationsInput | string | null
-    level?: EnumGoalLevelFieldUpdateOperationsInput | $Enums.GoalLevel
-    status?: EnumGoalStatusFieldUpdateOperationsInput | $Enums.GoalStatus
-    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    endDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    progress?: FloatFieldUpdateOperationsInput | number
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    userId?: StringFieldUpdateOperationsInput | string
-    parentId?: NullableStringFieldUpdateOperationsInput | string | null
-    metrics?: NullableJsonNullValueInput | InputJsonValue
-    resources?: NullableJsonNullValueInput | InputJsonValue
-    priority?: IntFieldUpdateOperationsInput | number
-    weight?: FloatFieldUpdateOperationsInput | number
-    metadata?: NullableJsonNullValueInput | InputJsonValue
-    tasks?: TaskUncheckedUpdateManyWithoutGoalNestedInput
-    tags?: TagUncheckedUpdateManyWithoutGoalsNestedInput
-    progressLogs?: ProgressLogUncheckedUpdateManyWithoutGoalNestedInput
-  }
-
-  export type GoalUpsertWithWhereUniqueWithoutParentInput = {
-    where: GoalWhereUniqueInput
-    update: XOR<GoalUpdateWithoutParentInput, GoalUncheckedUpdateWithoutParentInput>
-    create: XOR<GoalCreateWithoutParentInput, GoalUncheckedCreateWithoutParentInput>
-  }
-
-  export type GoalUpdateWithWhereUniqueWithoutParentInput = {
-    where: GoalWhereUniqueInput
-    data: XOR<GoalUpdateWithoutParentInput, GoalUncheckedUpdateWithoutParentInput>
-  }
-
-  export type GoalUpdateManyWithWhereWithoutParentInput = {
-    where: GoalScalarWhereInput
-    data: XOR<GoalUpdateManyMutationInput, GoalUncheckedUpdateManyWithoutParentInput>
-  }
-
-  export type UserUpsertWithoutGoalsInput = {
-    update: XOR<UserUpdateWithoutGoalsInput, UserUncheckedUpdateWithoutGoalsInput>
-    create: XOR<UserCreateWithoutGoalsInput, UserUncheckedCreateWithoutGoalsInput>
-    where?: UserWhereInput
-  }
-
-  export type UserUpdateToOneWithWhereWithoutGoalsInput = {
-    where?: UserWhereInput
-    data: XOR<UserUpdateWithoutGoalsInput, UserUncheckedUpdateWithoutGoalsInput>
-  }
-
-  export type UserUpdateWithoutGoalsInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
-    name?: NullableStringFieldUpdateOperationsInput | string | null
-    password?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    messages?: MessageUpdateManyWithoutUserNestedInput
-    tasks?: TaskUpdateManyWithoutUserNestedInput
-    timeRecords?: TimeRecordUpdateManyWithoutUserNestedInput
-    progressLogs?: ProgressLogUpdateManyWithoutUserNestedInput
-    importedFiles?: ImportedFileUpdateManyWithoutUserNestedInput
-  }
-
-  export type UserUncheckedUpdateWithoutGoalsInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
-    name?: NullableStringFieldUpdateOperationsInput | string | null
-    password?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    messages?: MessageUncheckedUpdateManyWithoutUserNestedInput
-    tasks?: TaskUncheckedUpdateManyWithoutUserNestedInput
-    timeRecords?: TimeRecordUncheckedUpdateManyWithoutUserNestedInput
-    progressLogs?: ProgressLogUncheckedUpdateManyWithoutUserNestedInput
-    importedFiles?: ImportedFileUncheckedUpdateManyWithoutUserNestedInput
-  }
-
-  export type TaskUpsertWithWhereUniqueWithoutGoalInput = {
-    where: TaskWhereUniqueInput
-    update: XOR<TaskUpdateWithoutGoalInput, TaskUncheckedUpdateWithoutGoalInput>
-    create: XOR<TaskCreateWithoutGoalInput, TaskUncheckedCreateWithoutGoalInput>
-  }
-
-  export type TaskUpdateWithWhereUniqueWithoutGoalInput = {
-    where: TaskWhereUniqueInput
-    data: XOR<TaskUpdateWithoutGoalInput, TaskUncheckedUpdateWithoutGoalInput>
-  }
-
-  export type TaskUpdateManyWithWhereWithoutGoalInput = {
-    where: TaskScalarWhereInput
-    data: XOR<TaskUpdateManyMutationInput, TaskUncheckedUpdateManyWithoutGoalInput>
-  }
-
-  export type TagUpsertWithWhereUniqueWithoutGoalsInput = {
-    where: TagWhereUniqueInput
-    update: XOR<TagUpdateWithoutGoalsInput, TagUncheckedUpdateWithoutGoalsInput>
-    create: XOR<TagCreateWithoutGoalsInput, TagUncheckedCreateWithoutGoalsInput>
-  }
-
-  export type TagUpdateWithWhereUniqueWithoutGoalsInput = {
-    where: TagWhereUniqueInput
-    data: XOR<TagUpdateWithoutGoalsInput, TagUncheckedUpdateWithoutGoalsInput>
-  }
-
-  export type TagUpdateManyWithWhereWithoutGoalsInput = {
-    where: TagScalarWhereInput
-    data: XOR<TagUpdateManyMutationInput, TagUncheckedUpdateManyWithoutGoalsInput>
-  }
-
-  export type ProgressLogUpsertWithWhereUniqueWithoutGoalInput = {
-    where: ProgressLogWhereUniqueInput
-    update: XOR<ProgressLogUpdateWithoutGoalInput, ProgressLogUncheckedUpdateWithoutGoalInput>
-    create: XOR<ProgressLogCreateWithoutGoalInput, ProgressLogUncheckedCreateWithoutGoalInput>
-  }
-
-  export type ProgressLogUpdateWithWhereUniqueWithoutGoalInput = {
-    where: ProgressLogWhereUniqueInput
-    data: XOR<ProgressLogUpdateWithoutGoalInput, ProgressLogUncheckedUpdateWithoutGoalInput>
-  }
-
-  export type ProgressLogUpdateManyWithWhereWithoutGoalInput = {
-    where: ProgressLogScalarWhereInput
-    data: XOR<ProgressLogUpdateManyMutationInput, ProgressLogUncheckedUpdateManyWithoutGoalInput>
+    data: XOR<TimeRecordUpdateManyMutationInput, TimeRecordUncheckedUpdateManyWithoutObjectiveInput>
   }
 
   export type CategoryCreateWithoutMessagesInput = {
@@ -19733,11 +16745,10 @@ export namespace Prisma {
     password: string
     createdAt?: Date | string
     updatedAt?: Date | string
-    goals?: GoalCreateNestedManyWithoutUserInput
-    tasks?: TaskCreateNestedManyWithoutUserInput
     timeRecords?: TimeRecordCreateNestedManyWithoutUserInput
     progressLogs?: ProgressLogCreateNestedManyWithoutUserInput
     importedFiles?: ImportedFileCreateNestedManyWithoutUserInput
+    objectives?: ObjectiveCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutMessagesInput = {
@@ -19747,11 +16758,10 @@ export namespace Prisma {
     password: string
     createdAt?: Date | string
     updatedAt?: Date | string
-    goals?: GoalUncheckedCreateNestedManyWithoutUserInput
-    tasks?: TaskUncheckedCreateNestedManyWithoutUserInput
     timeRecords?: TimeRecordUncheckedCreateNestedManyWithoutUserInput
     progressLogs?: ProgressLogUncheckedCreateNestedManyWithoutUserInput
     importedFiles?: ImportedFileUncheckedCreateNestedManyWithoutUserInput
+    objectives?: ObjectiveUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutMessagesInput = {
@@ -19765,8 +16775,7 @@ export namespace Prisma {
     color?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    goals?: GoalCreateNestedManyWithoutTagsInput
-    tasks?: TaskCreateNestedManyWithoutTagsInput
+    objectives?: ObjectiveCreateNestedManyWithoutTagsInput
   }
 
   export type TagUncheckedCreateWithoutMessagesInput = {
@@ -19775,8 +16784,7 @@ export namespace Prisma {
     color?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    goals?: GoalUncheckedCreateNestedManyWithoutTagsInput
-    tasks?: TaskUncheckedCreateNestedManyWithoutTagsInput
+    objectives?: ObjectiveUncheckedCreateNestedManyWithoutTagsInput
   }
 
   export type TagCreateOrConnectWithoutMessagesInput = {
@@ -19835,11 +16843,10 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    goals?: GoalUpdateManyWithoutUserNestedInput
-    tasks?: TaskUpdateManyWithoutUserNestedInput
     timeRecords?: TimeRecordUpdateManyWithoutUserNestedInput
     progressLogs?: ProgressLogUpdateManyWithoutUserNestedInput
     importedFiles?: ImportedFileUpdateManyWithoutUserNestedInput
+    objectives?: ObjectiveUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutMessagesInput = {
@@ -19849,11 +16856,10 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    goals?: GoalUncheckedUpdateManyWithoutUserNestedInput
-    tasks?: TaskUncheckedUpdateManyWithoutUserNestedInput
     timeRecords?: TimeRecordUncheckedUpdateManyWithoutUserNestedInput
     progressLogs?: ProgressLogUncheckedUpdateManyWithoutUserNestedInput
     importedFiles?: ImportedFileUncheckedUpdateManyWithoutUserNestedInput
+    objectives?: ObjectiveUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type TagUpsertWithWhereUniqueWithoutMessagesInput = {
@@ -20043,55 +17049,53 @@ export namespace Prisma {
     data: XOR<MessageUpdateManyMutationInput, MessageUncheckedUpdateManyWithoutCategoryInput>
   }
 
-  export type GoalCreateWithoutTagsInput = {
+  export type ObjectiveCreateWithoutTagsInput = {
     id?: string
     title: string
     description?: string | null
-    level?: $Enums.GoalLevel
-    status?: $Enums.GoalStatus
-    startDate: Date | string
-    endDate: Date | string
+    type?: $Enums.ObjectiveType
+    status?: $Enums.ObjectiveStatus
+    priority?: number
+    startDate?: Date | string | null
+    endDate?: Date | string | null
     progress?: number
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    weight?: number
+    totalTime?: number
     createdAt?: Date | string
     updatedAt?: Date | string
-    metrics?: NullableJsonNullValueInput | InputJsonValue
-    resources?: NullableJsonNullValueInput | InputJsonValue
-    priority?: number
-    weight?: number
-    metadata?: NullableJsonNullValueInput | InputJsonValue
-    parent?: GoalCreateNestedOneWithoutSubGoalsInput
-    subGoals?: GoalCreateNestedManyWithoutParentInput
-    user: UserCreateNestedOneWithoutGoalsInput
-    tasks?: TaskCreateNestedManyWithoutGoalInput
-    progressLogs?: ProgressLogCreateNestedManyWithoutGoalInput
+    parent?: ObjectiveCreateNestedOneWithoutSubObjectivesInput
+    subObjectives?: ObjectiveCreateNestedManyWithoutParentInput
+    user: UserCreateNestedOneWithoutObjectivesInput
+    progressLogs?: ProgressLogCreateNestedManyWithoutObjectiveInput
+    timeRecords?: TimeRecordCreateNestedManyWithoutObjectiveInput
   }
 
-  export type GoalUncheckedCreateWithoutTagsInput = {
+  export type ObjectiveUncheckedCreateWithoutTagsInput = {
     id?: string
     title: string
     description?: string | null
-    level?: $Enums.GoalLevel
-    status?: $Enums.GoalStatus
-    startDate: Date | string
-    endDate: Date | string
+    type?: $Enums.ObjectiveType
+    status?: $Enums.ObjectiveStatus
+    priority?: number
+    startDate?: Date | string | null
+    endDate?: Date | string | null
     progress?: number
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    userId: string
     parentId?: string | null
-    metrics?: NullableJsonNullValueInput | InputJsonValue
-    resources?: NullableJsonNullValueInput | InputJsonValue
-    priority?: number
-    weight?: number
+    userId: string
     metadata?: NullableJsonNullValueInput | InputJsonValue
-    subGoals?: GoalUncheckedCreateNestedManyWithoutParentInput
-    tasks?: TaskUncheckedCreateNestedManyWithoutGoalInput
-    progressLogs?: ProgressLogUncheckedCreateNestedManyWithoutGoalInput
+    weight?: number
+    totalTime?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    subObjectives?: ObjectiveUncheckedCreateNestedManyWithoutParentInput
+    progressLogs?: ProgressLogUncheckedCreateNestedManyWithoutObjectiveInput
+    timeRecords?: TimeRecordUncheckedCreateNestedManyWithoutObjectiveInput
   }
 
-  export type GoalCreateOrConnectWithoutTagsInput = {
-    where: GoalWhereUniqueInput
-    create: XOR<GoalCreateWithoutTagsInput, GoalUncheckedCreateWithoutTagsInput>
+  export type ObjectiveCreateOrConnectWithoutTagsInput = {
+    where: ObjectiveWhereUniqueInput
+    create: XOR<ObjectiveCreateWithoutTagsInput, ObjectiveUncheckedCreateWithoutTagsInput>
   }
 
   export type MessageCreateWithoutTagsInput = {
@@ -20123,63 +17127,20 @@ export namespace Prisma {
     create: XOR<MessageCreateWithoutTagsInput, MessageUncheckedCreateWithoutTagsInput>
   }
 
-  export type TaskCreateWithoutTagsInput = {
-    id?: string
-    title: string
-    description?: string | null
-    status?: $Enums.TaskStatus
-    priority?: $Enums.TaskPriority
-    dueDate?: Date | string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    metadata?: NullableJsonNullValueInput | InputJsonValue
-    totalTime?: number
-    goal?: GoalCreateNestedOneWithoutTasksInput
-    parent?: TaskCreateNestedOneWithoutSubTasksInput
-    subTasks?: TaskCreateNestedManyWithoutParentInput
-    user: UserCreateNestedOneWithoutTasksInput
-    timeRecords?: TimeRecordCreateNestedManyWithoutTaskInput
-    progressLogs?: ProgressLogCreateNestedManyWithoutTaskInput
+  export type ObjectiveUpsertWithWhereUniqueWithoutTagsInput = {
+    where: ObjectiveWhereUniqueInput
+    update: XOR<ObjectiveUpdateWithoutTagsInput, ObjectiveUncheckedUpdateWithoutTagsInput>
+    create: XOR<ObjectiveCreateWithoutTagsInput, ObjectiveUncheckedCreateWithoutTagsInput>
   }
 
-  export type TaskUncheckedCreateWithoutTagsInput = {
-    id?: string
-    title: string
-    description?: string | null
-    status?: $Enums.TaskStatus
-    priority?: $Enums.TaskPriority
-    dueDate?: Date | string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    userId: string
-    parentId?: string | null
-    goalId?: string | null
-    metadata?: NullableJsonNullValueInput | InputJsonValue
-    totalTime?: number
-    subTasks?: TaskUncheckedCreateNestedManyWithoutParentInput
-    timeRecords?: TimeRecordUncheckedCreateNestedManyWithoutTaskInput
-    progressLogs?: ProgressLogUncheckedCreateNestedManyWithoutTaskInput
+  export type ObjectiveUpdateWithWhereUniqueWithoutTagsInput = {
+    where: ObjectiveWhereUniqueInput
+    data: XOR<ObjectiveUpdateWithoutTagsInput, ObjectiveUncheckedUpdateWithoutTagsInput>
   }
 
-  export type TaskCreateOrConnectWithoutTagsInput = {
-    where: TaskWhereUniqueInput
-    create: XOR<TaskCreateWithoutTagsInput, TaskUncheckedCreateWithoutTagsInput>
-  }
-
-  export type GoalUpsertWithWhereUniqueWithoutTagsInput = {
-    where: GoalWhereUniqueInput
-    update: XOR<GoalUpdateWithoutTagsInput, GoalUncheckedUpdateWithoutTagsInput>
-    create: XOR<GoalCreateWithoutTagsInput, GoalUncheckedCreateWithoutTagsInput>
-  }
-
-  export type GoalUpdateWithWhereUniqueWithoutTagsInput = {
-    where: GoalWhereUniqueInput
-    data: XOR<GoalUpdateWithoutTagsInput, GoalUncheckedUpdateWithoutTagsInput>
-  }
-
-  export type GoalUpdateManyWithWhereWithoutTagsInput = {
-    where: GoalScalarWhereInput
-    data: XOR<GoalUpdateManyMutationInput, GoalUncheckedUpdateManyWithoutTagsInput>
+  export type ObjectiveUpdateManyWithWhereWithoutTagsInput = {
+    where: ObjectiveScalarWhereInput
+    data: XOR<ObjectiveUpdateManyMutationInput, ObjectiveUncheckedUpdateManyWithoutTagsInput>
   }
 
   export type MessageUpsertWithWhereUniqueWithoutTagsInput = {
@@ -20198,22 +17159,6 @@ export namespace Prisma {
     data: XOR<MessageUpdateManyMutationInput, MessageUncheckedUpdateManyWithoutTagsInput>
   }
 
-  export type TaskUpsertWithWhereUniqueWithoutTagsInput = {
-    where: TaskWhereUniqueInput
-    update: XOR<TaskUpdateWithoutTagsInput, TaskUncheckedUpdateWithoutTagsInput>
-    create: XOR<TaskCreateWithoutTagsInput, TaskUncheckedCreateWithoutTagsInput>
-  }
-
-  export type TaskUpdateWithWhereUniqueWithoutTagsInput = {
-    where: TaskWhereUniqueInput
-    data: XOR<TaskUpdateWithoutTagsInput, TaskUncheckedUpdateWithoutTagsInput>
-  }
-
-  export type TaskUpdateManyWithWhereWithoutTagsInput = {
-    where: TaskScalarWhereInput
-    data: XOR<TaskUpdateManyMutationInput, TaskUncheckedUpdateManyWithoutTagsInput>
-  }
-
   export type UserCreateWithoutTimeRecordsInput = {
     id?: string
     email: string
@@ -20221,11 +17166,10 @@ export namespace Prisma {
     password: string
     createdAt?: Date | string
     updatedAt?: Date | string
-    goals?: GoalCreateNestedManyWithoutUserInput
     messages?: MessageCreateNestedManyWithoutUserInput
-    tasks?: TaskCreateNestedManyWithoutUserInput
     progressLogs?: ProgressLogCreateNestedManyWithoutUserInput
     importedFiles?: ImportedFileCreateNestedManyWithoutUserInput
+    objectives?: ObjectiveCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutTimeRecordsInput = {
@@ -20235,11 +17179,10 @@ export namespace Prisma {
     password: string
     createdAt?: Date | string
     updatedAt?: Date | string
-    goals?: GoalUncheckedCreateNestedManyWithoutUserInput
     messages?: MessageUncheckedCreateNestedManyWithoutUserInput
-    tasks?: TaskUncheckedCreateNestedManyWithoutUserInput
     progressLogs?: ProgressLogUncheckedCreateNestedManyWithoutUserInput
     importedFiles?: ImportedFileUncheckedCreateNestedManyWithoutUserInput
+    objectives?: ObjectiveUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutTimeRecordsInput = {
@@ -20247,47 +17190,53 @@ export namespace Prisma {
     create: XOR<UserCreateWithoutTimeRecordsInput, UserUncheckedCreateWithoutTimeRecordsInput>
   }
 
-  export type TaskCreateWithoutTimeRecordsInput = {
+  export type ObjectiveCreateWithoutTimeRecordsInput = {
     id?: string
     title: string
     description?: string | null
-    status?: $Enums.TaskStatus
-    priority?: $Enums.TaskPriority
-    dueDate?: Date | string | null
+    type?: $Enums.ObjectiveType
+    status?: $Enums.ObjectiveStatus
+    priority?: number
+    startDate?: Date | string | null
+    endDate?: Date | string | null
+    progress?: number
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    weight?: number
+    totalTime?: number
     createdAt?: Date | string
     updatedAt?: Date | string
-    metadata?: NullableJsonNullValueInput | InputJsonValue
-    totalTime?: number
-    goal?: GoalCreateNestedOneWithoutTasksInput
-    parent?: TaskCreateNestedOneWithoutSubTasksInput
-    subTasks?: TaskCreateNestedManyWithoutParentInput
-    user: UserCreateNestedOneWithoutTasksInput
-    tags?: TagCreateNestedManyWithoutTasksInput
-    progressLogs?: ProgressLogCreateNestedManyWithoutTaskInput
+    parent?: ObjectiveCreateNestedOneWithoutSubObjectivesInput
+    subObjectives?: ObjectiveCreateNestedManyWithoutParentInput
+    user: UserCreateNestedOneWithoutObjectivesInput
+    tags?: TagCreateNestedManyWithoutObjectivesInput
+    progressLogs?: ProgressLogCreateNestedManyWithoutObjectiveInput
   }
 
-  export type TaskUncheckedCreateWithoutTimeRecordsInput = {
+  export type ObjectiveUncheckedCreateWithoutTimeRecordsInput = {
     id?: string
     title: string
     description?: string | null
-    status?: $Enums.TaskStatus
-    priority?: $Enums.TaskPriority
-    dueDate?: Date | string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    userId: string
+    type?: $Enums.ObjectiveType
+    status?: $Enums.ObjectiveStatus
+    priority?: number
+    startDate?: Date | string | null
+    endDate?: Date | string | null
+    progress?: number
     parentId?: string | null
-    goalId?: string | null
+    userId: string
     metadata?: NullableJsonNullValueInput | InputJsonValue
+    weight?: number
     totalTime?: number
-    subTasks?: TaskUncheckedCreateNestedManyWithoutParentInput
-    tags?: TagUncheckedCreateNestedManyWithoutTasksInput
-    progressLogs?: ProgressLogUncheckedCreateNestedManyWithoutTaskInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    subObjectives?: ObjectiveUncheckedCreateNestedManyWithoutParentInput
+    tags?: TagUncheckedCreateNestedManyWithoutObjectivesInput
+    progressLogs?: ProgressLogUncheckedCreateNestedManyWithoutObjectiveInput
   }
 
-  export type TaskCreateOrConnectWithoutTimeRecordsInput = {
-    where: TaskWhereUniqueInput
-    create: XOR<TaskCreateWithoutTimeRecordsInput, TaskUncheckedCreateWithoutTimeRecordsInput>
+  export type ObjectiveCreateOrConnectWithoutTimeRecordsInput = {
+    where: ObjectiveWhereUniqueInput
+    create: XOR<ObjectiveCreateWithoutTimeRecordsInput, ObjectiveUncheckedCreateWithoutTimeRecordsInput>
   }
 
   export type UserUpsertWithoutTimeRecordsInput = {
@@ -20308,11 +17257,10 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    goals?: GoalUpdateManyWithoutUserNestedInput
     messages?: MessageUpdateManyWithoutUserNestedInput
-    tasks?: TaskUpdateManyWithoutUserNestedInput
     progressLogs?: ProgressLogUpdateManyWithoutUserNestedInput
     importedFiles?: ImportedFileUpdateManyWithoutUserNestedInput
+    objectives?: ObjectiveUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutTimeRecordsInput = {
@@ -20322,60 +17270,65 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    goals?: GoalUncheckedUpdateManyWithoutUserNestedInput
     messages?: MessageUncheckedUpdateManyWithoutUserNestedInput
-    tasks?: TaskUncheckedUpdateManyWithoutUserNestedInput
     progressLogs?: ProgressLogUncheckedUpdateManyWithoutUserNestedInput
     importedFiles?: ImportedFileUncheckedUpdateManyWithoutUserNestedInput
+    objectives?: ObjectiveUncheckedUpdateManyWithoutUserNestedInput
   }
 
-  export type TaskUpsertWithoutTimeRecordsInput = {
-    update: XOR<TaskUpdateWithoutTimeRecordsInput, TaskUncheckedUpdateWithoutTimeRecordsInput>
-    create: XOR<TaskCreateWithoutTimeRecordsInput, TaskUncheckedCreateWithoutTimeRecordsInput>
-    where?: TaskWhereInput
+  export type ObjectiveUpsertWithoutTimeRecordsInput = {
+    update: XOR<ObjectiveUpdateWithoutTimeRecordsInput, ObjectiveUncheckedUpdateWithoutTimeRecordsInput>
+    create: XOR<ObjectiveCreateWithoutTimeRecordsInput, ObjectiveUncheckedCreateWithoutTimeRecordsInput>
+    where?: ObjectiveWhereInput
   }
 
-  export type TaskUpdateToOneWithWhereWithoutTimeRecordsInput = {
-    where?: TaskWhereInput
-    data: XOR<TaskUpdateWithoutTimeRecordsInput, TaskUncheckedUpdateWithoutTimeRecordsInput>
+  export type ObjectiveUpdateToOneWithWhereWithoutTimeRecordsInput = {
+    where?: ObjectiveWhereInput
+    data: XOR<ObjectiveUpdateWithoutTimeRecordsInput, ObjectiveUncheckedUpdateWithoutTimeRecordsInput>
   }
 
-  export type TaskUpdateWithoutTimeRecordsInput = {
+  export type ObjectiveUpdateWithoutTimeRecordsInput = {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
-    status?: EnumTaskStatusFieldUpdateOperationsInput | $Enums.TaskStatus
-    priority?: EnumTaskPriorityFieldUpdateOperationsInput | $Enums.TaskPriority
-    dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    type?: EnumObjectiveTypeFieldUpdateOperationsInput | $Enums.ObjectiveType
+    status?: EnumObjectiveStatusFieldUpdateOperationsInput | $Enums.ObjectiveStatus
+    priority?: IntFieldUpdateOperationsInput | number
+    startDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    endDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    progress?: FloatFieldUpdateOperationsInput | number
     metadata?: NullableJsonNullValueInput | InputJsonValue
+    weight?: FloatFieldUpdateOperationsInput | number
     totalTime?: IntFieldUpdateOperationsInput | number
-    goal?: GoalUpdateOneWithoutTasksNestedInput
-    parent?: TaskUpdateOneWithoutSubTasksNestedInput
-    subTasks?: TaskUpdateManyWithoutParentNestedInput
-    user?: UserUpdateOneRequiredWithoutTasksNestedInput
-    tags?: TagUpdateManyWithoutTasksNestedInput
-    progressLogs?: ProgressLogUpdateManyWithoutTaskNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    parent?: ObjectiveUpdateOneWithoutSubObjectivesNestedInput
+    subObjectives?: ObjectiveUpdateManyWithoutParentNestedInput
+    user?: UserUpdateOneRequiredWithoutObjectivesNestedInput
+    tags?: TagUpdateManyWithoutObjectivesNestedInput
+    progressLogs?: ProgressLogUpdateManyWithoutObjectiveNestedInput
   }
 
-  export type TaskUncheckedUpdateWithoutTimeRecordsInput = {
+  export type ObjectiveUncheckedUpdateWithoutTimeRecordsInput = {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
-    status?: EnumTaskStatusFieldUpdateOperationsInput | $Enums.TaskStatus
-    priority?: EnumTaskPriorityFieldUpdateOperationsInput | $Enums.TaskPriority
-    dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    userId?: StringFieldUpdateOperationsInput | string
+    type?: EnumObjectiveTypeFieldUpdateOperationsInput | $Enums.ObjectiveType
+    status?: EnumObjectiveStatusFieldUpdateOperationsInput | $Enums.ObjectiveStatus
+    priority?: IntFieldUpdateOperationsInput | number
+    startDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    endDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    progress?: FloatFieldUpdateOperationsInput | number
     parentId?: NullableStringFieldUpdateOperationsInput | string | null
-    goalId?: NullableStringFieldUpdateOperationsInput | string | null
+    userId?: StringFieldUpdateOperationsInput | string
     metadata?: NullableJsonNullValueInput | InputJsonValue
+    weight?: FloatFieldUpdateOperationsInput | number
     totalTime?: IntFieldUpdateOperationsInput | number
-    subTasks?: TaskUncheckedUpdateManyWithoutParentNestedInput
-    tags?: TagUncheckedUpdateManyWithoutTasksNestedInput
-    progressLogs?: ProgressLogUncheckedUpdateManyWithoutTaskNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    subObjectives?: ObjectiveUncheckedUpdateManyWithoutParentNestedInput
+    tags?: TagUncheckedUpdateManyWithoutObjectivesNestedInput
+    progressLogs?: ProgressLogUncheckedUpdateManyWithoutObjectiveNestedInput
   }
 
   export type UserCreateWithoutProgressLogsInput = {
@@ -20385,11 +17338,10 @@ export namespace Prisma {
     password: string
     createdAt?: Date | string
     updatedAt?: Date | string
-    goals?: GoalCreateNestedManyWithoutUserInput
     messages?: MessageCreateNestedManyWithoutUserInput
-    tasks?: TaskCreateNestedManyWithoutUserInput
     timeRecords?: TimeRecordCreateNestedManyWithoutUserInput
     importedFiles?: ImportedFileCreateNestedManyWithoutUserInput
+    objectives?: ObjectiveCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutProgressLogsInput = {
@@ -20399,11 +17351,10 @@ export namespace Prisma {
     password: string
     createdAt?: Date | string
     updatedAt?: Date | string
-    goals?: GoalUncheckedCreateNestedManyWithoutUserInput
     messages?: MessageUncheckedCreateNestedManyWithoutUserInput
-    tasks?: TaskUncheckedCreateNestedManyWithoutUserInput
     timeRecords?: TimeRecordUncheckedCreateNestedManyWithoutUserInput
     importedFiles?: ImportedFileUncheckedCreateNestedManyWithoutUserInput
+    objectives?: ObjectiveUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutProgressLogsInput = {
@@ -20411,98 +17362,53 @@ export namespace Prisma {
     create: XOR<UserCreateWithoutProgressLogsInput, UserUncheckedCreateWithoutProgressLogsInput>
   }
 
-  export type TaskCreateWithoutProgressLogsInput = {
+  export type ObjectiveCreateWithoutProgressLogsInput = {
     id?: string
     title: string
     description?: string | null
-    status?: $Enums.TaskStatus
-    priority?: $Enums.TaskPriority
-    dueDate?: Date | string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    metadata?: NullableJsonNullValueInput | InputJsonValue
-    totalTime?: number
-    goal?: GoalCreateNestedOneWithoutTasksInput
-    parent?: TaskCreateNestedOneWithoutSubTasksInput
-    subTasks?: TaskCreateNestedManyWithoutParentInput
-    user: UserCreateNestedOneWithoutTasksInput
-    tags?: TagCreateNestedManyWithoutTasksInput
-    timeRecords?: TimeRecordCreateNestedManyWithoutTaskInput
-  }
-
-  export type TaskUncheckedCreateWithoutProgressLogsInput = {
-    id?: string
-    title: string
-    description?: string | null
-    status?: $Enums.TaskStatus
-    priority?: $Enums.TaskPriority
-    dueDate?: Date | string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    userId: string
-    parentId?: string | null
-    goalId?: string | null
-    metadata?: NullableJsonNullValueInput | InputJsonValue
-    totalTime?: number
-    subTasks?: TaskUncheckedCreateNestedManyWithoutParentInput
-    tags?: TagUncheckedCreateNestedManyWithoutTasksInput
-    timeRecords?: TimeRecordUncheckedCreateNestedManyWithoutTaskInput
-  }
-
-  export type TaskCreateOrConnectWithoutProgressLogsInput = {
-    where: TaskWhereUniqueInput
-    create: XOR<TaskCreateWithoutProgressLogsInput, TaskUncheckedCreateWithoutProgressLogsInput>
-  }
-
-  export type GoalCreateWithoutProgressLogsInput = {
-    id?: string
-    title: string
-    description?: string | null
-    level?: $Enums.GoalLevel
-    status?: $Enums.GoalStatus
-    startDate: Date | string
-    endDate: Date | string
-    progress?: number
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    metrics?: NullableJsonNullValueInput | InputJsonValue
-    resources?: NullableJsonNullValueInput | InputJsonValue
+    type?: $Enums.ObjectiveType
+    status?: $Enums.ObjectiveStatus
     priority?: number
-    weight?: number
+    startDate?: Date | string | null
+    endDate?: Date | string | null
+    progress?: number
     metadata?: NullableJsonNullValueInput | InputJsonValue
-    parent?: GoalCreateNestedOneWithoutSubGoalsInput
-    subGoals?: GoalCreateNestedManyWithoutParentInput
-    user: UserCreateNestedOneWithoutGoalsInput
-    tasks?: TaskCreateNestedManyWithoutGoalInput
-    tags?: TagCreateNestedManyWithoutGoalsInput
+    weight?: number
+    totalTime?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    parent?: ObjectiveCreateNestedOneWithoutSubObjectivesInput
+    subObjectives?: ObjectiveCreateNestedManyWithoutParentInput
+    user: UserCreateNestedOneWithoutObjectivesInput
+    tags?: TagCreateNestedManyWithoutObjectivesInput
+    timeRecords?: TimeRecordCreateNestedManyWithoutObjectiveInput
   }
 
-  export type GoalUncheckedCreateWithoutProgressLogsInput = {
+  export type ObjectiveUncheckedCreateWithoutProgressLogsInput = {
     id?: string
     title: string
     description?: string | null
-    level?: $Enums.GoalLevel
-    status?: $Enums.GoalStatus
-    startDate: Date | string
-    endDate: Date | string
+    type?: $Enums.ObjectiveType
+    status?: $Enums.ObjectiveStatus
+    priority?: number
+    startDate?: Date | string | null
+    endDate?: Date | string | null
     progress?: number
+    parentId?: string | null
+    userId: string
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    weight?: number
+    totalTime?: number
     createdAt?: Date | string
     updatedAt?: Date | string
-    userId: string
-    parentId?: string | null
-    metrics?: NullableJsonNullValueInput | InputJsonValue
-    resources?: NullableJsonNullValueInput | InputJsonValue
-    priority?: number
-    weight?: number
-    metadata?: NullableJsonNullValueInput | InputJsonValue
-    subGoals?: GoalUncheckedCreateNestedManyWithoutParentInput
-    tasks?: TaskUncheckedCreateNestedManyWithoutGoalInput
-    tags?: TagUncheckedCreateNestedManyWithoutGoalsInput
+    subObjectives?: ObjectiveUncheckedCreateNestedManyWithoutParentInput
+    tags?: TagUncheckedCreateNestedManyWithoutObjectivesInput
+    timeRecords?: TimeRecordUncheckedCreateNestedManyWithoutObjectiveInput
   }
 
-  export type GoalCreateOrConnectWithoutProgressLogsInput = {
-    where: GoalWhereUniqueInput
-    create: XOR<GoalCreateWithoutProgressLogsInput, GoalUncheckedCreateWithoutProgressLogsInput>
+  export type ObjectiveCreateOrConnectWithoutProgressLogsInput = {
+    where: ObjectiveWhereUniqueInput
+    create: XOR<ObjectiveCreateWithoutProgressLogsInput, ObjectiveUncheckedCreateWithoutProgressLogsInput>
   }
 
   export type UserUpsertWithoutProgressLogsInput = {
@@ -20523,11 +17429,10 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    goals?: GoalUpdateManyWithoutUserNestedInput
     messages?: MessageUpdateManyWithoutUserNestedInput
-    tasks?: TaskUpdateManyWithoutUserNestedInput
     timeRecords?: TimeRecordUpdateManyWithoutUserNestedInput
     importedFiles?: ImportedFileUpdateManyWithoutUserNestedInput
+    objectives?: ObjectiveUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutProgressLogsInput = {
@@ -20537,117 +17442,65 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    goals?: GoalUncheckedUpdateManyWithoutUserNestedInput
     messages?: MessageUncheckedUpdateManyWithoutUserNestedInput
-    tasks?: TaskUncheckedUpdateManyWithoutUserNestedInput
     timeRecords?: TimeRecordUncheckedUpdateManyWithoutUserNestedInput
     importedFiles?: ImportedFileUncheckedUpdateManyWithoutUserNestedInput
+    objectives?: ObjectiveUncheckedUpdateManyWithoutUserNestedInput
   }
 
-  export type TaskUpsertWithoutProgressLogsInput = {
-    update: XOR<TaskUpdateWithoutProgressLogsInput, TaskUncheckedUpdateWithoutProgressLogsInput>
-    create: XOR<TaskCreateWithoutProgressLogsInput, TaskUncheckedCreateWithoutProgressLogsInput>
-    where?: TaskWhereInput
+  export type ObjectiveUpsertWithoutProgressLogsInput = {
+    update: XOR<ObjectiveUpdateWithoutProgressLogsInput, ObjectiveUncheckedUpdateWithoutProgressLogsInput>
+    create: XOR<ObjectiveCreateWithoutProgressLogsInput, ObjectiveUncheckedCreateWithoutProgressLogsInput>
+    where?: ObjectiveWhereInput
   }
 
-  export type TaskUpdateToOneWithWhereWithoutProgressLogsInput = {
-    where?: TaskWhereInput
-    data: XOR<TaskUpdateWithoutProgressLogsInput, TaskUncheckedUpdateWithoutProgressLogsInput>
+  export type ObjectiveUpdateToOneWithWhereWithoutProgressLogsInput = {
+    where?: ObjectiveWhereInput
+    data: XOR<ObjectiveUpdateWithoutProgressLogsInput, ObjectiveUncheckedUpdateWithoutProgressLogsInput>
   }
 
-  export type TaskUpdateWithoutProgressLogsInput = {
+  export type ObjectiveUpdateWithoutProgressLogsInput = {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
-    status?: EnumTaskStatusFieldUpdateOperationsInput | $Enums.TaskStatus
-    priority?: EnumTaskPriorityFieldUpdateOperationsInput | $Enums.TaskPriority
-    dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    metadata?: NullableJsonNullValueInput | InputJsonValue
-    totalTime?: IntFieldUpdateOperationsInput | number
-    goal?: GoalUpdateOneWithoutTasksNestedInput
-    parent?: TaskUpdateOneWithoutSubTasksNestedInput
-    subTasks?: TaskUpdateManyWithoutParentNestedInput
-    user?: UserUpdateOneRequiredWithoutTasksNestedInput
-    tags?: TagUpdateManyWithoutTasksNestedInput
-    timeRecords?: TimeRecordUpdateManyWithoutTaskNestedInput
-  }
-
-  export type TaskUncheckedUpdateWithoutProgressLogsInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    title?: StringFieldUpdateOperationsInput | string
-    description?: NullableStringFieldUpdateOperationsInput | string | null
-    status?: EnumTaskStatusFieldUpdateOperationsInput | $Enums.TaskStatus
-    priority?: EnumTaskPriorityFieldUpdateOperationsInput | $Enums.TaskPriority
-    dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    userId?: StringFieldUpdateOperationsInput | string
-    parentId?: NullableStringFieldUpdateOperationsInput | string | null
-    goalId?: NullableStringFieldUpdateOperationsInput | string | null
-    metadata?: NullableJsonNullValueInput | InputJsonValue
-    totalTime?: IntFieldUpdateOperationsInput | number
-    subTasks?: TaskUncheckedUpdateManyWithoutParentNestedInput
-    tags?: TagUncheckedUpdateManyWithoutTasksNestedInput
-    timeRecords?: TimeRecordUncheckedUpdateManyWithoutTaskNestedInput
-  }
-
-  export type GoalUpsertWithoutProgressLogsInput = {
-    update: XOR<GoalUpdateWithoutProgressLogsInput, GoalUncheckedUpdateWithoutProgressLogsInput>
-    create: XOR<GoalCreateWithoutProgressLogsInput, GoalUncheckedCreateWithoutProgressLogsInput>
-    where?: GoalWhereInput
-  }
-
-  export type GoalUpdateToOneWithWhereWithoutProgressLogsInput = {
-    where?: GoalWhereInput
-    data: XOR<GoalUpdateWithoutProgressLogsInput, GoalUncheckedUpdateWithoutProgressLogsInput>
-  }
-
-  export type GoalUpdateWithoutProgressLogsInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    title?: StringFieldUpdateOperationsInput | string
-    description?: NullableStringFieldUpdateOperationsInput | string | null
-    level?: EnumGoalLevelFieldUpdateOperationsInput | $Enums.GoalLevel
-    status?: EnumGoalStatusFieldUpdateOperationsInput | $Enums.GoalStatus
-    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    endDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    progress?: FloatFieldUpdateOperationsInput | number
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    metrics?: NullableJsonNullValueInput | InputJsonValue
-    resources?: NullableJsonNullValueInput | InputJsonValue
+    type?: EnumObjectiveTypeFieldUpdateOperationsInput | $Enums.ObjectiveType
+    status?: EnumObjectiveStatusFieldUpdateOperationsInput | $Enums.ObjectiveStatus
     priority?: IntFieldUpdateOperationsInput | number
-    weight?: FloatFieldUpdateOperationsInput | number
+    startDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    endDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    progress?: FloatFieldUpdateOperationsInput | number
     metadata?: NullableJsonNullValueInput | InputJsonValue
-    parent?: GoalUpdateOneWithoutSubGoalsNestedInput
-    subGoals?: GoalUpdateManyWithoutParentNestedInput
-    user?: UserUpdateOneRequiredWithoutGoalsNestedInput
-    tasks?: TaskUpdateManyWithoutGoalNestedInput
-    tags?: TagUpdateManyWithoutGoalsNestedInput
+    weight?: FloatFieldUpdateOperationsInput | number
+    totalTime?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    parent?: ObjectiveUpdateOneWithoutSubObjectivesNestedInput
+    subObjectives?: ObjectiveUpdateManyWithoutParentNestedInput
+    user?: UserUpdateOneRequiredWithoutObjectivesNestedInput
+    tags?: TagUpdateManyWithoutObjectivesNestedInput
+    timeRecords?: TimeRecordUpdateManyWithoutObjectiveNestedInput
   }
 
-  export type GoalUncheckedUpdateWithoutProgressLogsInput = {
+  export type ObjectiveUncheckedUpdateWithoutProgressLogsInput = {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
-    level?: EnumGoalLevelFieldUpdateOperationsInput | $Enums.GoalLevel
-    status?: EnumGoalStatusFieldUpdateOperationsInput | $Enums.GoalStatus
-    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    endDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    type?: EnumObjectiveTypeFieldUpdateOperationsInput | $Enums.ObjectiveType
+    status?: EnumObjectiveStatusFieldUpdateOperationsInput | $Enums.ObjectiveStatus
+    priority?: IntFieldUpdateOperationsInput | number
+    startDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    endDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     progress?: FloatFieldUpdateOperationsInput | number
+    parentId?: NullableStringFieldUpdateOperationsInput | string | null
+    userId?: StringFieldUpdateOperationsInput | string
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    weight?: FloatFieldUpdateOperationsInput | number
+    totalTime?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    userId?: StringFieldUpdateOperationsInput | string
-    parentId?: NullableStringFieldUpdateOperationsInput | string | null
-    metrics?: NullableJsonNullValueInput | InputJsonValue
-    resources?: NullableJsonNullValueInput | InputJsonValue
-    priority?: IntFieldUpdateOperationsInput | number
-    weight?: FloatFieldUpdateOperationsInput | number
-    metadata?: NullableJsonNullValueInput | InputJsonValue
-    subGoals?: GoalUncheckedUpdateManyWithoutParentNestedInput
-    tasks?: TaskUncheckedUpdateManyWithoutGoalNestedInput
-    tags?: TagUncheckedUpdateManyWithoutGoalsNestedInput
+    subObjectives?: ObjectiveUncheckedUpdateManyWithoutParentNestedInput
+    tags?: TagUncheckedUpdateManyWithoutObjectivesNestedInput
+    timeRecords?: TimeRecordUncheckedUpdateManyWithoutObjectiveNestedInput
   }
 
   export type UserCreateWithoutImportedFilesInput = {
@@ -20657,11 +17510,10 @@ export namespace Prisma {
     password: string
     createdAt?: Date | string
     updatedAt?: Date | string
-    goals?: GoalCreateNestedManyWithoutUserInput
     messages?: MessageCreateNestedManyWithoutUserInput
-    tasks?: TaskCreateNestedManyWithoutUserInput
     timeRecords?: TimeRecordCreateNestedManyWithoutUserInput
     progressLogs?: ProgressLogCreateNestedManyWithoutUserInput
+    objectives?: ObjectiveCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutImportedFilesInput = {
@@ -20671,11 +17523,10 @@ export namespace Prisma {
     password: string
     createdAt?: Date | string
     updatedAt?: Date | string
-    goals?: GoalUncheckedCreateNestedManyWithoutUserInput
     messages?: MessageUncheckedCreateNestedManyWithoutUserInput
-    tasks?: TaskUncheckedCreateNestedManyWithoutUserInput
     timeRecords?: TimeRecordUncheckedCreateNestedManyWithoutUserInput
     progressLogs?: ProgressLogUncheckedCreateNestedManyWithoutUserInput
+    objectives?: ObjectiveUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutImportedFilesInput = {
@@ -20701,11 +17552,10 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    goals?: GoalUpdateManyWithoutUserNestedInput
     messages?: MessageUpdateManyWithoutUserNestedInput
-    tasks?: TaskUpdateManyWithoutUserNestedInput
     timeRecords?: TimeRecordUpdateManyWithoutUserNestedInput
     progressLogs?: ProgressLogUpdateManyWithoutUserNestedInput
+    objectives?: ObjectiveUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutImportedFilesInput = {
@@ -20715,30 +17565,10 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    goals?: GoalUncheckedUpdateManyWithoutUserNestedInput
     messages?: MessageUncheckedUpdateManyWithoutUserNestedInput
-    tasks?: TaskUncheckedUpdateManyWithoutUserNestedInput
     timeRecords?: TimeRecordUncheckedUpdateManyWithoutUserNestedInput
     progressLogs?: ProgressLogUncheckedUpdateManyWithoutUserNestedInput
-  }
-
-  export type GoalCreateManyUserInput = {
-    id?: string
-    title: string
-    description?: string | null
-    level?: $Enums.GoalLevel
-    status?: $Enums.GoalStatus
-    startDate: Date | string
-    endDate: Date | string
-    progress?: number
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    parentId?: string | null
-    metrics?: NullableJsonNullValueInput | InputJsonValue
-    resources?: NullableJsonNullValueInput | InputJsonValue
-    priority?: number
-    weight?: number
-    metadata?: NullableJsonNullValueInput | InputJsonValue
+    objectives?: ObjectiveUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type MessageCreateManyUserInput = {
@@ -20750,21 +17580,6 @@ export namespace Prisma {
     updatedAt?: Date | string
     categoryId?: string | null
     metadata?: NullableJsonNullValueInput | InputJsonValue
-  }
-
-  export type TaskCreateManyUserInput = {
-    id?: string
-    title: string
-    description?: string | null
-    status?: $Enums.TaskStatus
-    priority?: $Enums.TaskPriority
-    dueDate?: Date | string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    parentId?: string | null
-    goalId?: string | null
-    metadata?: NullableJsonNullValueInput | InputJsonValue
-    totalTime?: number
   }
 
   export type TimeRecordCreateManyUserInput = {
@@ -20800,69 +17615,22 @@ export namespace Prisma {
     updatedAt?: Date | string
   }
 
-  export type GoalUpdateWithoutUserInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    title?: StringFieldUpdateOperationsInput | string
-    description?: NullableStringFieldUpdateOperationsInput | string | null
-    level?: EnumGoalLevelFieldUpdateOperationsInput | $Enums.GoalLevel
-    status?: EnumGoalStatusFieldUpdateOperationsInput | $Enums.GoalStatus
-    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    endDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    progress?: FloatFieldUpdateOperationsInput | number
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    metrics?: NullableJsonNullValueInput | InputJsonValue
-    resources?: NullableJsonNullValueInput | InputJsonValue
-    priority?: IntFieldUpdateOperationsInput | number
-    weight?: FloatFieldUpdateOperationsInput | number
+  export type ObjectiveCreateManyUserInput = {
+    id?: string
+    title: string
+    description?: string | null
+    type?: $Enums.ObjectiveType
+    status?: $Enums.ObjectiveStatus
+    priority?: number
+    startDate?: Date | string | null
+    endDate?: Date | string | null
+    progress?: number
+    parentId?: string | null
     metadata?: NullableJsonNullValueInput | InputJsonValue
-    parent?: GoalUpdateOneWithoutSubGoalsNestedInput
-    subGoals?: GoalUpdateManyWithoutParentNestedInput
-    tasks?: TaskUpdateManyWithoutGoalNestedInput
-    tags?: TagUpdateManyWithoutGoalsNestedInput
-    progressLogs?: ProgressLogUpdateManyWithoutGoalNestedInput
-  }
-
-  export type GoalUncheckedUpdateWithoutUserInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    title?: StringFieldUpdateOperationsInput | string
-    description?: NullableStringFieldUpdateOperationsInput | string | null
-    level?: EnumGoalLevelFieldUpdateOperationsInput | $Enums.GoalLevel
-    status?: EnumGoalStatusFieldUpdateOperationsInput | $Enums.GoalStatus
-    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    endDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    progress?: FloatFieldUpdateOperationsInput | number
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    parentId?: NullableStringFieldUpdateOperationsInput | string | null
-    metrics?: NullableJsonNullValueInput | InputJsonValue
-    resources?: NullableJsonNullValueInput | InputJsonValue
-    priority?: IntFieldUpdateOperationsInput | number
-    weight?: FloatFieldUpdateOperationsInput | number
-    metadata?: NullableJsonNullValueInput | InputJsonValue
-    subGoals?: GoalUncheckedUpdateManyWithoutParentNestedInput
-    tasks?: TaskUncheckedUpdateManyWithoutGoalNestedInput
-    tags?: TagUncheckedUpdateManyWithoutGoalsNestedInput
-    progressLogs?: ProgressLogUncheckedUpdateManyWithoutGoalNestedInput
-  }
-
-  export type GoalUncheckedUpdateManyWithoutUserInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    title?: StringFieldUpdateOperationsInput | string
-    description?: NullableStringFieldUpdateOperationsInput | string | null
-    level?: EnumGoalLevelFieldUpdateOperationsInput | $Enums.GoalLevel
-    status?: EnumGoalStatusFieldUpdateOperationsInput | $Enums.GoalStatus
-    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    endDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    progress?: FloatFieldUpdateOperationsInput | number
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    parentId?: NullableStringFieldUpdateOperationsInput | string | null
-    metrics?: NullableJsonNullValueInput | InputJsonValue
-    resources?: NullableJsonNullValueInput | InputJsonValue
-    priority?: IntFieldUpdateOperationsInput | number
-    weight?: FloatFieldUpdateOperationsInput | number
-    metadata?: NullableJsonNullValueInput | InputJsonValue
+    weight?: number
+    totalTime?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
   }
 
   export type MessageUpdateWithoutUserInput = {
@@ -20900,59 +17668,6 @@ export namespace Prisma {
     metadata?: NullableJsonNullValueInput | InputJsonValue
   }
 
-  export type TaskUpdateWithoutUserInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    title?: StringFieldUpdateOperationsInput | string
-    description?: NullableStringFieldUpdateOperationsInput | string | null
-    status?: EnumTaskStatusFieldUpdateOperationsInput | $Enums.TaskStatus
-    priority?: EnumTaskPriorityFieldUpdateOperationsInput | $Enums.TaskPriority
-    dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    metadata?: NullableJsonNullValueInput | InputJsonValue
-    totalTime?: IntFieldUpdateOperationsInput | number
-    goal?: GoalUpdateOneWithoutTasksNestedInput
-    parent?: TaskUpdateOneWithoutSubTasksNestedInput
-    subTasks?: TaskUpdateManyWithoutParentNestedInput
-    tags?: TagUpdateManyWithoutTasksNestedInput
-    timeRecords?: TimeRecordUpdateManyWithoutTaskNestedInput
-    progressLogs?: ProgressLogUpdateManyWithoutTaskNestedInput
-  }
-
-  export type TaskUncheckedUpdateWithoutUserInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    title?: StringFieldUpdateOperationsInput | string
-    description?: NullableStringFieldUpdateOperationsInput | string | null
-    status?: EnumTaskStatusFieldUpdateOperationsInput | $Enums.TaskStatus
-    priority?: EnumTaskPriorityFieldUpdateOperationsInput | $Enums.TaskPriority
-    dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    parentId?: NullableStringFieldUpdateOperationsInput | string | null
-    goalId?: NullableStringFieldUpdateOperationsInput | string | null
-    metadata?: NullableJsonNullValueInput | InputJsonValue
-    totalTime?: IntFieldUpdateOperationsInput | number
-    subTasks?: TaskUncheckedUpdateManyWithoutParentNestedInput
-    tags?: TagUncheckedUpdateManyWithoutTasksNestedInput
-    timeRecords?: TimeRecordUncheckedUpdateManyWithoutTaskNestedInput
-    progressLogs?: ProgressLogUncheckedUpdateManyWithoutTaskNestedInput
-  }
-
-  export type TaskUncheckedUpdateManyWithoutUserInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    title?: StringFieldUpdateOperationsInput | string
-    description?: NullableStringFieldUpdateOperationsInput | string | null
-    status?: EnumTaskStatusFieldUpdateOperationsInput | $Enums.TaskStatus
-    priority?: EnumTaskPriorityFieldUpdateOperationsInput | $Enums.TaskPriority
-    dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    parentId?: NullableStringFieldUpdateOperationsInput | string | null
-    goalId?: NullableStringFieldUpdateOperationsInput | string | null
-    metadata?: NullableJsonNullValueInput | InputJsonValue
-    totalTime?: IntFieldUpdateOperationsInput | number
-  }
-
   export type TimeRecordUpdateWithoutUserInput = {
     id?: StringFieldUpdateOperationsInput | string
     startTime?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -20961,7 +17676,7 @@ export namespace Prisma {
     note?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    task?: TaskUpdateOneRequiredWithoutTimeRecordsNestedInput
+    objective?: ObjectiveUpdateOneRequiredWithoutTimeRecordsNestedInput
   }
 
   export type TimeRecordUncheckedUpdateWithoutUserInput = {
@@ -20992,8 +17707,8 @@ export namespace Prisma {
     note?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    task?: TaskUpdateOneWithoutProgressLogsNestedInput
-    goal?: GoalUpdateOneWithoutProgressLogsNestedInput
+    goalId?: NullableStringFieldUpdateOperationsInput | string | null
+    objective?: ObjectiveUpdateOneWithoutProgressLogsNestedInput
   }
 
   export type ProgressLogUncheckedUpdateWithoutUserInput = {
@@ -21052,22 +17767,97 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type TaskCreateManyParentInput = {
+  export type ObjectiveUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    type?: EnumObjectiveTypeFieldUpdateOperationsInput | $Enums.ObjectiveType
+    status?: EnumObjectiveStatusFieldUpdateOperationsInput | $Enums.ObjectiveStatus
+    priority?: IntFieldUpdateOperationsInput | number
+    startDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    endDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    progress?: FloatFieldUpdateOperationsInput | number
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    weight?: FloatFieldUpdateOperationsInput | number
+    totalTime?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    parent?: ObjectiveUpdateOneWithoutSubObjectivesNestedInput
+    subObjectives?: ObjectiveUpdateManyWithoutParentNestedInput
+    tags?: TagUpdateManyWithoutObjectivesNestedInput
+    progressLogs?: ProgressLogUpdateManyWithoutObjectiveNestedInput
+    timeRecords?: TimeRecordUpdateManyWithoutObjectiveNestedInput
+  }
+
+  export type ObjectiveUncheckedUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    type?: EnumObjectiveTypeFieldUpdateOperationsInput | $Enums.ObjectiveType
+    status?: EnumObjectiveStatusFieldUpdateOperationsInput | $Enums.ObjectiveStatus
+    priority?: IntFieldUpdateOperationsInput | number
+    startDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    endDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    progress?: FloatFieldUpdateOperationsInput | number
+    parentId?: NullableStringFieldUpdateOperationsInput | string | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    weight?: FloatFieldUpdateOperationsInput | number
+    totalTime?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    subObjectives?: ObjectiveUncheckedUpdateManyWithoutParentNestedInput
+    tags?: TagUncheckedUpdateManyWithoutObjectivesNestedInput
+    progressLogs?: ProgressLogUncheckedUpdateManyWithoutObjectiveNestedInput
+    timeRecords?: TimeRecordUncheckedUpdateManyWithoutObjectiveNestedInput
+  }
+
+  export type ObjectiveUncheckedUpdateManyWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    type?: EnumObjectiveTypeFieldUpdateOperationsInput | $Enums.ObjectiveType
+    status?: EnumObjectiveStatusFieldUpdateOperationsInput | $Enums.ObjectiveStatus
+    priority?: IntFieldUpdateOperationsInput | number
+    startDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    endDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    progress?: FloatFieldUpdateOperationsInput | number
+    parentId?: NullableStringFieldUpdateOperationsInput | string | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    weight?: FloatFieldUpdateOperationsInput | number
+    totalTime?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ObjectiveCreateManyParentInput = {
     id?: string
     title: string
     description?: string | null
-    status?: $Enums.TaskStatus
-    priority?: $Enums.TaskPriority
-    dueDate?: Date | string | null
+    type?: $Enums.ObjectiveType
+    status?: $Enums.ObjectiveStatus
+    priority?: number
+    startDate?: Date | string | null
+    endDate?: Date | string | null
+    progress?: number
+    userId: string
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    weight?: number
+    totalTime?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ProgressLogCreateManyObjectiveInput = {
+    id?: string
+    progress: number
+    note?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     userId: string
     goalId?: string | null
-    metadata?: NullableJsonNullValueInput | InputJsonValue
-    totalTime?: number
   }
 
-  export type TimeRecordCreateManyTaskInput = {
+  export type TimeRecordCreateManyObjectiveInput = {
     id?: string
     startTime: Date | string
     endTime?: Date | string | null
@@ -21078,90 +17868,87 @@ export namespace Prisma {
     userId: string
   }
 
-  export type ProgressLogCreateManyTaskInput = {
-    id?: string
-    progress: number
-    note?: string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    userId: string
-    goalId?: string | null
-  }
-
-  export type TaskUpdateWithoutParentInput = {
+  export type ObjectiveUpdateWithoutParentInput = {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
-    status?: EnumTaskStatusFieldUpdateOperationsInput | $Enums.TaskStatus
-    priority?: EnumTaskPriorityFieldUpdateOperationsInput | $Enums.TaskPriority
-    dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    type?: EnumObjectiveTypeFieldUpdateOperationsInput | $Enums.ObjectiveType
+    status?: EnumObjectiveStatusFieldUpdateOperationsInput | $Enums.ObjectiveStatus
+    priority?: IntFieldUpdateOperationsInput | number
+    startDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    endDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    progress?: FloatFieldUpdateOperationsInput | number
     metadata?: NullableJsonNullValueInput | InputJsonValue
+    weight?: FloatFieldUpdateOperationsInput | number
     totalTime?: IntFieldUpdateOperationsInput | number
-    goal?: GoalUpdateOneWithoutTasksNestedInput
-    subTasks?: TaskUpdateManyWithoutParentNestedInput
-    user?: UserUpdateOneRequiredWithoutTasksNestedInput
-    tags?: TagUpdateManyWithoutTasksNestedInput
-    timeRecords?: TimeRecordUpdateManyWithoutTaskNestedInput
-    progressLogs?: ProgressLogUpdateManyWithoutTaskNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    subObjectives?: ObjectiveUpdateManyWithoutParentNestedInput
+    user?: UserUpdateOneRequiredWithoutObjectivesNestedInput
+    tags?: TagUpdateManyWithoutObjectivesNestedInput
+    progressLogs?: ProgressLogUpdateManyWithoutObjectiveNestedInput
+    timeRecords?: TimeRecordUpdateManyWithoutObjectiveNestedInput
   }
 
-  export type TaskUncheckedUpdateWithoutParentInput = {
+  export type ObjectiveUncheckedUpdateWithoutParentInput = {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
-    status?: EnumTaskStatusFieldUpdateOperationsInput | $Enums.TaskStatus
-    priority?: EnumTaskPriorityFieldUpdateOperationsInput | $Enums.TaskPriority
-    dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    type?: EnumObjectiveTypeFieldUpdateOperationsInput | $Enums.ObjectiveType
+    status?: EnumObjectiveStatusFieldUpdateOperationsInput | $Enums.ObjectiveStatus
+    priority?: IntFieldUpdateOperationsInput | number
+    startDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    endDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    progress?: FloatFieldUpdateOperationsInput | number
     userId?: StringFieldUpdateOperationsInput | string
-    goalId?: NullableStringFieldUpdateOperationsInput | string | null
     metadata?: NullableJsonNullValueInput | InputJsonValue
+    weight?: FloatFieldUpdateOperationsInput | number
     totalTime?: IntFieldUpdateOperationsInput | number
-    subTasks?: TaskUncheckedUpdateManyWithoutParentNestedInput
-    tags?: TagUncheckedUpdateManyWithoutTasksNestedInput
-    timeRecords?: TimeRecordUncheckedUpdateManyWithoutTaskNestedInput
-    progressLogs?: ProgressLogUncheckedUpdateManyWithoutTaskNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    subObjectives?: ObjectiveUncheckedUpdateManyWithoutParentNestedInput
+    tags?: TagUncheckedUpdateManyWithoutObjectivesNestedInput
+    progressLogs?: ProgressLogUncheckedUpdateManyWithoutObjectiveNestedInput
+    timeRecords?: TimeRecordUncheckedUpdateManyWithoutObjectiveNestedInput
   }
 
-  export type TaskUncheckedUpdateManyWithoutParentInput = {
+  export type ObjectiveUncheckedUpdateManyWithoutParentInput = {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
-    status?: EnumTaskStatusFieldUpdateOperationsInput | $Enums.TaskStatus
-    priority?: EnumTaskPriorityFieldUpdateOperationsInput | $Enums.TaskPriority
-    dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    type?: EnumObjectiveTypeFieldUpdateOperationsInput | $Enums.ObjectiveType
+    status?: EnumObjectiveStatusFieldUpdateOperationsInput | $Enums.ObjectiveStatus
+    priority?: IntFieldUpdateOperationsInput | number
+    startDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    endDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    progress?: FloatFieldUpdateOperationsInput | number
+    userId?: StringFieldUpdateOperationsInput | string
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    weight?: FloatFieldUpdateOperationsInput | number
+    totalTime?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    userId?: StringFieldUpdateOperationsInput | string
-    goalId?: NullableStringFieldUpdateOperationsInput | string | null
-    metadata?: NullableJsonNullValueInput | InputJsonValue
-    totalTime?: IntFieldUpdateOperationsInput | number
   }
 
-  export type TagUpdateWithoutTasksInput = {
+  export type TagUpdateWithoutObjectivesInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     color?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    goals?: GoalUpdateManyWithoutTagsNestedInput
     messages?: MessageUpdateManyWithoutTagsNestedInput
   }
 
-  export type TagUncheckedUpdateWithoutTasksInput = {
+  export type TagUncheckedUpdateWithoutObjectivesInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     color?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    goals?: GoalUncheckedUpdateManyWithoutTagsNestedInput
     messages?: MessageUncheckedUpdateManyWithoutTagsNestedInput
   }
 
-  export type TagUncheckedUpdateManyWithoutTasksInput = {
+  export type TagUncheckedUpdateManyWithoutObjectivesInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     color?: NullableStringFieldUpdateOperationsInput | string | null
@@ -21169,7 +17956,37 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type TimeRecordUpdateWithoutTaskInput = {
+  export type ProgressLogUpdateWithoutObjectiveInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    progress?: FloatFieldUpdateOperationsInput | number
+    note?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    goalId?: NullableStringFieldUpdateOperationsInput | string | null
+    user?: UserUpdateOneRequiredWithoutProgressLogsNestedInput
+  }
+
+  export type ProgressLogUncheckedUpdateWithoutObjectiveInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    progress?: FloatFieldUpdateOperationsInput | number
+    note?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    userId?: StringFieldUpdateOperationsInput | string
+    goalId?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type ProgressLogUncheckedUpdateManyWithoutObjectiveInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    progress?: FloatFieldUpdateOperationsInput | number
+    note?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    userId?: StringFieldUpdateOperationsInput | string
+    goalId?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type TimeRecordUpdateWithoutObjectiveInput = {
     id?: StringFieldUpdateOperationsInput | string
     startTime?: DateTimeFieldUpdateOperationsInput | Date | string
     endTime?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -21180,7 +17997,7 @@ export namespace Prisma {
     user?: UserUpdateOneRequiredWithoutTimeRecordsNestedInput
   }
 
-  export type TimeRecordUncheckedUpdateWithoutTaskInput = {
+  export type TimeRecordUncheckedUpdateWithoutObjectiveInput = {
     id?: StringFieldUpdateOperationsInput | string
     startTime?: DateTimeFieldUpdateOperationsInput | Date | string
     endTime?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -21191,7 +18008,7 @@ export namespace Prisma {
     userId?: StringFieldUpdateOperationsInput | string
   }
 
-  export type TimeRecordUncheckedUpdateManyWithoutTaskInput = {
+  export type TimeRecordUncheckedUpdateManyWithoutObjectiveInput = {
     id?: StringFieldUpdateOperationsInput | string
     startTime?: DateTimeFieldUpdateOperationsInput | Date | string
     endTime?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -21200,256 +18017,6 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     userId?: StringFieldUpdateOperationsInput | string
-  }
-
-  export type ProgressLogUpdateWithoutTaskInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    progress?: FloatFieldUpdateOperationsInput | number
-    note?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    user?: UserUpdateOneRequiredWithoutProgressLogsNestedInput
-    goal?: GoalUpdateOneWithoutProgressLogsNestedInput
-  }
-
-  export type ProgressLogUncheckedUpdateWithoutTaskInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    progress?: FloatFieldUpdateOperationsInput | number
-    note?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    userId?: StringFieldUpdateOperationsInput | string
-    goalId?: NullableStringFieldUpdateOperationsInput | string | null
-  }
-
-  export type ProgressLogUncheckedUpdateManyWithoutTaskInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    progress?: FloatFieldUpdateOperationsInput | number
-    note?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    userId?: StringFieldUpdateOperationsInput | string
-    goalId?: NullableStringFieldUpdateOperationsInput | string | null
-  }
-
-  export type GoalCreateManyParentInput = {
-    id?: string
-    title: string
-    description?: string | null
-    level?: $Enums.GoalLevel
-    status?: $Enums.GoalStatus
-    startDate: Date | string
-    endDate: Date | string
-    progress?: number
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    userId: string
-    metrics?: NullableJsonNullValueInput | InputJsonValue
-    resources?: NullableJsonNullValueInput | InputJsonValue
-    priority?: number
-    weight?: number
-    metadata?: NullableJsonNullValueInput | InputJsonValue
-  }
-
-  export type TaskCreateManyGoalInput = {
-    id?: string
-    title: string
-    description?: string | null
-    status?: $Enums.TaskStatus
-    priority?: $Enums.TaskPriority
-    dueDate?: Date | string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    userId: string
-    parentId?: string | null
-    metadata?: NullableJsonNullValueInput | InputJsonValue
-    totalTime?: number
-  }
-
-  export type ProgressLogCreateManyGoalInput = {
-    id?: string
-    progress: number
-    note?: string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    userId: string
-    taskId?: string | null
-  }
-
-  export type GoalUpdateWithoutParentInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    title?: StringFieldUpdateOperationsInput | string
-    description?: NullableStringFieldUpdateOperationsInput | string | null
-    level?: EnumGoalLevelFieldUpdateOperationsInput | $Enums.GoalLevel
-    status?: EnumGoalStatusFieldUpdateOperationsInput | $Enums.GoalStatus
-    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    endDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    progress?: FloatFieldUpdateOperationsInput | number
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    metrics?: NullableJsonNullValueInput | InputJsonValue
-    resources?: NullableJsonNullValueInput | InputJsonValue
-    priority?: IntFieldUpdateOperationsInput | number
-    weight?: FloatFieldUpdateOperationsInput | number
-    metadata?: NullableJsonNullValueInput | InputJsonValue
-    subGoals?: GoalUpdateManyWithoutParentNestedInput
-    user?: UserUpdateOneRequiredWithoutGoalsNestedInput
-    tasks?: TaskUpdateManyWithoutGoalNestedInput
-    tags?: TagUpdateManyWithoutGoalsNestedInput
-    progressLogs?: ProgressLogUpdateManyWithoutGoalNestedInput
-  }
-
-  export type GoalUncheckedUpdateWithoutParentInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    title?: StringFieldUpdateOperationsInput | string
-    description?: NullableStringFieldUpdateOperationsInput | string | null
-    level?: EnumGoalLevelFieldUpdateOperationsInput | $Enums.GoalLevel
-    status?: EnumGoalStatusFieldUpdateOperationsInput | $Enums.GoalStatus
-    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    endDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    progress?: FloatFieldUpdateOperationsInput | number
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    userId?: StringFieldUpdateOperationsInput | string
-    metrics?: NullableJsonNullValueInput | InputJsonValue
-    resources?: NullableJsonNullValueInput | InputJsonValue
-    priority?: IntFieldUpdateOperationsInput | number
-    weight?: FloatFieldUpdateOperationsInput | number
-    metadata?: NullableJsonNullValueInput | InputJsonValue
-    subGoals?: GoalUncheckedUpdateManyWithoutParentNestedInput
-    tasks?: TaskUncheckedUpdateManyWithoutGoalNestedInput
-    tags?: TagUncheckedUpdateManyWithoutGoalsNestedInput
-    progressLogs?: ProgressLogUncheckedUpdateManyWithoutGoalNestedInput
-  }
-
-  export type GoalUncheckedUpdateManyWithoutParentInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    title?: StringFieldUpdateOperationsInput | string
-    description?: NullableStringFieldUpdateOperationsInput | string | null
-    level?: EnumGoalLevelFieldUpdateOperationsInput | $Enums.GoalLevel
-    status?: EnumGoalStatusFieldUpdateOperationsInput | $Enums.GoalStatus
-    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    endDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    progress?: FloatFieldUpdateOperationsInput | number
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    userId?: StringFieldUpdateOperationsInput | string
-    metrics?: NullableJsonNullValueInput | InputJsonValue
-    resources?: NullableJsonNullValueInput | InputJsonValue
-    priority?: IntFieldUpdateOperationsInput | number
-    weight?: FloatFieldUpdateOperationsInput | number
-    metadata?: NullableJsonNullValueInput | InputJsonValue
-  }
-
-  export type TaskUpdateWithoutGoalInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    title?: StringFieldUpdateOperationsInput | string
-    description?: NullableStringFieldUpdateOperationsInput | string | null
-    status?: EnumTaskStatusFieldUpdateOperationsInput | $Enums.TaskStatus
-    priority?: EnumTaskPriorityFieldUpdateOperationsInput | $Enums.TaskPriority
-    dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    metadata?: NullableJsonNullValueInput | InputJsonValue
-    totalTime?: IntFieldUpdateOperationsInput | number
-    parent?: TaskUpdateOneWithoutSubTasksNestedInput
-    subTasks?: TaskUpdateManyWithoutParentNestedInput
-    user?: UserUpdateOneRequiredWithoutTasksNestedInput
-    tags?: TagUpdateManyWithoutTasksNestedInput
-    timeRecords?: TimeRecordUpdateManyWithoutTaskNestedInput
-    progressLogs?: ProgressLogUpdateManyWithoutTaskNestedInput
-  }
-
-  export type TaskUncheckedUpdateWithoutGoalInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    title?: StringFieldUpdateOperationsInput | string
-    description?: NullableStringFieldUpdateOperationsInput | string | null
-    status?: EnumTaskStatusFieldUpdateOperationsInput | $Enums.TaskStatus
-    priority?: EnumTaskPriorityFieldUpdateOperationsInput | $Enums.TaskPriority
-    dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    userId?: StringFieldUpdateOperationsInput | string
-    parentId?: NullableStringFieldUpdateOperationsInput | string | null
-    metadata?: NullableJsonNullValueInput | InputJsonValue
-    totalTime?: IntFieldUpdateOperationsInput | number
-    subTasks?: TaskUncheckedUpdateManyWithoutParentNestedInput
-    tags?: TagUncheckedUpdateManyWithoutTasksNestedInput
-    timeRecords?: TimeRecordUncheckedUpdateManyWithoutTaskNestedInput
-    progressLogs?: ProgressLogUncheckedUpdateManyWithoutTaskNestedInput
-  }
-
-  export type TaskUncheckedUpdateManyWithoutGoalInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    title?: StringFieldUpdateOperationsInput | string
-    description?: NullableStringFieldUpdateOperationsInput | string | null
-    status?: EnumTaskStatusFieldUpdateOperationsInput | $Enums.TaskStatus
-    priority?: EnumTaskPriorityFieldUpdateOperationsInput | $Enums.TaskPriority
-    dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    userId?: StringFieldUpdateOperationsInput | string
-    parentId?: NullableStringFieldUpdateOperationsInput | string | null
-    metadata?: NullableJsonNullValueInput | InputJsonValue
-    totalTime?: IntFieldUpdateOperationsInput | number
-  }
-
-  export type TagUpdateWithoutGoalsInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    color?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    messages?: MessageUpdateManyWithoutTagsNestedInput
-    tasks?: TaskUpdateManyWithoutTagsNestedInput
-  }
-
-  export type TagUncheckedUpdateWithoutGoalsInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    color?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    messages?: MessageUncheckedUpdateManyWithoutTagsNestedInput
-    tasks?: TaskUncheckedUpdateManyWithoutTagsNestedInput
-  }
-
-  export type TagUncheckedUpdateManyWithoutGoalsInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    color?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type ProgressLogUpdateWithoutGoalInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    progress?: FloatFieldUpdateOperationsInput | number
-    note?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    user?: UserUpdateOneRequiredWithoutProgressLogsNestedInput
-    task?: TaskUpdateOneWithoutProgressLogsNestedInput
-  }
-
-  export type ProgressLogUncheckedUpdateWithoutGoalInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    progress?: FloatFieldUpdateOperationsInput | number
-    note?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    userId?: StringFieldUpdateOperationsInput | string
-    taskId?: NullableStringFieldUpdateOperationsInput | string | null
-  }
-
-  export type ProgressLogUncheckedUpdateManyWithoutGoalInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    progress?: FloatFieldUpdateOperationsInput | number
-    note?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    userId?: StringFieldUpdateOperationsInput | string
-    taskId?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type TagUpdateWithoutMessagesInput = {
@@ -21458,8 +18025,7 @@ export namespace Prisma {
     color?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    goals?: GoalUpdateManyWithoutTagsNestedInput
-    tasks?: TaskUpdateManyWithoutTagsNestedInput
+    objectives?: ObjectiveUpdateManyWithoutTagsNestedInput
   }
 
   export type TagUncheckedUpdateWithoutMessagesInput = {
@@ -21468,8 +18034,7 @@ export namespace Prisma {
     color?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    goals?: GoalUncheckedUpdateManyWithoutTagsNestedInput
-    tasks?: TaskUncheckedUpdateManyWithoutTagsNestedInput
+    objectives?: ObjectiveUncheckedUpdateManyWithoutTagsNestedInput
   }
 
   export type TagUncheckedUpdateManyWithoutMessagesInput = {
@@ -21566,70 +18131,67 @@ export namespace Prisma {
     metadata?: NullableJsonNullValueInput | InputJsonValue
   }
 
-  export type GoalUpdateWithoutTagsInput = {
+  export type ObjectiveUpdateWithoutTagsInput = {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
-    level?: EnumGoalLevelFieldUpdateOperationsInput | $Enums.GoalLevel
-    status?: EnumGoalStatusFieldUpdateOperationsInput | $Enums.GoalStatus
-    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    endDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    type?: EnumObjectiveTypeFieldUpdateOperationsInput | $Enums.ObjectiveType
+    status?: EnumObjectiveStatusFieldUpdateOperationsInput | $Enums.ObjectiveStatus
+    priority?: IntFieldUpdateOperationsInput | number
+    startDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    endDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     progress?: FloatFieldUpdateOperationsInput | number
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    weight?: FloatFieldUpdateOperationsInput | number
+    totalTime?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    metrics?: NullableJsonNullValueInput | InputJsonValue
-    resources?: NullableJsonNullValueInput | InputJsonValue
-    priority?: IntFieldUpdateOperationsInput | number
-    weight?: FloatFieldUpdateOperationsInput | number
-    metadata?: NullableJsonNullValueInput | InputJsonValue
-    parent?: GoalUpdateOneWithoutSubGoalsNestedInput
-    subGoals?: GoalUpdateManyWithoutParentNestedInput
-    user?: UserUpdateOneRequiredWithoutGoalsNestedInput
-    tasks?: TaskUpdateManyWithoutGoalNestedInput
-    progressLogs?: ProgressLogUpdateManyWithoutGoalNestedInput
+    parent?: ObjectiveUpdateOneWithoutSubObjectivesNestedInput
+    subObjectives?: ObjectiveUpdateManyWithoutParentNestedInput
+    user?: UserUpdateOneRequiredWithoutObjectivesNestedInput
+    progressLogs?: ProgressLogUpdateManyWithoutObjectiveNestedInput
+    timeRecords?: TimeRecordUpdateManyWithoutObjectiveNestedInput
   }
 
-  export type GoalUncheckedUpdateWithoutTagsInput = {
+  export type ObjectiveUncheckedUpdateWithoutTagsInput = {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
-    level?: EnumGoalLevelFieldUpdateOperationsInput | $Enums.GoalLevel
-    status?: EnumGoalStatusFieldUpdateOperationsInput | $Enums.GoalStatus
-    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    endDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    type?: EnumObjectiveTypeFieldUpdateOperationsInput | $Enums.ObjectiveType
+    status?: EnumObjectiveStatusFieldUpdateOperationsInput | $Enums.ObjectiveStatus
+    priority?: IntFieldUpdateOperationsInput | number
+    startDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    endDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     progress?: FloatFieldUpdateOperationsInput | number
+    parentId?: NullableStringFieldUpdateOperationsInput | string | null
+    userId?: StringFieldUpdateOperationsInput | string
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    weight?: FloatFieldUpdateOperationsInput | number
+    totalTime?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    userId?: StringFieldUpdateOperationsInput | string
-    parentId?: NullableStringFieldUpdateOperationsInput | string | null
-    metrics?: NullableJsonNullValueInput | InputJsonValue
-    resources?: NullableJsonNullValueInput | InputJsonValue
-    priority?: IntFieldUpdateOperationsInput | number
-    weight?: FloatFieldUpdateOperationsInput | number
-    metadata?: NullableJsonNullValueInput | InputJsonValue
-    subGoals?: GoalUncheckedUpdateManyWithoutParentNestedInput
-    tasks?: TaskUncheckedUpdateManyWithoutGoalNestedInput
-    progressLogs?: ProgressLogUncheckedUpdateManyWithoutGoalNestedInput
+    subObjectives?: ObjectiveUncheckedUpdateManyWithoutParentNestedInput
+    progressLogs?: ProgressLogUncheckedUpdateManyWithoutObjectiveNestedInput
+    timeRecords?: TimeRecordUncheckedUpdateManyWithoutObjectiveNestedInput
   }
 
-  export type GoalUncheckedUpdateManyWithoutTagsInput = {
+  export type ObjectiveUncheckedUpdateManyWithoutTagsInput = {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
-    level?: EnumGoalLevelFieldUpdateOperationsInput | $Enums.GoalLevel
-    status?: EnumGoalStatusFieldUpdateOperationsInput | $Enums.GoalStatus
-    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    endDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    type?: EnumObjectiveTypeFieldUpdateOperationsInput | $Enums.ObjectiveType
+    status?: EnumObjectiveStatusFieldUpdateOperationsInput | $Enums.ObjectiveStatus
+    priority?: IntFieldUpdateOperationsInput | number
+    startDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    endDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     progress?: FloatFieldUpdateOperationsInput | number
+    parentId?: NullableStringFieldUpdateOperationsInput | string | null
+    userId?: StringFieldUpdateOperationsInput | string
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    weight?: FloatFieldUpdateOperationsInput | number
+    totalTime?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    userId?: StringFieldUpdateOperationsInput | string
-    parentId?: NullableStringFieldUpdateOperationsInput | string | null
-    metrics?: NullableJsonNullValueInput | InputJsonValue
-    resources?: NullableJsonNullValueInput | InputJsonValue
-    priority?: IntFieldUpdateOperationsInput | number
-    weight?: FloatFieldUpdateOperationsInput | number
-    metadata?: NullableJsonNullValueInput | InputJsonValue
   }
 
   export type MessageUpdateWithoutTagsInput = {
@@ -21666,60 +18228,6 @@ export namespace Prisma {
     userId?: StringFieldUpdateOperationsInput | string
     categoryId?: NullableStringFieldUpdateOperationsInput | string | null
     metadata?: NullableJsonNullValueInput | InputJsonValue
-  }
-
-  export type TaskUpdateWithoutTagsInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    title?: StringFieldUpdateOperationsInput | string
-    description?: NullableStringFieldUpdateOperationsInput | string | null
-    status?: EnumTaskStatusFieldUpdateOperationsInput | $Enums.TaskStatus
-    priority?: EnumTaskPriorityFieldUpdateOperationsInput | $Enums.TaskPriority
-    dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    metadata?: NullableJsonNullValueInput | InputJsonValue
-    totalTime?: IntFieldUpdateOperationsInput | number
-    goal?: GoalUpdateOneWithoutTasksNestedInput
-    parent?: TaskUpdateOneWithoutSubTasksNestedInput
-    subTasks?: TaskUpdateManyWithoutParentNestedInput
-    user?: UserUpdateOneRequiredWithoutTasksNestedInput
-    timeRecords?: TimeRecordUpdateManyWithoutTaskNestedInput
-    progressLogs?: ProgressLogUpdateManyWithoutTaskNestedInput
-  }
-
-  export type TaskUncheckedUpdateWithoutTagsInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    title?: StringFieldUpdateOperationsInput | string
-    description?: NullableStringFieldUpdateOperationsInput | string | null
-    status?: EnumTaskStatusFieldUpdateOperationsInput | $Enums.TaskStatus
-    priority?: EnumTaskPriorityFieldUpdateOperationsInput | $Enums.TaskPriority
-    dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    userId?: StringFieldUpdateOperationsInput | string
-    parentId?: NullableStringFieldUpdateOperationsInput | string | null
-    goalId?: NullableStringFieldUpdateOperationsInput | string | null
-    metadata?: NullableJsonNullValueInput | InputJsonValue
-    totalTime?: IntFieldUpdateOperationsInput | number
-    subTasks?: TaskUncheckedUpdateManyWithoutParentNestedInput
-    timeRecords?: TimeRecordUncheckedUpdateManyWithoutTaskNestedInput
-    progressLogs?: ProgressLogUncheckedUpdateManyWithoutTaskNestedInput
-  }
-
-  export type TaskUncheckedUpdateManyWithoutTagsInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    title?: StringFieldUpdateOperationsInput | string
-    description?: NullableStringFieldUpdateOperationsInput | string | null
-    status?: EnumTaskStatusFieldUpdateOperationsInput | $Enums.TaskStatus
-    priority?: EnumTaskPriorityFieldUpdateOperationsInput | $Enums.TaskPriority
-    dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    userId?: StringFieldUpdateOperationsInput | string
-    parentId?: NullableStringFieldUpdateOperationsInput | string | null
-    goalId?: NullableStringFieldUpdateOperationsInput | string | null
-    metadata?: NullableJsonNullValueInput | InputJsonValue
-    totalTime?: IntFieldUpdateOperationsInput | number
   }
 
 
